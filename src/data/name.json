@@ -1,0 +1,70 @@
+{
+    "type": "name",
+    "id": 1,
+    "formId": 2,
+    "label": "Name",
+    "cssClass": null,
+    "isRequired": true,
+    "description": "First and Last Name Fields.",
+    "inputs": [
+        {
+            "key": "prefix",
+            "label": "Prefix",
+            "placeholder": null,
+            "choices": [
+                {
+                    "text": "Dr.",
+                    "value": "Dr."
+                },
+                {
+                    "text": "Miss",
+                    "value": "Miss"
+                },
+                {
+                    "text": "Mr.",
+                    "value": "Mr."
+                },
+                {
+                    "text": "Mrs.",
+                    "value": "Mrs."
+                },
+                {
+                    "text": "Ms.",
+                    "value": "Ms."
+                },
+                {
+                    "text": "Prof.",
+                    "value": "Prof."
+                },
+                {
+                    "text": "Rev.",
+                    "value": "Rev."
+                }
+            ]
+        },
+        {
+            "key": "first",
+            "label": "First",
+            "placeholder": null,
+            "choices": null
+        },
+        {
+            "key": "middle",
+            "label": "Middle",
+            "placeholder": null,
+            "choices": null
+        },
+        {
+            "key": "last",
+            "label": "Last",
+            "placeholder": null,
+            "choices": null
+        },
+        {
+            "key": "suffix",
+            "label": "Suffix",
+            "placeholder": null,
+            "choices": null
+        }
+    ]
+}

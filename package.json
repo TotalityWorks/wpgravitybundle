@@ -1,12 +1,15 @@
 {
   "name": "wpgravitybundle",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A collection of form templates to use for your headless WordPress React application, using Gravity Forms.",
   "author": "@totalityworks",
   "license": "ISC",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TotalityWorks/wpgravitybundle.git"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --open development",
     "build": "webpack --mode production",
     "deploy": "webpack --config publish.config.js --mode production && npm publish"

@@ -1,12 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { ExampleComponent } from '../../src'
-import { AnotherComponent } from '../../src'
+import { FormsField } from '../../src'
+import name from '../../src/data/name.json'
 
 render(
     <>
-        <ExampleComponent words='dope' />
-        <AnotherComponent />
+        <FormsField field={name} />
     </>, 
     document.getElementById('root')
 );

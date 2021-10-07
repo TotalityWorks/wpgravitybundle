@@ -10,19 +10,21 @@ To install this package simply run
 
 ## Use
 
-To use this package, simply import it and call it with the appropriate props:
+To use this package, simply import it and call it with the appropriate props. Under the hood, the FormFields component will map through the fields prop it receives in order to display your form.
 
 ``` 
 import React from 'react';
 import { graphql } from 'gatsby';
-import { FormFields, Button } from 'wpgravitybundle';
+import { FormsField, Button } from 'wpgravitybundle';
 
 export default function Example({ data }) {
     const formFields = data.gravityFormsForm.formFields.nodes;
     const { type, text } = data.gravityFormsForm.lastPageButton;
     return (
         <>
-        <FormFields fields={formFields} />
+        {formFields.map(field =>
+            <FormsField key={field.id} field={field} />
+        )}
         <Button type={type} text={text} />
         </>
     )

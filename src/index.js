@@ -1,5 +1,4 @@
 import React from 'react';
-import ExampleComponent from './Example';
-import AnotherComponent from './Another'
+import FormsField from './components/FormsField';
 
-export { ExampleComponent, AnotherComponent };
+export { FormsField };
