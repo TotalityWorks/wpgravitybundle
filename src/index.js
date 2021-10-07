@@ -1,9 +1,5 @@
 import React from 'react';
+import ExampleComponent from './Example';
+import AnotherComponent from './Another'
 
-const ExampleComponent = () => (
-  <div>
-    Example Component
-  </div>
-)
-
-export default ExampleComponent;
+export { ExampleComponent, AnotherComponent };
