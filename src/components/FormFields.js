@@ -12,7 +12,6 @@ import TextArea from './FormFields/TextArea';
 import Time from './FormFields/Time';
 import Website from './FormFields/Website';
 
-
 export default function FormsField({ field, fieldErrors }) {
   switch (field.type) {
     case "address":
