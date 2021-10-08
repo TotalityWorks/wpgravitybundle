@@ -7,7 +7,7 @@ export default function NameField({ field }) {
   const otherInputs = inputs?.filter(input => input?.key !== 'prefix') || [];
 
   return (
-    <fieldset id={htmlId} className={`gfield gfield-${type} ${cssClass}`.trim()}>
+    <fieldset id={htmlId} className={`${cssClass}`.trim()}>
       <legend>{label}</legend>
       {!prefixInput.isHidden && prefixInput ? 
         <>
@@ -33,6 +33,7 @@ export default function NameField({ field }) {
         const key = input.key;
         const inputLabel = input?.label || '';
         const placeholder = input?.placeholder || '';
+        const isRequired = input?.isRequired || '';
         if(input.isHidden) {
             return;
         }
@@ -44,6 +45,7 @@ export default function NameField({ field }) {
               name={String(key)}
               id={`input_${formId}_${id}_${key}`}
               placeholder={placeholder}
+              required={isRequired}
             />
           </div>
         );

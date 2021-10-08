@@ -1,0 +1,10 @@
+{
+    "type": "email",
+    "id": 2,
+    "formId": 1,
+    "label": "Email",
+    "cssClass": "contact-email",
+    "isRequired": true,
+    "description": null,
+    "placeholder": "Email"
+}
