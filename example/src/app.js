@@ -3,11 +3,13 @@ import { render } from 'react-dom'
 import { FormsField } from '../../src'
 import name from '../../src/data/name.json'
 import email from '../../src/data/email.json'
+import textArea from '../../src/data/textarea.json'
 
 render(
     <>
         <FormsField field={name} />
         <FormsField field={email} />
+        <FormsField field={textArea} />
     </>, 
     document.getElementById('root')
 );
