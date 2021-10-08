@@ -10,6 +10,7 @@
         {
             "key": "prefix",
             "label": "Prefix",
+            "isHidden": false,
             "placeholder": null,
             "choices": [
                 {
@@ -45,24 +46,28 @@
         {
             "key": "first",
             "label": "First",
+            "isHidden": false,
             "placeholder": null,
             "choices": null
         },
         {
             "key": "middle",
             "label": "Middle",
+            "isHidden": false,
             "placeholder": null,
             "choices": null
         },
         {
             "key": "last",
             "label": "Last",
+            "isHidden": false,
             "placeholder": null,
             "choices": null
         },
         {
             "key": "suffix",
             "label": "Suffix",
+            "isHidden": false,
             "placeholder": null,
             "choices": null
         }

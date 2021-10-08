@@ -10,7 +10,7 @@ To install this package simply run
 
 ## Use
 
-To use this package, simply import it and call it with the appropriate props. Under the hood, the FormFields component will map through the fields prop it receives in order to display your form.
+To use this package, simply import it and call it with the appropriate props.
 
 ``` 
 import React from 'react';

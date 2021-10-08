@@ -9,7 +9,7 @@ export default function NameField({ field }) {
   return (
     <fieldset id={htmlId} className={`gfield gfield-${type} ${cssClass}`.trim()}>
       <legend>{label}</legend>
-      {prefixInput ? 
+      {!prefixInput.isHidden && prefixInput ? 
         <>
             <select
                 name={String(prefixInput.key)}
@@ -33,6 +33,9 @@ export default function NameField({ field }) {
         const key = input.key;
         const inputLabel = input?.label || '';
         const placeholder = input?.placeholder || '';
+        if(input.isHidden) {
+            return;
+        }
         return (
           <div key={key}>
             <label htmlFor={`input_${formId}_${id}_${key}`}>{inputLabel}</label>
