@@ -8,7 +8,7 @@ import Name from './FormFields/Name';
 import Phone from './FormFields/Phone';
 // import Radio from './FormFields/Radio';
 // import Select from './FormFields/Select';
-// import Text from './FormFields/Text';
+import Text from './FormFields/Text';
 import TextArea from './FormFields/TextArea';
 // import Time from './FormFields/Time';
 // import Website from './FormFields/Website';
@@ -33,8 +33,8 @@ export default function FormsField({ field }) {
     //   return <Radio field={field} fieldErrors={fieldErrors} />;
     // case "select":
     //   return <Select field={field} fieldErrors={fieldErrors} />;
-    // case "text":
-    //   return <Text field={field} fieldErrors={fieldErrors} />;
+    case "text":
+      return <Text field={field} />;
     case "textarea":
       return <TextArea field={field} />;
     // case "time":
