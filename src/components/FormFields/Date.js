@@ -9,7 +9,6 @@ export default function DateField({ field }) {
   const handleChange = (event) => {
     const { name, value } = event.target;
     const formattedValue = moment(value).format('DD MMMM, YYYY');
-    console.log(date)
     return setDate({[name]: formattedValue});
   }
 
