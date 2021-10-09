@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function TextAreaField({ field }) {
   const { id, formId, type, label, description, cssClass, isRequired } = field;
   const htmlId = `field_${formId}_${id}`;
+  const [ textArea, setTextArea ] = useState('')
+  
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    console.log(textArea)
+    return setTextArea({...textArea, [name]: value});
+  }
 
   return (
     <div className={`${cssClass}`.trim()}>
@@ -11,6 +18,8 @@ export default function TextAreaField({ field }) {
         name={id}
         id={htmlId}
         required={isRequired}
+        value={textArea.textArea}
+        onChange={handleChange}
       />
     </div>
   );
