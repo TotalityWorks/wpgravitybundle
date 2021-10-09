@@ -5,7 +5,7 @@ import React from 'react';
 import Email from './FormFields/Email';
 // import MultiSelect from './FormFields/MultiSelect';
 import Name from './FormFields/Name';
-// import Phone from './FormFields/Phone';
+import Phone from './FormFields/Phone';
 // import Radio from './FormFields/Radio';
 // import Select from './FormFields/Select';
 // import Text from './FormFields/Text';
@@ -27,8 +27,8 @@ export default function FormsField({ field }) {
     //   return <MultiSelect field={field} fieldErrors={fieldErrors} />;
     case "name":
       return <Name field={field} />;
-    // case "phone":
-    //   return <Phone field={field} fieldErrors={fieldErrors} />;
+    case "phone":
+      return <Phone field={field} />;
     // case "radio":
     //   return <Radio field={field} fieldErrors={fieldErrors} />;
     // case "select":
