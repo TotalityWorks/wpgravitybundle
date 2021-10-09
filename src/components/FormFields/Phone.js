@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 export default function PhoneField({ field }) {
   const { id, formId, type, label, description, cssClass, isRequired, placeholder } = field;
   const htmlId = `field_${formId}_${id}`;
+  const [ phone, setPhone ] = useState('')
+  
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    console.log(phone)
+    return setPhone({...phone, [name]: value});
+  }
 
   return (
     <div className={`${cssClass}`.trim()}>
@@ -13,6 +20,8 @@ export default function PhoneField({ field }) {
         id={htmlId}
         required={isRequired}
         placeholder={placeholder || ''}
+        value={phone.phone}
+        onChange={handleChange}
       />
     </div>
   );
