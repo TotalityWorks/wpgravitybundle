@@ -7,7 +7,6 @@ export default function PhoneField({ field }) {
   
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(phone)
     return setPhone({...phone, [name]: value});
   }
 
