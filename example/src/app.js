@@ -8,6 +8,7 @@ import phone from '../../src/data/phone.json'
 import text from '../../src/data/text.json'
 import select from '../../src/data/select.json'
 import date from '../../src/data/date.json'
+import time from '../../src/data/time.json'
 
 render(
     <>
@@ -18,6 +19,7 @@ render(
         <FormsField field={text} />
         <FormsField field={select} />
         <FormsField field={date} />
+        <FormsField field={time} />
     </>, 
     document.getElementById('root')
 );
