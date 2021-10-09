@@ -7,7 +7,6 @@ export default function TextAreaField({ field }) {
   
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(textArea)
     return setTextArea({...textArea, [name]: value});
   }
 
