@@ -1,7 +1,7 @@
 import React from 'react';
 // import Address from './FormFields/Address';
 // import Checkbox from './FormFields/Checkbox';
-// import Date from './FormFields/Date';
+import Date from './FormFields/Date';
 import Email from './FormFields/Email';
 // import MultiSelect from './FormFields/MultiSelect';
 import Name from './FormFields/Name';
@@ -19,8 +19,8 @@ export default function FormsField({ field }) {
     //   return <Address field={field} fieldErrors={fieldErrors} />;
     // case "checkbox":
     //   return <Checkbox field={field} fieldErrors={fieldErrors} />;
-    // case "date":
-    //   return <Date field={field} fieldErrors={fieldErrors} />;
+    case "date":
+      return <Date field={field} />;
     case "email":
       return <Email field={field} />;
     // case "multiselect":

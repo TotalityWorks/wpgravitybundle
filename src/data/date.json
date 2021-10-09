@@ -1,0 +1,10 @@
+{
+    "type": "date",
+    "id": 6,
+    "formId": 2,
+    "label": "Date",
+    "description": null,
+    "cssClass": "event-date",
+    "isRequired": true,
+    "placeholder": null
+}

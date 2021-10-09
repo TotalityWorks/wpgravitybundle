@@ -7,6 +7,7 @@ import textArea from '../../src/data/textarea.json'
 import phone from '../../src/data/phone.json'
 import text from '../../src/data/text.json'
 import select from '../../src/data/select.json'
+import date from '../../src/data/date.json'
 
 render(
     <>
@@ -16,6 +17,7 @@ render(
         <FormsField field={phone} />
         <FormsField field={text} />
         <FormsField field={select} />
+        <FormsField field={date} />
     </>, 
     document.getElementById('root')
 );
