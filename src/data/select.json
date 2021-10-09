@@ -6,7 +6,7 @@
     "description": null,
     "cssClass": "event-type",
     "isRequired": true,
-    "defaultValue": null,
+    "defaultValue": "Family",
     "choices": [
         {
             "text": "Family",
