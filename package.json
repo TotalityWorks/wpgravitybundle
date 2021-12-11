@@ -1,6 +1,6 @@
 {
   "name": "wpgravitybundle",
-  "version": "0.11.1",
+  "version": "0.12.0",
   "description": "A collection of form templates to use for your headless WordPress React application, using Gravity Forms.",
   "author": "@totalityworks",
   "license": "ISC",
@@ -33,6 +33,7 @@
     "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "react-hook-form": "^7.21.2"
   }
 }

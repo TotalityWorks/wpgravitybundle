@@ -13,32 +13,32 @@ import TextArea from './FormFields/TextArea';
 import Time from './FormFields/Time';
 // import Website from './FormFields/Website';
 
-export default function FormsField({ field }) {
+export default function FormsField({ field, register }) {
   switch (field.type) {
     // case "address":
     //   return <Address field={field} fieldErrors={fieldErrors} />;
     // case "checkbox":
     //   return <Checkbox field={field} fieldErrors={fieldErrors} />;
     case "date":
-      return <Date field={field} />;
+      return <Date field={field} register={register} />;
     case "email":
-      return <Email field={field} />;
+      return <Email field={field} register={register} />;
     // case "multiselect":
     //   return <MultiSelect field={field} fieldErrors={fieldErrors} />;
     case "name":
-      return <Name field={field} />;
+      return <Name field={field} register={register} />;
     case "phone":
-      return <Phone field={field} />;
+      return <Phone field={field} register={register} />;
     // case "radio":
     //   return <Radio field={field} fieldErrors={fieldErrors} />;
     case "select":
-      return <Select field={field} />;
+      return <Select field={field} register={register} />;
     case "text":
-      return <Text field={field} />;
+      return <Text field={field} register={register} />;
     case "textarea":
-      return <TextArea field={field} />;
+      return <TextArea field={field} register={register} />;
     case "time":
-      return <Time field={field} />;
+      return <Time field={field} register={register} />;
     // case "website":
     //   return <Website field={field} fieldErrors={fieldErrors} />;
     default:

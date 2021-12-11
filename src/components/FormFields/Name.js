@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function NameField({ field }) {
+export default function NameField({ field, register }) {
   const { id, formId, type, label, description, cssClass, inputs } = field;
   const htmlId = `field_${formId}_${id}`;
   const prefixInput = inputs.find(input => input.key === 'prefix');
@@ -18,7 +18,7 @@ export default function NameField({ field }) {
       {!prefixInput.isHidden && prefixInput ? 
         <>
             <select
-                name={prefixInput.key}
+                {...register(prefixInput.key.toString())}
                 id={`input_${formId}_${id}_${prefixInput.key}`}
                 value={nameValue?.prefix}
                 onChange={handleChange}
@@ -49,8 +49,8 @@ export default function NameField({ field }) {
           <div key={key}>
             <label htmlFor={`input_${formId}_${id}_${key}`}>{inputLabel}</label>
             <input
+              {...register(key.toString(), { required: isRequired })}
               type="text"
-              name={key}
               id={`input_${formId}_${id}_${key}`}
               placeholder={placeholder}
               required={isRequired}
