@@ -1,0 +1,24 @@
+{
+    "type": "select",
+    "id": 5,
+    "formId": 2,
+    "label": "Event Type",
+    "description": null,
+    "cssClass": "event-type",
+    "isRequired": true,
+    "defaultValue": "Family",
+    "choices": [
+        {
+            "text": "Family",
+            "value": "Family"
+        },
+        {
+            "text": "Business",
+            "value": "Business"
+        },
+        {
+            "text": "Birthday",
+            "value": "Birthday"
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "type": "textarea",
+    "id": 3,
+    "formId": 1,
+    "label": "Message",
+    "cssClass": "contact-message",
+    "isRequired": true,
+    "description": null,
+    "placeholder": null
+}

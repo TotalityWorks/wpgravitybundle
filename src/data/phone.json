@@ -1,0 +1,10 @@
+{
+    "type": "phone",
+    "id": 3,
+    "formId": 2,
+    "label": "Phone",
+    "description": null,
+    "cssClass": "event-phone",
+    "isRequired": true,
+    "placeholder": null
+}
