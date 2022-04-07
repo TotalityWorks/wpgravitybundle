@@ -29,7 +29,7 @@ export default function AddressField({ field, state, setFormData }) {
               name={String(key)}
               id={`input_${formId}_${id}_${key}`}
               placeholder={placeholder}
-              value={addressValue?.[key] ?? ''}
+              value={addressValue?.[key]}
               onChange={handleChange}
             />
             <label htmlFor={`input_${formId}_${id}_${key}`}>{inputLabel}</label>

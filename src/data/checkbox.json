@@ -1,0 +1,42 @@
+{
+    "id": 7,
+    "formId": 1,
+    "type": "checkbox",
+    "cssClass": null,
+    "label": "Checkboxes",
+    "description": null,
+    "inputs": [
+        {
+            "id": 2.1,
+            "name": "",
+            "label": "First Choice"
+        },
+        {
+            "id": 2.2,
+            "name": "",
+            "label": "Second Choice"
+        },
+        {
+            "id": 2.3,
+            "name": "",
+            "label": "Third Choice"
+        }
+    ],
+    "choices": [
+        {
+            "text": "First Choice",
+            "value": "First Choice",
+            "isSelected": true
+        },
+        {
+            "text": "Second Choice",
+            "value": "Second Choice",
+            "isSelected": false
+        },
+        {
+            "text": "Third Choice",
+            "value": "Third Choice",
+            "isSelected": false
+        }
+    ]
+}
