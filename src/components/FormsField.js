@@ -3,6 +3,7 @@ import React from 'react';
 import Email from './FormFields/Email';
 import Name from './FormFields/Name';
 import Text from './FormFields/Text';
+import TextArea from './FormFields/TextArea';
 
 export default function FormsField({ field, state, setFormData }) {
   switch (field.type) {
@@ -12,6 +13,8 @@ export default function FormsField({ field, state, setFormData }) {
       return <Name field={field} state={state} setFormData={setFormData} />;
     case "text":
       return <Text field={field} state={state} setFormData={setFormData} />;
+    case "textarea":
+      return <TextArea field={field} state={state} setFormData={setFormData} />;  
     default:
       return <p>{`This Gravity Forms field type is not currently supported: ${field.type}.`}</p>;
   }

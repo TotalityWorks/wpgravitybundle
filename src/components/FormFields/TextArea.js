@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 
-export default function TextAreaField({ field }) {
+import updateFormState from '../../updateFormState'
+
+export default function TextAreaField({ field, state, setFormData }) {
   const { id, formId, type, label, description, cssClass, isRequired } = field;
   const htmlId = `field_${formId}_${id}`;
-  const [ textArea, setTextArea ] = useState('')
+  const [textAreaValue, setTextAreaValue] = useState('')
   
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    return setTextArea({...textArea, [name]: value});
+    const { value } = event.target;
+    setTextAreaValue(value);
+    const newTextAreaValue = value
+    return updateFormState(type, id, state, newTextAreaValue, setFormData)
   }
 
   return (
@@ -17,7 +21,7 @@ export default function TextAreaField({ field }) {
         name={id}
         id={htmlId}
         required={isRequired}
-        value={textArea.textArea}
+        value={textAreaValue}
         onChange={handleChange}
       />
     </div>
