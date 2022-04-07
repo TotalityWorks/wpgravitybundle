@@ -1,29 +1,27 @@
 import React, { useState } from "react";
+import moment from 'moment';
 
-import updateFormState from '../../updateFormState'
-
-export default function EmailField({ field, state, setFormData}) {
+export default function DateField({ field }) {
   const { id, formId, type, label, description, cssClass, isRequired, placeholder } = field;
   const htmlId = `field_${formId}_${id}`;
-  const [emailValue, setEmailValue] = useState('')
-
+  const [ date, setDate ] = useState('');
+  
   const handleChange = (event) => {
-    const { value } = event.target;
-    setEmailValue(value);
-    const newEmailValue = value
-    return updateFormState(type, id, state, newEmailValue, setFormData)
+    const { name, value } = event.target;
+    const formattedValue = moment(value).format('DD MMMM, YYYY');
+    return setDate({[name]: formattedValue});
   }
 
   return (
     <div className={`${cssClass}`.trim()}>
       <label htmlFor={htmlId}>{label}</label>
       <input
-        type="email"
+        type="date"
         name={id}
         id={htmlId}
-        placeholder={placeholder}
         required={isRequired}
-        value={emailValue}
+        placeholder={placeholder || ''}
+        value={date.date}
         onChange={handleChange}
       />
     </div>

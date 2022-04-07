@@ -45,6 +45,7 @@ export default function NameField({ field, state, setFormData }) {
         const key = input.key;
         const inputLabel = input?.label || '';
         const placeholder = input?.placeholder || '';
+        const isRequired = input?.isRequired || '';
         if(input.isHidden) {
             return;
         }
@@ -52,10 +53,11 @@ export default function NameField({ field, state, setFormData }) {
           <div key={key}>
             <label htmlFor={`input_${formId}_${id}_${key}`}>{inputLabel}</label>
             <input
-              type="text"
               name={String(key)}
+              type="text"
               id={`input_${formId}_${id}_${key}`}
               placeholder={placeholder}
+              required={isRequired}
               value={nameValue?.[key]}
               onChange={handleChange}
             />

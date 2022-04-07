@@ -1,29 +1,25 @@
 import React, { useState } from "react";
 
-import updateFormState from '../../updateFormState'
-
-export default function EmailField({ field, state, setFormData}) {
+export default function PhoneField({ field }) {
   const { id, formId, type, label, description, cssClass, isRequired, placeholder } = field;
   const htmlId = `field_${formId}_${id}`;
-  const [emailValue, setEmailValue] = useState('')
-
+  const [ phone, setPhone ] = useState('')
+  
   const handleChange = (event) => {
-    const { value } = event.target;
-    setEmailValue(value);
-    const newEmailValue = value
-    return updateFormState(type, id, state, newEmailValue, setFormData)
+    const { name, value } = event.target;
+    return setPhone({...phone, [name]: value});
   }
 
   return (
     <div className={`${cssClass}`.trim()}>
       <label htmlFor={htmlId}>{label}</label>
       <input
-        type="email"
+        type="tel"
         name={id}
         id={htmlId}
-        placeholder={placeholder}
         required={isRequired}
-        value={emailValue}
+        placeholder={placeholder || ''}
+        value={phone.phone}
         onChange={handleChange}
       />
     </div>

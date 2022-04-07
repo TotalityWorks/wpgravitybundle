@@ -32,8 +32,6 @@ export default function Form({ fields, button, onSubmit }) {
                 onClick={handleSubmit}
             />
         )}
-        
-        <pre>{JSON.stringify(formData, null, 2)}</pre>
         </>
     )
 }
