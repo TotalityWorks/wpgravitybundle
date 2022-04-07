@@ -1,0 +1,25 @@
+{
+    "type": "name",
+    "id": 2,
+    "formId": 2,
+    "label": "Friend's Name",
+    "cssClass": null,
+    "isRequired": true,
+    "description": "First and Last Name Fields.",
+    "inputs": [
+        {
+            "key": "first",
+            "label": "First",
+            "isHidden": false,
+            "placeholder": null,
+            "choices": null
+        },
+        {
+            "key": "last",
+            "label": "Last",
+            "isHidden": false,
+            "placeholder": null,
+            "choices": null
+        }
+    ]
+}

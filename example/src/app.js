@@ -1,11 +1,25 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { FormsField } from '../../src'
+import GravityForm from '../../src'
+
 import name from '../../src/data/name.json'
+import otherName from '../../src/data/otherName.json'
+import button from '../../src/data/button.json'
+
+const fields = [
+    name,
+    otherName
+]
+
+const handleSubmit = (values) => {
+    return console.log(values)
+}
 
 render(
-    <>
-        <FormsField field={name} />
-    </>, 
+    <GravityForm 
+        fields={fields} 
+        button={button} 
+        onSubmit={handleSubmit}
+    />,
     document.getElementById('root')
 );

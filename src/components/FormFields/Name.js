@@ -1,28 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 
-export default function NameField({ field }) {
+export default function NameField({ field, state, setFormData }) {
   const { id, formId, type, label, description, cssClass, inputs } = field;
   const htmlId = `field_${formId}_${id}`;
   const prefixInput = inputs.find(input => input.key === 'prefix');
   const otherInputs = inputs?.filter(input => input?.key !== 'prefix') || [];
+  const [nameValue, setNameValue] = useState()
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setNameValue({...nameValue, [name]: value});
+    const newNameValue = {...nameValue, [name]: value}
+    return updateFormState(newNameValue)
+  }
+
+  const updateFormState = (nameValue) => {
+    const valueId = `${type}${id}`
+    const values = {
+      ...state,
+      [valueId]: nameValue
+    }
+    return setFormData(values)
+  }
 
   return (
-    <fieldset id={htmlId} className={`gfield gfield-${type} ${cssClass}`.trim()}>
+    <fieldset id={htmlId} className={`${cssClass}`.trim()}>
       <legend>{label}</legend>
-      {!prefixInput.isHidden && prefixInput ? 
+      {prefixInput && !prefixInput.isHidden ? 
         <>
             <select
                 name={String(prefixInput.key)}
                 id={`input_${formId}_${id}_${prefixInput.key}`}
+                value={nameValue?.prefix}
+                onChange={handleChange}
             >
                 <option value=""></option>
                 {prefixInput.choices?.map(choice =>
-                <option
-                    key={choice?.value}
-                    value={String(choice?.value)}
-                >
-                    {String(choice?.text)}
-                </option>
+                  <option
+                      key={choice?.value}
+                      value={String(choice?.value)}
+                  >
+                      {String(choice?.text)}
+                  </option>
                 )}
             </select>
         </>
@@ -44,6 +63,8 @@ export default function NameField({ field }) {
               name={String(key)}
               id={`input_${formId}_${id}_${key}`}
               placeholder={placeholder}
+              value={nameValue?.[key]}
+              onChange={handleChange}
             />
           </div>
         );

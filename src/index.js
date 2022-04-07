@@ -1,4 +1,5 @@
-import React from 'react';
-import FormsField from './components/FormsField';
+import GravityForm from './components/Form';
+// import useFormData from './hooks/useFormData'
 
-export { FormsField };
+export default GravityForm;
+// export { useFormData };
