@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import updateFormState from '../../updateFormState'
+
 export default function NameField({ field, state, setFormData }) {
   const { id, formId, type, label, description, cssClass, inputs } = field;
   const htmlId = `field_${formId}_${id}`;
@@ -11,16 +13,7 @@ export default function NameField({ field, state, setFormData }) {
     const { name, value } = event.target;
     setNameValue({...nameValue, [name]: value});
     const newNameValue = {...nameValue, [name]: value}
-    return updateFormState(newNameValue)
-  }
-
-  const updateFormState = (nameValue) => {
-    const valueId = `${type}${id}`
-    const values = {
-      ...state,
-      [valueId]: nameValue
-    }
-    return setFormData(values)
+    return updateFormState(type, id, state, newNameValue, setFormData)
   }
 
   return (

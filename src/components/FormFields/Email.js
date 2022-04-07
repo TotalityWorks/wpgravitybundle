@@ -1,24 +1,17 @@
 import React, { useState } from "react";
 
+import updateFormState from '../../updateFormState'
+
 export default function EmailField({ field, state, setFormData}) {
   const { id, formId, type, label, description, cssClass, isRequired, placeholder } = field;
   const htmlId = `field_${formId}_${id}`;
   const [emailValue, setEmailValue] = useState('')
-  
+
   const handleChange = (event) => {
     const { value } = event.target;
     setEmailValue(value);
     const newEmailValue = value
-    return updateFormState(newEmailValue)
-  }
-
-  const updateFormState = (emailValue) => {
-    const valueId = `${type}${id}`
-    const values = {
-      ...state,
-      [valueId]: emailValue
-    }
-    return setFormData(values)
+    return updateFormState(type, id, state, newEmailValue, setFormData)
   }
 
   return (
@@ -33,7 +26,6 @@ export default function EmailField({ field, state, setFormData}) {
         value={emailValue}
         onChange={handleChange}
       />
-      <pre>{JSON.stringify(emailValue, null, 2)}</pre>
     </div>
   );
 }
