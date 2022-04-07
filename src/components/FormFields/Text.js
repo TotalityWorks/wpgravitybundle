@@ -5,7 +5,7 @@ import updateFormState from '../../updateFormState'
 export default function TextField({ field, state, setFormData}) {
   const { id, formId, type, label, description, cssClass, isRequired, placeholder } = field;
   const htmlId = `field_${formId}_${id}`;
-  const [ textValue, setTextValue ] = useState('')
+  const [textValue, setTextValue] = useState('')
   
   const handleChange = (event) => {
     const { value } = event.target;

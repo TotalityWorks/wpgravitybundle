@@ -1,7 +1,7 @@
 {
     "type": "name",
     "id": 1,
-    "formId": 2,
+    "formId": 1,
     "label": "Name",
     "cssClass": null,
     "isRequired": true,

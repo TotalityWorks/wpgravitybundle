@@ -1,7 +1,7 @@
 {
     "type": "name",
     "id": 2,
-    "formId": 2,
+    "formId": 1,
     "label": "Friend's Name",
     "cssClass": null,
     "isRequired": true,

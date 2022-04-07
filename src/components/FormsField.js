@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Address from './FormFields/Address';
 import Email from './FormFields/Email';
 import Name from './FormFields/Name';
 import Text from './FormFields/Text';
@@ -7,6 +8,8 @@ import TextArea from './FormFields/TextArea';
 
 export default function FormsField({ field, state, setFormData }) {
   switch (field.type) {
+    case "address":
+      return <Address field={field} state={state} setFormData={setFormData} />;
     case "email":
       return <Email field={field} state={state} setFormData={setFormData} />;
     case "name":
