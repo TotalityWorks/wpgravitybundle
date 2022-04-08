@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-import moment from 'moment';
+import { format } from 'date-fns'
 
-export default function DateField({ field }) {
+import updateFormState from '../../updateFormState'
+
+export default function DateField({ field, state, setFormData }) {
   const { id, formId, type, label, description, cssClass, isRequired, placeholder } = field;
   const htmlId = `field_${formId}_${id}`;
-  const [ date, setDate ] = useState('');
+  const [ dateValue, setDateValue ] = useState('');
   
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    const formattedValue = moment(value).format('DD MMMM, YYYY');
-    return setDate({[name]: formattedValue});
+    const { value } = event.target;
+    // formattedValue is one day prior due to Timezone issues. Must fix.
+    const formattedValue = format(new Date(value), "MM/dd/yyyy")
+    setDateValue(value);
+    const newDateValue = formattedValue;
+    return updateFormState(type, id, state, newDateValue, setFormData)
   }
 
   return (
@@ -21,7 +26,7 @@ export default function DateField({ field }) {
         id={htmlId}
         required={isRequired}
         placeholder={placeholder || ''}
-        value={date.date}
+        value={dateValue}
         onChange={handleChange}
       />
     </div>
