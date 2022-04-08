@@ -11,6 +11,7 @@ import email from '../../src/data/email.json'
 import name from '../../src/data/name.json'
 import phone from '../../src/data/phone.json'
 import otherName from '../../src/data/otherName.json'
+import select from '../../src/data/select.json'
 import text from '../../src/data/text.json'
 import textarea from '../../src/data/textarea.json'
 
@@ -23,6 +24,7 @@ const fields = [
     name,
     phone,
     otherName,
+    select,
     text,
     textarea
 ]

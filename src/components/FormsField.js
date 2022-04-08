@@ -7,6 +7,7 @@ import Consent from './FormFields/Consent';
 import Email from './FormFields/Email';
 import Name from './FormFields/Name';
 import Phone from './FormFields/Phone';
+import Select from './FormFields/Select';
 import Text from './FormFields/Text';
 import TextArea from './FormFields/TextArea';
 
@@ -26,6 +27,8 @@ export default function FormsField({ field, state, setFormData }) {
       return <Name field={field} state={state} setFormData={setFormData} />;
     case "phone":
       return <Phone field={field} state={state} setFormData={setFormData} />;
+    case "select":
+      return <Select field={field} state={state} setFormData={setFormData} />;
     case "text":
       return <Text field={field} state={state} setFormData={setFormData} />;
     case "textarea":

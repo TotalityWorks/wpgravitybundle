@@ -1,16 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function SelectField({ field }) {
-  const { id, formId, type, label, description, cssClass, isRequired, defaultValue, choices } = field;
+import updateFormState from '../../updateFormState'
+
+export default function SelectField({ field, state, setFormData }) {
+  const { 
+    id, 
+    formId, 
+    type, 
+    label, 
+    description, 
+    cssClass, 
+    isRequired, 
+    defaultValue, 
+    choices 
+  } = field;
   const htmlId = `field_${formId}_${id}`;
-  const defaultState = {
-    [id]: defaultValue
-  };
-  const [ select, setSelect ] = useState(defaultState);
-  
+  const [selectValue, setSelectValue] = useState(defaultValue);
+
+  useEffect(() => {
+    updateFormState(type, id, state, defaultValue, setFormData)
+  }, []);
+
   const handleChange = (event) => {
-    const { name, value } = event.target;
-    return setSelect({[name]: value});
+    const { value } = event.target;
+    setSelectValue(value);
+    const newSelectValue = value;
+    return updateFormState(type, id, state, newSelectValue, setFormData)
   }
 
   return (
@@ -20,7 +35,7 @@ export default function SelectField({ field }) {
         name={id}
         id={htmlId}
         required={isRequired}
-        value={select.select}
+        value={selectValue}
         onChange={handleChange}
       >
         {choices?.map(choice =>
