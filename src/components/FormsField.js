@@ -2,6 +2,7 @@ import React from 'react';
 
 import Address from './FormFields/Address';
 import Checkbox from './FormFields/Checkbox';
+import Consent from './FormFields/Consent';
 import Email from './FormFields/Email';
 import Name from './FormFields/Name';
 import Text from './FormFields/Text';
@@ -13,6 +14,8 @@ export default function FormsField({ field, state, setFormData }) {
       return <Address field={field} state={state} setFormData={setFormData} />;
     case "checkbox":
       return <Checkbox field={field} state={state} setFormData={setFormData} />;
+    case "consent":
+      return <Consent field={field} state={state} setFormData={setFormData} />;
     case "email":
       return <Email field={field} state={state} setFormData={setFormData} />;
     case "name":
