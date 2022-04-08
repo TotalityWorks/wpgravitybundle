@@ -10,6 +10,7 @@ import Phone from './FormFields/Phone';
 import Select from './FormFields/Select';
 import Text from './FormFields/Text';
 import TextArea from './FormFields/TextArea';
+import Website from './FormFields/Website';
 
 export default function FormsField({ field, state, setFormData }) {
   switch (field.type) {
@@ -32,7 +33,9 @@ export default function FormsField({ field, state, setFormData }) {
     case "text":
       return <Text field={field} state={state} setFormData={setFormData} />;
     case "textarea":
-      return <TextArea field={field} state={state} setFormData={setFormData} />;  
+      return <TextArea field={field} state={state} setFormData={setFormData} />;
+    case "website":
+      return <Website field={field} state={state} setFormData={setFormData} />;  
     default:
       return <p>{`This Gravity Forms field type is not currently supported: ${field.type}.`}</p>;
   }

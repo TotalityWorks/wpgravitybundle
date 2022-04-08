@@ -5,7 +5,7 @@ import updateFormState from '../../updateFormState'
 export default function NameField({ field, state, setFormData }) {
   const { id, formId, type, label, description, cssClass, inputs } = field;
   const htmlId = `field_${formId}_${id}`;
-  const prefixInput = inputs.find(input => input.key === 'prefix');
+  const prefixInput = inputs && inputs.find(input => input.key === 'prefix');
   const otherInputs = inputs?.filter(input => input?.key !== 'prefix') || [];
   const [nameValue, setNameValue] = useState()
 
@@ -41,7 +41,7 @@ export default function NameField({ field, state, setFormData }) {
         : 
         null
       }
-      {otherInputs.map(input => {
+      {otherInputs && otherInputs.map(input => {
         const key = input.key;
         const inputLabel = input?.label || '';
         const placeholder = input?.placeholder || '';

@@ -1,6 +1,6 @@
 # WP Gravity Bundle
 
-Headless WordPress is the future of WordPress, and WPGraphQL is at it's helm. With WPGraphQL for Gravity Forms, you can harness the power of Gravity Forms for your headless website. This package is a collection of form field templates that you can just plug directly into your React app, give it your GraphQL data, and go. This package was built with Gatsby.js in mind and has not been tested for any other React framework.
+Headless WordPress is the future of WordPress, and WPGraphQL is at it's helm. With WPGraphQL for Gravity Forms, you can harness the power of Gravity Forms for your headless website. This package is a collection of form field templates that you can just plug directly into your React app, give it your GraphQL data, and go.
 
 ## Installation
 

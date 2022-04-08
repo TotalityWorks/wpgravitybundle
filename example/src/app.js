@@ -14,6 +14,7 @@ import otherName from '../../src/data/otherName.json'
 import select from '../../src/data/select.json'
 import text from '../../src/data/text.json'
 import textarea from '../../src/data/textarea.json'
+import website from '../../src/data/website.json'
 
 const fields = [
     address,
@@ -26,7 +27,8 @@ const fields = [
     otherName,
     select,
     text,
-    textarea
+    textarea,
+    website
 ]
 
 const handleSubmit = (values) => {
