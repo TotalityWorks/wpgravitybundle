@@ -28,7 +28,8 @@ export default function Form({ fields, button, onSubmit }) {
         {button && (
             <Button 
                 type={button.type} 
-                text={button.text} 
+                text={button.text}
+                cssClass={button.cssClass}
                 onClick={handleSubmit}
             />
         )}
