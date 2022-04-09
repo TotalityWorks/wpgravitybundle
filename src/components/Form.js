@@ -23,16 +23,16 @@ export default function Form({ fields, button, onSubmit }) {
                     setFormData={setFormData} 
                 />
             ))}
-        </form>
 
-        {button && (
-            <Button 
-                type={button.type} 
-                text={button.text}
-                cssClass={button.cssClass}
-                onClick={handleSubmit}
-            />
-        )}
+            {button && (
+                <Button 
+                    type={button.type} 
+                    text={button.text}
+                    cssClass={button.cssClass}
+                    onClick={handleSubmit}
+                />
+            )}
+        </form>
         </>
     )
 }
