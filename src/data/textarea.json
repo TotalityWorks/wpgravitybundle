@@ -6,5 +6,5 @@
     "cssClass": "contact-message",
     "isRequired": true,
     "description": null,
-    "placeholder": null
+    "placeholder": "placeholder text"
 }
