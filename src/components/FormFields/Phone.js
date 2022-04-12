@@ -12,12 +12,14 @@ export default function PhoneField({ field, state, setFormData }) {
     cssClass, 
     isRequired, 
     placeholder, 
-    phoneFormat 
+    phoneFormat,
+    size
     // phoneFormat is either "STANDARD" or "INTERNATIONAL"
     // does not matter for return value, but does for field validation
   } = field;
   const htmlId = `field_${formId}_${id}`;
   const [ phoneValue, setPhoneValue ] = useState('')
+  const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
 
   const handleChange = (event) => {
     const { value } = event.target;
@@ -27,7 +29,7 @@ export default function PhoneField({ field, state, setFormData }) {
   }
 
   return (
-    <div className={`${cssClass}`.trim()}>
+    <div className={classes}>
       <label htmlFor={htmlId}>{label}</label>
       <input
         type="tel"

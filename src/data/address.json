@@ -5,6 +5,7 @@
     "cssClass": null,
     "label": "Address",
     "description": null,
+    "size": "LARGE",
     "inputs": [
         {
             "key": "street",

@@ -12,10 +12,12 @@ export default function SelectField({ field, state, setFormData }) {
     cssClass, 
     isRequired, 
     defaultValue, 
-    choices 
+    choices,
+    size
   } = field;
   const htmlId = `field_${formId}_${id}`;
   const [selectValue, setSelectValue] = useState(defaultValue);
+  const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
 
   useEffect(() => {
     updateFormState(type, id, state, defaultValue, setFormData)
@@ -29,7 +31,7 @@ export default function SelectField({ field, state, setFormData }) {
   }
 
   return (
-    <div className={`${cssClass}`.trim()}>
+    <div className={classes}>
       <label htmlFor={htmlId}>{label}</label>
       <select
         name={id}

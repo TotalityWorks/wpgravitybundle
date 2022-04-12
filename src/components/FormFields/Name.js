@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import updateFormState from '../../updateFormState'
 
 export default function NameField({ field, state, setFormData }) {
-  const { id, formId, type, label, description, cssClass, inputs } = field;
+  const { id, formId, type, label, description, cssClass, inputs, size } = field;
   const htmlId = `field_${formId}_${id}`;
   const prefixInput = inputs && inputs.find(input => input.key === 'prefix');
   const otherInputs = inputs?.filter(input => input?.key !== 'prefix') || [];
   const [nameValue, setNameValue] = useState()
+  const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -17,7 +18,7 @@ export default function NameField({ field, state, setFormData }) {
   }
 
   return (
-    <fieldset id={htmlId} className={`${cssClass}`.trim()}>
+    <fieldset id={htmlId} className={classes}>
       <legend>{label}</legend>
       {prefixInput && !prefixInput.isHidden ? 
         <>

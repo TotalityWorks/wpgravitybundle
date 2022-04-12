@@ -5,6 +5,7 @@
     "cssClass": null,
     "label": "Checkboxes",
     "description": null,
+    "size": "SMALL",
     "inputs": [
         {
             "id": 2.1,

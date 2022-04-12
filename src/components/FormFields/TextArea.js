@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import updateFormState from '../../updateFormState'
 
 export default function TextAreaField({ field, state, setFormData }) {
-  const { id, formId, type, label, description, cssClass, isRequired } = field;
+  const { id, formId, type, label, description, cssClass, isRequired, size } = field;
   const htmlId = `field_${formId}_${id}`;
   const [textAreaValue, setTextAreaValue] = useState('')
-  
+  const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
+
   const handleChange = (event) => {
     const { value } = event.target;
     setTextAreaValue(value);
@@ -15,7 +16,7 @@ export default function TextAreaField({ field, state, setFormData }) {
   }
 
   return (
-    <div className={`${cssClass}`.trim()}>
+    <div className={classes}>
       <label htmlFor={htmlId}>{label}</label>
       <textarea
         name={id}

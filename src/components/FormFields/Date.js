@@ -4,10 +4,11 @@ import { format } from 'date-fns'
 import updateFormState from '../../updateFormState'
 
 export default function DateField({ field, state, setFormData }) {
-  const { id, formId, type, label, description, cssClass, isRequired, placeholder } = field;
+  const { id, formId, type, label, description, cssClass, isRequired, placeholder, size } = field;
   const htmlId = `field_${formId}_${id}`;
   const [ dateValue, setDateValue ] = useState('');
-  
+  const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
+
   const handleChange = (event) => {
     const { value } = event.target;
     // formattedValue is one day prior due to Timezone issues. Must fix.
@@ -18,7 +19,7 @@ export default function DateField({ field, state, setFormData }) {
   }
 
   return (
-    <div className={`${cssClass}`.trim()}>
+    <div className={classes}>
       <label htmlFor={htmlId}>{label}</label>
       <input
         type="date"

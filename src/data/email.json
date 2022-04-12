@@ -6,5 +6,6 @@
     "cssClass": "contact-email",
     "isRequired": true,
     "description": null,
+    "size": "MEDIUM",
     "placeholder": "Email"
 }

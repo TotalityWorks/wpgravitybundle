@@ -3,9 +3,10 @@ import React, { useState } from "react";
 import updateFormState from '../../updateFormState'
 
 export default function EmailField({ field, state, setFormData}) {
-  const { id, formId, type, label, description, cssClass, isRequired, placeholder } = field;
+  const { id, formId, type, label, description, cssClass, isRequired, placeholder, size } = field;
   const htmlId = `field_${formId}_${id}`;
   const [emailValue, setEmailValue] = useState('')
+  const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
 
   const handleChange = (event) => {
     const { value } = event.target;
@@ -15,7 +16,7 @@ export default function EmailField({ field, state, setFormData}) {
   }
 
   return (
-    <div className={`${cssClass}`.trim()}>
+    <div className={classes}>
       <label htmlFor={htmlId}>{label}</label>
       <input
         type="email"

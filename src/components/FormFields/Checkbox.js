@@ -3,11 +3,12 @@ import React, { useState, useEffect } from "react";
 import updateFormState from '../../updateFormState'
 
 export default function CheckboxField({ field, state, setFormData }) {
-  const { id, formId, type, label, description, cssClass, inputs, choices } = field;
+  const { id, formId, type, label, description, cssClass, inputs, choices, size } = field;
   const checkboxInputs = choices?.map((choice, index) => ({ ...choice, id: inputs?.[index]?.id }));
   const htmlId = `field_${formId}_${id}`;
   const selectedBoxes = checkboxInputs.filter(box => box.isSelected);
   const [checkboxValue, setCheckboxValue] = useState(selectedBoxes)
+  const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
 
   const handleChange = (event) => {
     const { value, checked } = event.target;
@@ -30,7 +31,7 @@ export default function CheckboxField({ field, state, setFormData }) {
   }
 
   return (
-    <fieldset id={htmlId} className={`${cssClass}`.trim()}>
+    <fieldset id={htmlId} className={classes}>
       <legend>{label}</legend>
       {checkboxInputs.map(({ id: inputId, text, value, isSelected }) =>
         <Checkbox 
