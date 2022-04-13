@@ -40,7 +40,7 @@ export default function Example({ data }) {
     const [submitForm, { data, loading, error }] = useMutation(SUBMIT_FORM);
 
     const handleSubmit = (values) => {
-        return submitForm({ variables: { values } });
+        return submitForm({ variables: values })
     }
 
     if(loading) {

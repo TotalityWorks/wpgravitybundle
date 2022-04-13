@@ -20,16 +20,17 @@ const useFormData = (fields) => {
         const email = `$${value}Value: String${required}`
         const emailConfirmation = isEmail && field.emailConfirmEnabled && `, $${value}ConfirmationValue: String${required}` || ''
 
-        const prefixInput = isName && field.inputs && field?.inputs?.find(input => input.key === 'prefix');
-        const firstInput = isName && field.inputs && field?.inputs?.find(input => input.key === 'first');
-        const middleInput = isName && field.inputs && field?.inputs?.find(input => input.key === 'middle');
-        const lastInput = isName && field.inputs && field?.inputs?.find(input => input.key === 'last');
-        const suffixInput = isName && field.inputs && field?.inputs?.find(input => input.key === 'suffix');
-        const prefix = prefixInput && `$${value}PrefixValue: String${required}` || ''
-        const first = firstInput && `$${value}FirstValue: String${required}` || ''
-        const middle = middleInput && `$${value}MiddleValue: String${required}` || ''
-        const last = lastInput && `$${value}LastValue: String${required}` || ''
-        const suffix = suffixInput && `$${value}SuffixValue: String${required}` || ''
+        const prefixInput = isName && field?.inputs?.find(input => input.key === 'prefix');
+        const firstInput = isName && field?.inputs?.find(input => input.key === 'first');
+        const middleInput = isName && field?.inputs?.find(input => input.key === 'middle');
+        const lastInput = isName && field?.inputs?.find(input => input.key === 'last');
+        const suffixInput = isName && field?.inputs?.find(input => input.key === 'suffix');
+        // currently not accurately giving us only the fields in use: name
+        const prefix = prefixInput && !prefixInput.isHidden && `$${value}PrefixValue: String${required}, ` || ''
+        const first = firstInput && !firstInput.isHidden && `$${value}FirstValue: String${required}, ` || ''
+        const middle = middleInput && !middleInput.isHidden && `$${value}MiddleValue: String${required}, ` || ''
+        const last = lastInput && !lastInput.isHidden && `$${value}LastValue: String${required}` || ''
+        const suffix = suffixInput && !suffixInput.isHidden && `, $${value}SuffixValue: String${required}, ` || ''
 
         switch(type) {
             case "address":
@@ -41,7 +42,7 @@ const useFormData = (fields) => {
             case "email":
                 return `${space}${email}${emailConfirmation}`
             case "name":
-                return `${space}${prefix}, ${first}, ${middle}, ${last}, ${suffix}`
+                return `${space}${prefix}${first}${middle}${last}${suffix}`
             case "phone":
                 return `${space}$${value}Value: String${required}`
             // case "select":
@@ -83,12 +84,11 @@ const useFormData = (fields) => {
         const middleInput = isName && field.inputs && field?.inputs?.find(input => input.key === 'middle');
         const lastInput = isName && field.inputs && field?.inputs?.find(input => input.key === 'last');
         const suffixInput = isName && field.inputs && field?.inputs?.find(input => input.key === 'suffix');
-        const prefix = prefixInput && `prefix: $${value}PrefixValue` || ''
-        const first = firstInput && `first: $${value}FirstValue` || ''
-        const middle = middleInput && `middle: $${value}MiddleValue` || ''
-        const last = lastInput && `last: $${value}LastValue` || ''
-        const suffix = suffixInput && `suffix: $${value}SuffixValue` || ''
-
+        const prefix = prefixInput && !prefixInput.isHidden && `prefix: $${value}PrefixValue` || ''
+        const first = firstInput && !firstInput.isHidden && `first: $${value}FirstValue` || ''
+        const middle = middleInput && !middleInput.isHidden && `middle: $${value}MiddleValue` || ''
+        const last = lastInput && !lastInput.isHidden && `last: $${value}LastValue` || ''
+        const suffix = suffixInput && !suffixInput.isHidden && `suffix: $${value}SuffixValue` || ''
         
         switch(type) {
             case "address":
