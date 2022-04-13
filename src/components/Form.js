@@ -3,7 +3,9 @@ import React, { useState } from 'react';
 import FormsField from './FormsField';
 import Button from './Button';
 
-export default function Form({ fields, button, onSubmit }) {
+export default function Form({ form, buttonClass, onSubmit }) {
+    const fields = form.formFields.nodes;
+    const button = form.button;
     const [formData, setFormData] = useState();
 
     const handleSubmit = (e) => {
@@ -15,7 +17,7 @@ export default function Form({ fields, button, onSubmit }) {
     return (
         <>
         <form onSubmit={handleSubmit}>
-            {fields.map((field, id) => (
+            {fields && fields.map((field, id) => (
                 <FormsField 
                     key={`${id}-${field.type}`} 
                     field={field} 
@@ -28,7 +30,7 @@ export default function Form({ fields, button, onSubmit }) {
                 <Button 
                     type={button.type} 
                     text={button.text}
-                    cssClass={button.cssClass}
+                    cssClass={buttonClass}
                     onClick={handleSubmit}
                 />
             )}

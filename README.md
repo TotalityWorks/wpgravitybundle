@@ -10,15 +10,18 @@ To install this package simply run
 
 ## Use
 
-To use this package, import the form component.
-The GravityForm component expects three props: fields, button, and onSubmit.
+To use this package, import the form component and the hook.
+The GravityForm component expects three props: form, buttonClass, and onSubmit.
 Since this package is built to use with `WPGraphQL for Gravity Forms` WordPress plugin by Harness Software, it expects a specific json object for each field.
-Fields should be the formFields.nodes object you receive from your query.
-Button is expecting an object that includes type and text.
-The onSubmit prop is expecting a function that is called when the form is submitted.
+`form` should be the data.gravityFormsForm object you receive from your query.
+`buttonClass` is an optional prop for additional styling control.
+This should be a string.
+The `onSubmit` prop is expecting a function that is called when the form is submitted.
 
 Internally, the package will map through your fields, display them, and handle state and validation.
-The form values are passed into your onSubmit function when the form is submitted and can be accessed by `values.${type}${id}`.
+It will also use the form data to create the necessary GraphQL Mutation to submit the form data.
+The form values are passed into your onSubmit function when the form is submitted.
+They are already preformatted so that all you need to do is pass the values into your mutation as an object: `{ variables: { values } }`.
 
 Example Use:
 
@@ -26,45 +29,18 @@ Example Use:
 import React from 'react';
 import { graphql } from 'gatsby';
 import { useMutation, gql } from '@apollo/client';
-import GravityForm from 'wpgravitybundle';
+import GravityForm, { useGravityFormMutation } from "wpgravitybundle"
 
 export default function Example({ data }) {
-    const formFields = data.gravityFormsForm.formFields.nodes;
-    const buttonData = data.gravityFormsForm.lastPageButton;
-
-    const SUBMIT_FORM = gql`
-        mutation SubmitForm($textValue: String!) {
-            submitGravityFormsForm(
-                input: {
-                    formId: 50
-                    fieldValues: [
-                        {
-                        id: 1
-                        value: $textValue
-                        }
-                    ]
-                    saveAsDraft: false
-                    sourcePage: 1
-                    targetPage: 0
-                }
-            ) {
-                errors {
-                    id
-                    message
-                }
-                entryId
-                resumeToken
-                entry {
-                    id
-                }
-            }
-        }
-    `;
-
+    const form = data.gravityFormsForm;
+    const buttonClass = "btn-primary"
+   
+    const gravityFormMutation = useGravityFormMutation(form);
+    const SUBMIT_FORM = gql`${gravityFormMutation}`
     const [submitForm, { data, loading, error }] = useMutation(SUBMIT_FORM);
 
     const handleSubmit = (values) => {
-        return submitForm({ variables: { textValue: values.text1 } });
+        return submitForm({ variables: { values } });
     }
 
     if(loading) {
@@ -82,9 +58,9 @@ export default function Example({ data }) {
     return (
         <>
             <GravityForm 
-                fields={formFields} 
-                button={buttonData} 
+                form={form} 
                 onSubmit={handleSubmit}
+                buttonClass={buttonClass}
             />
         </>
     )
@@ -103,6 +79,7 @@ export const query = graphql`
                     type
                     ... on TextField {
                         label
+                        size
                         description
                         defaultValue
                         isRequired
@@ -111,7 +88,7 @@ export const query = graphql`
                     }
                 }
             }
-            lastPageButton {
+            button {
                 text
                 type
             }
@@ -120,7 +97,7 @@ export const query = graphql`
 `
 ```
 
-## Supported Fields
+<!-- ## Supported Fields
 
 | Field       | Props       |
 | ----------- | ----------- |
@@ -136,7 +113,7 @@ export const query = graphql`
 | Text        | {props}     |
 | TextArea    | {props}     |
 | Time        | {props}     |
-| Website     | {props}     |
+| Website     | {props}     | -->
 
 
 ## Inspiration
