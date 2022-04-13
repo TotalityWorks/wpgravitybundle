@@ -1,11 +1,11 @@
 const updateFormState = (type, id, formState, value, setFormData) => {
     if(type === 'name') {
       const { prefix, first, middle, last, suffix } = value;
-      const prefixValueId = prefix && `$${type}${id}PrefixValue`
-      const firstValueId = first && `$${type}${id}FirstValue`
-      const middleValueId = middle && `$${type}${id}MiddleValue`
-      const lastValueId = last && `$${type}${id}LastValue`
-      const suffixValueId = suffix && `$${type}${id}SuffixValue`
+      const prefixValueId = prefix && `${type}${id}PrefixValue`
+      const firstValueId = first && `${type}${id}FirstValue`
+      const middleValueId = middle && `${type}${id}MiddleValue`
+      const lastValueId = last && `${type}${id}LastValue`
+      const suffixValueId = suffix && `${type}${id}SuffixValue`
 
       let values = { ...formState };
       
@@ -19,12 +19,12 @@ const updateFormState = (type, id, formState, value, setFormData) => {
 
     if(type === 'address') {
       const { street, lineTwo, city, state, zip, country } = value;
-      const streetId = `$${type}${id}StreetValue`;
-      const lineTwoId = `$${type}${id}LineTwoValue`
-      const cityId = `$${type}${id}CityValue`
-      const stateId = `$${type}${id}StateValue`
-      const zipId = `$${type}${id}ZipValue`
-      const countryId = `$${type}${id}CountryValue`
+      const streetId = `${type}${id}StreetValue`;
+      const lineTwoId = `${type}${id}LineTwoValue`
+      const cityId = `${type}${id}CityValue`
+      const stateId = `${type}${id}StateValue`
+      const zipId = `${type}${id}ZipValue`
+      const countryId = `${type}${id}CountryValue`
 
       const addressValues = {
         [streetId]: street,
@@ -41,7 +41,7 @@ const updateFormState = (type, id, formState, value, setFormData) => {
       return setFormData(values)
     }
 
-    const valueId = `$${type}${id}Value`
+    const valueId = `${type}${id}Value`
     const values = {
       ...formState,
       [valueId]: value

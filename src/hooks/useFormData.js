@@ -16,7 +16,7 @@ const useFormData = (fields) => {
         const state = `$${value}StateValue: String${required}`
         const zip = `$${value}ZipValue: String${required}`
         const country = `$${value}CountryValue: String${required}`
-        
+
         const email = `$${value}Value: String${required}`
         const emailConfirmation = isEmail && field.emailConfirmEnabled && `, $${value}ConfirmationValue: String${required}` || ''
 
