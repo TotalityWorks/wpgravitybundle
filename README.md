@@ -25,7 +25,7 @@ They are already preformatted so that all you need to do is pass the values into
 
 Example Use:
 
-``` 
+``` js
 import React from 'react';
 import { graphql } from 'gatsby';
 import { useMutation, gql } from '@apollo/client';
