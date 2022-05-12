@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 
+import { useFormContext } from '../../formContext'
 import updateFormState from '../../updateFormState'
 
-export default function TextField({ field, state, setFormData}) {
+export default function TextField({ field }) {
   const { id, formId, type, label, description, cssClass, isRequired, placeholder, size } = field;
   const htmlId = `field_${formId}_${id}`;
   const [textValue, setTextValue] = useState('')
   const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
-
+  const { dispatch } = useFormContext();
+ 
   const handleChange = (event) => {
     const { value } = event.target;
     setTextValue(value);
     const newTextValue = value
-    return updateFormState(type, id, state, newTextValue, setFormData)
+    return updateFormState(field, newTextValue, dispatch)
   }
 
   return (

@@ -1,4 +1,4 @@
-const useFormData = (fields) => {
+const createMutationVariables = (fields) => {
     // uses the form fields data to create a string literal for all
     // mutation variables your form will need.
     const mappedMutationVariables = fields.map((field, key) => {
@@ -7,52 +7,74 @@ const useFormData = (fields) => {
         const value = `${type}${id}`
         const space = key === 0 ? '' : ' '
 
-        const isName = type === 'name'
-        const isEmail = type === 'email'
+        const textFields = (field) => {
+            const { id, type, isRequired } = field;
+            const required = `${isRequired ? '!' : ''}`
+            const value = `${type}${id}`
+            return `${space}$${value}Value: String${required}`
+        }
 
-        const street = `$${value}StreetValue: String${required}`;
-        const lineTwo = `$${value}LineTwoValue: String${required}`
-        const city = `$${value}CityValue: String${required}`
-        const state = `$${value}StateValue: String${required}`
-        const zip = `$${value}ZipValue: String${required}`
-        const country = `$${value}CountryValue: String${required}`
+        const nameField = (field) => {
+            const { id, type, isRequired } = field;
+            const required = `${isRequired ? '!' : ''}`
+            const value = `${type}${id}`
+            const isName = type === 'name'
+            const prefixInput = isName && field?.inputs?.find(input => input.key === 'prefix');
+            const firstInput = isName && field?.inputs?.find(input => input.key === 'first');
+            const middleInput = isName && field?.inputs?.find(input => input.key === 'middle');
+            const lastInput = isName && field?.inputs?.find(input => input.key === 'last');
+            const suffixInput = isName && field?.inputs?.find(input => input.key === 'suffix');
+            // currently not accurately giving us only the fields in use: name
+            const prefix = prefixInput && !prefixInput.isHidden && `$${value}PrefixValue: String${required}, ` || ''
+            const first = firstInput && !firstInput.isHidden && `$${value}FirstValue: String${required}, ` || ''
+            const middle = middleInput && !middleInput.isHidden && `$${value}MiddleValue: String${required}, ` || ''
+            const last = lastInput && !lastInput.isHidden && `$${value}LastValue: String${required}` || ''
+            const suffix = suffixInput && !suffixInput.isHidden && `, $${value}SuffixValue: String${required}, ` || ''
+            
+            return `${space}${prefix}${first}${middle}${last}${suffix}`
+        }
 
-        const email = `$${value}Value: String${required}`
-        const emailConfirmation = isEmail && field.emailConfirmEnabled && `, $${value}ConfirmationValue: String${required}` || ''
+        const emailField = (field) => {
+            const { type } = field;
+            const isEmail = type === 'email'
+            const email = `$${value}Value: String${required}`
+            const emailConfirmation = isEmail && field.emailConfirmEnabled && `, $${value}ConfirmationValue: String${required}` || ''
 
-        const prefixInput = isName && field?.inputs?.find(input => input.key === 'prefix');
-        const firstInput = isName && field?.inputs?.find(input => input.key === 'first');
-        const middleInput = isName && field?.inputs?.find(input => input.key === 'middle');
-        const lastInput = isName && field?.inputs?.find(input => input.key === 'last');
-        const suffixInput = isName && field?.inputs?.find(input => input.key === 'suffix');
-        // currently not accurately giving us only the fields in use: name
-        const prefix = prefixInput && !prefixInput.isHidden && `$${value}PrefixValue: String${required}, ` || ''
-        const first = firstInput && !firstInput.isHidden && `$${value}FirstValue: String${required}, ` || ''
-        const middle = middleInput && !middleInput.isHidden && `$${value}MiddleValue: String${required}, ` || ''
-        const last = lastInput && !lastInput.isHidden && `$${value}LastValue: String${required}` || ''
-        const suffix = suffixInput && !suffixInput.isHidden && `, $${value}SuffixValue: String${required}, ` || ''
+            return `${space}${email}${emailConfirmation}`
+        }
+        
+        const addressField = () => {
+            const street = `$${value}StreetValue: String${required}`;
+            const lineTwo = `$${value}LineTwoValue: String${required}`
+            const city = `$${value}CityValue: String${required}`
+            const state = `$${value}StateValue: String${required}`
+            const zip = `$${value}ZipValue: String${required}`
+            const country = `$${value}CountryValue: String${required}`
+
+            return `${space}${street}, ${lineTwo}, ${city}, ${state}, ${zip}, ${country}`
+        }
 
         switch(type) {
             case "address":
-                return `${space}${street}, ${lineTwo}, ${city}, ${state}, ${zip}, ${country}`
+                return addressField()
             // case "checkbox":
             //     return `$${value}Value: String${required}`
             case "consent":
-                return `${space}$${value}Value: String${required}`
+                return textFields(field)
             case "email":
-                return `${space}${email}${emailConfirmation}`
+                return emailField(field)
             case "name":
-                return `${space}${prefix}${first}${middle}${last}${suffix}`
+                return nameField(field)
             case "phone":
-                return `${space}$${value}Value: String${required}`
+                return textFields(field)
             // case "select":
             //     return `$${value}Value: String${required}`
             case "text":
-                return `${space}$${value}Value: String${required}`
+                return textFields(field)
             case "textarea":
-                return `${space}$${value}Value: String${required}`
+                return textFields(field)
             case "website":
-                return `${space}$${value}Value: String${required}`
+                return textFields(field)
             default:
                 return ``
         }
@@ -61,6 +83,10 @@ const useFormData = (fields) => {
     const filteredMutationVariables = mappedMutationVariables.filter(i => i !== '' || null);
     const mutationVariables = filteredMutationVariables.toString();
 
+    return mutationVariables;
+}
+
+const createFieldValuesShape = (fields) => {
     // uses form fields data to create the shape of your fieldValues array in your mutation
     const mappedFieldValuesShape = fields.map(field => {
         const { id, type } = field;
@@ -157,6 +183,12 @@ const useFormData = (fields) => {
     const filteredFieldValuesShape = mappedFieldValuesShape.filter(i => i !== '' || null);
     const fieldValuesShape = filteredFieldValuesShape.join("\n")
 
+    return fieldValuesShape;
+}
+
+const useFormData = (fields) => {
+    const mutationVariables = createMutationVariables(fields);
+    const fieldValuesShape = createFieldValuesShape(fields);
     return { mutationVariables, fieldValuesShape }
 }
 

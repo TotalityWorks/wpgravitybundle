@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import updateFormState from '../../updateFormState'
 
-export default function SelectField({ field, state, setFormData }) {
+export default function SelectField(props) {
+  const { field, state, setFormData, errors, setErrors, requiredFields } = props;
   const { 
     id, 
     formId, 
@@ -20,14 +21,14 @@ export default function SelectField({ field, state, setFormData }) {
   const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
 
   useEffect(() => {
-    updateFormState(type, id, state, defaultValue, setFormData)
+    updateFormState(field, state, defaultValue, setFormData, errors, setErrors, requiredFields)
   }, []);
 
   const handleChange = (event) => {
     const { value } = event.target;
     setSelectValue(value);
     const newSelectValue = value;
-    return updateFormState(type, id, state, newSelectValue, setFormData)
+    return updateFormState(field, state, newSelectValue, setFormData, errors, setErrors, requiredFields)
   }
 
   return (

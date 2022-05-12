@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
+import { useFormContext } from '../../formContext'
 import updateFormState from '../../updateFormState'
 
-export default function PhoneField({ field, state, setFormData }) {
+export default function PhoneField({ field }) {
   const { 
     id, 
     formId, 
@@ -20,12 +21,13 @@ export default function PhoneField({ field, state, setFormData }) {
   const htmlId = `field_${formId}_${id}`;
   const [ phoneValue, setPhoneValue ] = useState('')
   const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
+  const { dispatch } = useFormContext();
 
   const handleChange = (event) => {
     const { value } = event.target;
     setPhoneValue(value);
-    const newTextValue = value
-    return updateFormState(type, id, state, newTextValue, setFormData)
+    const newPhoneValue = value
+    return updateFormState(field, newPhoneValue, dispatch)
   }
 
   return (

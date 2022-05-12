@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 
+import { useFormContext } from '../../formContext'
 import updateFormState from '../../updateFormState'
 
-export default function NameField({ field, state, setFormData }) {
+export default function NameField({ field }) {
   const { id, formId, type, label, description, cssClass, inputs, size } = field;
   const htmlId = `field_${formId}_${id}`;
   const prefixInput = inputs && inputs.find(input => input.key === 'prefix');
   const otherInputs = inputs?.filter(input => input?.key !== 'prefix') || [];
   const [nameValue, setNameValue] = useState()
   const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
+  const { state: formData, dispatch } = useFormContext();
+  const context = { formData, dispatch }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNameValue({...nameValue, [name]: value});
     const newNameValue = {...nameValue, [name]: value}
-    return updateFormState(type, id, state, newNameValue, setFormData)
+    return updateFormState(field, newNameValue, context)
   }
 
   return (

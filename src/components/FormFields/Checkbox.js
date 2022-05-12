@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import updateFormState from '../../updateFormState'
 
-export default function CheckboxField({ field, state, setFormData }) {
+export default function CheckboxField(props) {
+  const { field, state, setFormData, errors, setErrors, requiredFields } = props;
   const { id, formId, type, label, description, cssClass, inputs, choices, size } = field;
   const checkboxInputs = choices?.map((choice, index) => ({ ...choice, id: inputs?.[index]?.id }));
   const htmlId = `field_${formId}_${id}`;
@@ -27,7 +28,7 @@ export default function CheckboxField({ field, state, setFormData }) {
         newCheckboxValue = [...checkboxValue, box]
         return setCheckboxValue([...checkboxValue, box])
     });
-    return updateFormState(type, id, state, newCheckboxValue, setFormData)
+    return updateFormState(field, state, newCheckboxValue, setFormData, errors, setErrors, requiredFields)
   }
 
   return (

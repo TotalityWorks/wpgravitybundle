@@ -3,7 +3,8 @@ import { format } from 'date-fns'
 
 import updateFormState from '../../updateFormState'
 
-export default function DateField({ field, state, setFormData }) {
+export default function DateField(props) {
+  const { field, state, setFormData, errors, setErrors, requiredFields } = props;
   const { id, formId, type, label, description, cssClass, isRequired, placeholder, size } = field;
   const htmlId = `field_${formId}_${id}`;
   const [ dateValue, setDateValue ] = useState('');
@@ -15,7 +16,7 @@ export default function DateField({ field, state, setFormData }) {
     const formattedValue = format(new Date(value), "MM/dd/yyyy")
     setDateValue(value);
     const newDateValue = formattedValue;
-    return updateFormState(type, id, state, newDateValue, setFormData)
+    return updateFormState(field, state, newDateValue, setFormData, errors, setErrors, requiredFields)
   }
 
   return (

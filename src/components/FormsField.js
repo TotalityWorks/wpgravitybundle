@@ -1,41 +1,68 @@
 import React from 'react';
 
-import Address from './FormFields/Address';
-import Checkbox from './FormFields/Checkbox';
+// import Address from './FormFields/Address';
+// import Checkbox from './FormFields/Checkbox';
 import Consent from './FormFields/Consent';
-// import Date from './FormFields/Date';
 import Email from './FormFields/Email';
 import Name from './FormFields/Name';
 import Phone from './FormFields/Phone';
-import Select from './FormFields/Select';
+// import Select from './FormFields/Select';
 import Text from './FormFields/Text';
 import TextArea from './FormFields/TextArea';
 import Website from './FormFields/Website';
 
-export default function FormsField({ field, state, setFormData }) {
+export default function FormsField({ field, errors, setErrors, requiredFields }) {
   switch (field.type) {
-    case "address":
-      return <Address field={field} state={state} setFormData={setFormData} />;
-    case "checkbox":
-      return <Checkbox field={field} state={state} setFormData={setFormData} />;
+    // case "address":
+    //   return (
+    //     <>
+    //       <Address 
+    //         field={field} 
+    //         state={state} 
+    //         setFormData={setFormData} 
+    //         errors={errors} 
+    //         setErrors={setErrors}
+    //         requiredFields={requiredFields}
+    //       />
+    //     </>);
+    // case "checkbox":
+    //   return (
+    //     <>
+    //       <Checkbox 
+    //         field={field} 
+    //         state={state} 
+    //         setFormData={setFormData} 
+    //         errors={errors} 
+    //         setErrors={setErrors}
+    //         requiredFields={requiredFields}
+    //       />
+    //     </>);
     case "consent":
-      return <Consent field={field} state={state} setFormData={setFormData} />;
-    // case "date":
-    //   return <Date field={field} state={state} setFormData={setFormData} />;
+      return <Consent field={field} />;
     case "email":
-      return <Email field={field} state={state} setFormData={setFormData} />;
+      return <Email field={field} />;
     case "name":
-      return <Name field={field} state={state} setFormData={setFormData} />;
+      return <Name field={field} />;
     case "phone":
-      return <Phone field={field} state={state} setFormData={setFormData} />;
-    case "select":
-      return <Select field={field} state={state} setFormData={setFormData} />;
+      return <Phone field={field} />;
+    // case "select":
+    //   return (
+    //     <>
+    //       <Select 
+    //         field={field} 
+    //         state={state} 
+    //         setFormData={setFormData} 
+    //         errors={errors} 
+    //         setErrors={setErrors} 
+    //         requiredFields={requiredFields}
+    //       />
+    //     </>);
     case "text":
-      return <Text field={field} state={state} setFormData={setFormData} />;
+      return <Text field={field} />;
     case "textarea":
-      return <TextArea field={field} state={state} setFormData={setFormData} />;
+      return <TextArea field={field} />;
     case "website":
-      return <Website field={field} state={state} setFormData={setFormData} />;  
+      return <Website field={field} />;
     default:
       return <p>{`This Gravity Forms field type is not currently supported: ${field.type}.`}</p>;
   }

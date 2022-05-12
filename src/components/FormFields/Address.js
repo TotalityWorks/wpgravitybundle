@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import updateFormState from '../../updateFormState'
 
-export default function AddressField({ field, state, setFormData }) {
+export default function AddressField(props) {
+    const { field, state, setFormData, errors, setErrors, requiredFields } = props;
     const { id, formId, type, label, description, cssClass, inputs, size } = field;
     const htmlId = `field_${formId}_${id}`;
     const [addressValue, setAddressValue] = useState()
@@ -12,7 +13,7 @@ export default function AddressField({ field, state, setFormData }) {
       const { name, value } = event.target;
       setAddressValue({...addressValue, [name]: value});
       const newAddressValue = {...addressValue, [name]: value}
-      return updateFormState(type, id, state, newAddressValue, setFormData)
+      return updateFormState(field, state, newAddressValue, setFormData, errors, setErrors, requiredFields)
     }
 
     return (
