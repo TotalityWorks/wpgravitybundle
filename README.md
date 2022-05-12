@@ -21,7 +21,7 @@ The `onSubmit` prop is expecting a function that is called when the form is subm
 Internally, the package will map through your fields, display them, and handle state and validation.
 It will also use the form data to create the necessary GraphQL Mutation to submit the form data.
 The form values are passed into your onSubmit function when the form is submitted.
-They are already preformatted so that all you need to do is pass the values into your mutation as an object: `{ variables: { values } }`.
+They are already preformatted so that all you need to do is pass the values into your mutation as an object: `{ variables: values }`.
 
 Example Use:
 
@@ -72,7 +72,6 @@ export const query = graphql`
             title
             formId
             cssClass
-            dateCreated
             formFields {
                 nodes {
                     id
@@ -119,3 +118,15 @@ export const query = graphql`
 ## Inspiration
 
 This package was inspired by the work of Kellen Mace (https://twitter.com/kellenmace) of WP Engine and his public Github repository: https://github.com/kellenmace/gravity-forms-in-headless-wordpress-gatsby.
+
+## Say Thank You
+
+If you enjoy using WPGravityBundle and want to say thank you, you can buy me a coffee:
+<a href="https://www.buymeacoffee.com/mosesintech" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;"></a>
+
+## I'm also currently looking for work!
+
+I am a React programmer through and through.
+I have been working with WordPRess for 13 years, and React/Node for 4.
+Headless WordPress is definitely a passion of mine, and I would love the opportunity to help your team with their headless projects.
+You can find me at moses@totalityworks.com!
