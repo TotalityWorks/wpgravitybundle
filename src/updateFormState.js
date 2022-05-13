@@ -1,5 +1,3 @@
-// The following 5 functions will update the Required Field State for each Name field individually.
-
 const updateNameRequiredField = (value, requiredFields, nameFieldValue, dispatch, fieldName) => {
   console.log(fieldName);
   if(value === "") {
@@ -49,9 +47,8 @@ const updateAddressRequiredFields = (field, value, dispatch) => {
 }
 
 const updateRequiredFields = (field, value, dispatch) => {
-  // add check for required fields. Only add required fields if isRequired.
-
   const fieldValue = `${field.type}${field.id}`
+  if(!field.isRequired) return
   if(field.type === 'name') {
     return updateNameRequiredFields(field, value, dispatch);
   }
@@ -119,10 +116,6 @@ const updateFormState = (field, value, dispatch) => {
     }
 
     const valueId = `${type}${id}Value`
-    // const values = {
-    //   ...state,
-    //   [valueId]: value
-    // }
     return dispatch({ type: "UPDATE_FORM_DATA", payload: {[valueId]: value} })
   }
 
