@@ -1,6 +1,6 @@
 import React from 'react';
 
-// import Address from './FormFields/Address';
+import Address from './FormFields/Address';
 // import Checkbox from './FormFields/Checkbox';
 import Consent from './FormFields/Consent';
 import Email from './FormFields/Email';
@@ -13,18 +13,8 @@ import Website from './FormFields/Website';
 
 export default function FormsField({ field, errors, setErrors, requiredFields }) {
   switch (field.type) {
-    // case "address":
-    //   return (
-    //     <>
-    //       <Address 
-    //         field={field} 
-    //         state={state} 
-    //         setFormData={setFormData} 
-    //         errors={errors} 
-    //         setErrors={setErrors}
-    //         requiredFields={requiredFields}
-    //       />
-    //     </>);
+    case "address":
+      return <Address field={field} />;
     // case "checkbox":
     //   return (
     //     <>

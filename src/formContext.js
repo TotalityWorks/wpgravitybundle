@@ -39,6 +39,13 @@ function formReducer(state, action) {
           requiredFields: updatedRequiredFields
         }
       }
+      case 'REMOVE_REQUIRED_FIELDS': {
+        const updatedRequiredFields = state.requiredFields.filter(field => !action.payload.includes(field));
+        return {
+          ...state,
+          requiredFields: updatedRequiredFields
+        }
+      }
       default: {
         throw new Error(`Unhandled action type: ${action.type}`)
       }

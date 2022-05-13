@@ -31,6 +31,21 @@ export default function Form({ form, buttonClass, onSubmit }) {
             }
             return 'not required';
         }
+        if(field.type === 'address') {
+            if(field.isRequired) {
+                const { type, id } = field;
+                const streetId = `${type}${id}Street`;
+                const lineTwoId = `${type}${id}LineTwo`
+                const cityId = `${type}${id}City`
+                const stateId = `${type}${id}State`
+                const zipId = `${type}${id}Zip`
+                const countryId = `${type}${id}Country`
+
+                const requiredAddressFields = [streetId, cityId, stateId, zipId, countryId];
+                return requiredAddressFields;
+            }
+            return 'not required';
+        }
         if(field.isRequired) {
             return `${field.type}${field.id}`;
         }

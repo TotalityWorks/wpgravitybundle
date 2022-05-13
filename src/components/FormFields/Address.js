@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 
+import { useFormContext } from '../../formContext'
 import updateFormState from '../../updateFormState'
 
-export default function AddressField(props) {
-    const { field, state, setFormData, errors, setErrors, requiredFields } = props;
+export default function AddressField({ field }) {
     const { id, formId, type, label, description, cssClass, inputs, size } = field;
     const htmlId = `field_${formId}_${id}`;
     const [addressValue, setAddressValue] = useState()
     const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
-
+    const { state: formData, dispatch } = useFormContext();
+    const context = { formData, dispatch }
+  
     const handleChange = (event) => {
       const { name, value } = event.target;
       setAddressValue({...addressValue, [name]: value});
       const newAddressValue = {...addressValue, [name]: value}
-      return updateFormState(field, state, newAddressValue, setFormData, errors, setErrors, requiredFields)
+      return updateFormState(field, newAddressValue, context)
     }
 
     return (
