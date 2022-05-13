@@ -89,7 +89,7 @@
                         "noDuplicates": false,
                         "maxLength": 0,
                         "label": "Text Area",
-                        "isRequired": true,
+                        "isRequired": false,
                         "description": null,
                         "descriptionPlacement": null,
                         "defaultValue": null,

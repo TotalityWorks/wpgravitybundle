@@ -60,7 +60,8 @@ const updateRequiredFields = (field, value, dispatch) => {
     return updateAddressRequiredFields(field, value, dispatch);
   }
 
-  if(value === ('' || null)) {
+  console.log(value)
+  if(value === "" || value === null) {
     return dispatch({ type: "ADD_REQUIRED_FIELD", payload: fieldValue })    
   }
   return dispatch({ type: "REMOVE_REQUIRED_FIELD", payload: fieldValue })
