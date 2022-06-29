@@ -115,6 +115,12 @@ export const query = graphql`
 | Website     | {props}     | -->
 
 
+## Demos
+
+Check out https://WPGravityBundle.TotalityWorks.com to see it in action.
+![Example Form](./imgs/example.png)
+
+
 ## Inspiration
 
 This package was inspired by the work of Kellen Mace (https://twitter.com/kellenmace) of WP Engine and his public Github repository: https://github.com/kellenmace/gravity-forms-in-headless-wordpress-gatsby.

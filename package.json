@@ -3,6 +3,7 @@
   "version": "0.18.2",
   "description": "A collection of form templates to use for your headless WordPress React application, using Gravity Forms.",
   "author": "@totalityworks",
+  "homepage": "https://wpgravitybundle.com",
   "license": "ISC",
   "main": "dist/index.js",
   "repository": {
