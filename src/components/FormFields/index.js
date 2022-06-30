@@ -12,18 +12,18 @@ import TextArea from './TextArea';
 import Time from './Time';
 import Website from './Website';
 
-export { 
-    Address,
-    Checkbox,
-    Date,
-    Email,
-    MultiSelect,
-    Name, 
-    Phone,
-    Radio,
-    Select,
-    Text,
-    TextArea,
-    Time,
-    Website 
+export {
+  Address,
+  Checkbox,
+  Date,
+  Email,
+  MultiSelect,
+  Name,
+  Phone,
+  Radio,
+  Select,
+  Text,
+  TextArea,
+  Time,
+  Website,
 };

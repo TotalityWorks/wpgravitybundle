@@ -1,7 +1,7 @@
-const useGravityMutation = (formId, mutationVariables, fieldValuesShape) => {  
-    // uses mutationVariables and fieldValuesShape from useFormData to create
-    // a ready-to-go GraphQL Mutation for your Gravity Forms form.
-    const gravityFormMutation = `
+const useGravityMutation = (formId, mutationVariables, fieldValuesShape) => {
+  // uses mutationVariables and fieldValuesShape from useFormData to create
+  // a ready-to-go GraphQL Mutation for your Gravity Forms form.
+  const gravityFormMutation = `
         mutation SubmitForm(${mutationVariables}) {
             submitGravityFormsForm(
                 input: {
@@ -23,8 +23,8 @@ const useGravityMutation = (formId, mutationVariables, fieldValuesShape) => {
                 }
             }
         }
-    `
-    return gravityFormMutation;
-}
+    `;
+  return gravityFormMutation;
+};
 
-export default useGravityMutation
+export default useGravityMutation;
