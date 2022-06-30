@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react"
 
-import { useFormContext } from '../../formContext';
-import updateFormState from '../../updateFormState';
+import { useFormContext } from "../../formContext"
+import updateFormState from "../../updateFormState"
 
 export default function PhoneField({ field }) {
   const {
@@ -17,18 +17,18 @@ export default function PhoneField({ field }) {
     size,
     // phoneFormat is either "STANDARD" or "INTERNATIONAL"
     // does not matter for return value, but does for field validation
-  } = field;
-  const htmlId = `field_${formId}_${id}`;
-  const [phoneValue, setPhoneValue] = useState('');
-  const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
-  const { dispatch } = useFormContext();
+  } = field
+  const htmlId = `field_${formId}_${id}`
+  const [phoneValue, setPhoneValue] = useState("")
+  const classes = `${(size && size.toLowerCase()) || ""} ${cssClass}`.trim()
+  const { dispatch } = useFormContext()
 
-  const handleChange = (event) => {
-    const { value } = event.target;
-    setPhoneValue(value);
-    const newPhoneValue = value;
-    return updateFormState(field, newPhoneValue, dispatch);
-  };
+  const handleChange = event => {
+    const { value } = event.target
+    setPhoneValue(value)
+    const newPhoneValue = value
+    return updateFormState(field, newPhoneValue, dispatch)
+  }
 
   return (
     <div className={classes}>
@@ -38,10 +38,10 @@ export default function PhoneField({ field }) {
         name={id}
         id={htmlId}
         required={isRequired}
-        placeholder={placeholder || ''}
+        placeholder={placeholder || ""}
         value={phoneValue}
         onChange={handleChange}
       />
     </div>
-  );
+  )
 }

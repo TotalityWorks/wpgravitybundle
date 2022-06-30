@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React from "react"
 
-import { useFormContext } from '../formContext';
+import { useFormContext } from "../formContext"
 
 export default function Button(props) {
-  const {
-    type, text, cssClass, onClick,
-  } = props;
-  const { state } = useFormContext();
-  const disabled = Object.keys(state.errors).length || state.requiredFields.length;
+  const { type, text, cssClass, onClick } = props
+  const { state } = useFormContext()
+  const disabled =
+    Object.keys(state.errors).length || state.requiredFields.length
 
   return (
     <div className={`${cssClass}`.trim()}>
@@ -18,8 +17,8 @@ export default function Button(props) {
         onClick={onClick}
         disabled={disabled}
       >
-        {text || 'Submit'}
+        {text || "Submit"}
       </button>
     </div>
-  );
+  )
 }

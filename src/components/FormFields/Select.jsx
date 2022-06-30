@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react"
 
-import updateFormState from '../../updateFormState';
+import updateFormState from "../../updateFormState"
 
 export default function SelectField(props) {
-  const {
-    field, state, setFormData, errors, setErrors, requiredFields,
-  } = props;
+  const { field, state, setFormData, errors, setErrors, requiredFields } = props
   const {
     id,
     formId,
@@ -17,21 +15,37 @@ export default function SelectField(props) {
     defaultValue,
     choices,
     size,
-  } = field;
-  const htmlId = `field_${formId}_${id}`;
-  const [selectValue, setSelectValue] = useState(defaultValue);
-  const classes = `${size && size.toLowerCase() || ''} ${cssClass}`.trim();
+  } = field
+  const htmlId = `field_${formId}_${id}`
+  const [selectValue, setSelectValue] = useState(defaultValue)
+  const classes = `${(size && size.toLowerCase()) || ""} ${cssClass}`.trim()
 
   useEffect(() => {
-    updateFormState(field, state, defaultValue, setFormData, errors, setErrors, requiredFields);
-  }, []);
+    updateFormState(
+      field,
+      state,
+      defaultValue,
+      setFormData,
+      errors,
+      setErrors,
+      requiredFields
+    )
+  }, [])
 
-  const handleChange = (event) => {
-    const { value } = event.target;
-    setSelectValue(value);
-    const newSelectValue = value;
-    return updateFormState(field, state, newSelectValue, setFormData, errors, setErrors, requiredFields);
-  };
+  const handleChange = event => {
+    const { value } = event.target
+    setSelectValue(value)
+    const newSelectValue = value
+    return updateFormState(
+      field,
+      state,
+      newSelectValue,
+      setFormData,
+      errors,
+      setErrors,
+      requiredFields
+    )
+  }
 
   return (
     <div className={classes}>
@@ -43,15 +57,12 @@ export default function SelectField(props) {
         value={selectValue}
         onChange={handleChange}
       >
-        {choices?.map((choice) => (
-          <option
-            key={choice?.value || ''}
-            value={choice?.value || ''}
-          >
-            {choice?.text || ''}
+        {choices?.map(choice => (
+          <option key={choice?.value || ""} value={choice?.value || ""}>
+            {choice?.text || ""}
           </option>
         ))}
       </select>
     </div>
-  );
+  )
 }

@@ -23,8 +23,8 @@ const useGravityMutation = (formId, mutationVariables, fieldValuesShape) => {
                 }
             }
         }
-    `;
-  return gravityFormMutation;
-};
+    `
+  return gravityFormMutation
+}
 
-export default useGravityMutation;
+export default useGravityMutation
