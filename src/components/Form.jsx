@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect } from "react"
 
 import { useFormContext } from "../formContext"
@@ -35,7 +36,7 @@ export default function Form({ form, buttonClass, onSubmit }) {
           "not required"
         const requiredNameFields = [prefix, first, middle, last, suffix]
         const filterNameFields = requiredNameFields.filter(
-          field => field !== "not required"
+          rNfield => rNfield !== "not required"
         )
 
         return filterNameFields
@@ -46,7 +47,7 @@ export default function Form({ form, buttonClass, onSubmit }) {
       if (field.isRequired) {
         const { type, id } = field
         const streetId = `${type}${id}Street`
-        const lineTwoId = `${type}${id}LineTwo`
+        // const lineTwoId = `${type}${id}LineTwo`
         const cityId = `${type}${id}City`
         const stateId = `${type}${id}State`
         const zipId = `${type}${id}Zip`
@@ -86,8 +87,8 @@ export default function Form({ form, buttonClass, onSubmit }) {
     <>
       <form onSubmit={handleSubmit}>
         {fields &&
-          fields.map((field, id) => (
-            <FormsField key={`${id}-${field.type}`} field={field} />
+          fields.map(field => (
+            <FormsField key={`${field.id}-${field.type}`} field={field} />
           ))}
 
         {button && (

@@ -1,22 +1,18 @@
-import React from "react"
+/* eslint-disable react/prop-types */
+import React, { lazy } from "react"
 
-import Address from "./FormFields/Address"
-// import Checkbox from './FormFields/Checkbox';
-import Consent from "./FormFields/Consent"
-import Email from "./FormFields/Email"
-import Name from "./FormFields/Name"
-import Phone from "./FormFields/Phone"
-// import Select from './FormFields/Select';
-import Text from "./FormFields/Text"
-import TextArea from "./FormFields/TextArea"
-import Website from "./FormFields/Website"
+const Address = lazy(() => import("./FormFields/Address"))
+// const Checkbox = lazy(() => import("./FormFields/Checkbox"))
+const Consent = lazy(() => import("./FormFields/Consent"))
+const Email = lazy(() => import("./FormFields/Email"))
+const Name = lazy(() => import("./FormFields/Name"))
+const Phone = lazy(() => import("./FormFields/Phone"))
+// const Select = lazy(() => import("./FormFields/Select"))
+const Text = lazy(() => import("./FormFields/Text"))
+const TextArea = lazy(() => import("./FormFields/TextArea"))
+const Website = lazy(() => import("./FormFields/Website"))
 
-export default function FormsField({
-  field,
-  errors,
-  setErrors,
-  requiredFields,
-}) {
+export default function FormsField({ field }) {
   switch (field.type) {
     case "address":
       return <Address field={field} />
