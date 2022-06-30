@@ -133,6 +133,6 @@ If you enjoy using WPGravityBundle and want to say thank you, you can buy me a c
 ## I'm also currently looking for work!
 
 I am a React programmer through and through.
-I have been working with WordPRess for 13 years, and React/Node for 4.
+I have been working with WordPress for 13 years, and React/Node for 4.
 Headless WordPress is definitely a passion of mine, and I would love the opportunity to help your team with their headless projects.
 You can find me at moses@totalityworks.com!

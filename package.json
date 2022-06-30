@@ -1,8 +1,8 @@
 {
   "name": "wpgravitybundle",
-  "version": "0.18.2",
-  "description": "A collection of form templates to use for your headless WordPress React application, using Gravity Forms.",
-  "author": "@totalityworks",
+  "version": "1.0.0",
+  "description": "A component and a hook to simplify your headless WordPress React application using Gravity Forms.",
+  "author": "@mosesintech",
   "homepage": "https://wpgravitybundle.com",
   "license": "ISC",
   "main": "dist/index.js",
@@ -11,6 +11,7 @@
     "url": "https://github.com/TotalityWorks/wpgravitybundle.git"
   },
   "scripts": {
+    "commit": "cz",
     "start": "webpack-dev-server --open development",
     "build": "webpack --mode production",
     "deploy": "webpack --config publish.config.js --mode production && npm publish"
@@ -24,8 +25,11 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "babel-loader": "^8.0.6",
     "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
     "html-webpack-plugin": "^3.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -36,5 +40,40 @@
   "dependencies": {
     "moment": "^2.29.1",
     "react-hook-form": "^7.21.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog",
+      "types": {
+        "feat": {
+          "description": "A new feature",
+          "title": "Features"
+        },
+        "fix": {
+          "description": "A bug fix",
+          "title": "Bug Fixes"
+        },
+        "docs": {
+          "description": "Documentation only changes",
+          "title": "Documentation"
+        },
+        "style": {
+          "description": "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)",
+          "title": "Styles"
+        },
+        "refactor": {
+          "description": "A code change that neither fixes a bug nor adds a feature",
+          "title": "Code Refactoring"
+        },
+        "test": {
+          "description": "Adding missing tests or correcting existing tests",
+          "title": "Tests"
+        },
+        "chore": {
+          "description": "Other changes that don't modify src or test files",
+          "title": "Chores"
+        }
+      }
+    }
   }
 }
