@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
-import { render } from "react-dom"
+import { createRoot } from "react-dom"
 import GravityForm, { useGravityFormMutation } from "../../src"
 
 import query from "../../src/data/query.json"
@@ -38,7 +38,6 @@ function App(props) {
 const form = query.data.gravityFormsForm
 const buttonClass = "btn btn-primary"
 
-render(
-  <App form={form} buttonClass={buttonClass} />,
-  document.getElementById("root")
-)
+const root = createRoot(document.getElementById("root"))
+
+root.render(<App form={form} buttonClass={buttonClass} />)
