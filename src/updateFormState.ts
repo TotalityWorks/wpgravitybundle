@@ -1,9 +1,9 @@
 const updateNameRequiredField = (
-  value,
-  requiredFields,
-  nameFieldValue,
-  dispatch,
-  fieldName
+  value: any,
+  requiredFields: any,
+  nameFieldValue: any,
+  dispatch: any,
+  fieldName: any
 ) => {
   if (value === "") {
     if (requiredFields.includes(`${nameFieldValue}${fieldName}`)) {
@@ -23,7 +23,7 @@ const updateNameRequiredField = (
   return {}
 }
 
-const updateNameRequiredFields = (field, value, dispatch) => {
+const updateNameRequiredFields = (field: any, value: any, dispatch: any) => {
   const { prefix, first, middle, last, suffix } = value
   const { formData } = dispatch
   const { requiredFields } = formData
@@ -65,7 +65,7 @@ const updateNameRequiredFields = (field, value, dispatch) => {
   )
 }
 
-const updateAddressRequiredFields = (field, value, dispatch) => {
+const updateAddressRequiredFields = (field: any, value: any, dispatch: any) => {
   const { street, city, state, zip, country } = value
   const missingFields =
     !street ||
@@ -100,7 +100,7 @@ const updateAddressRequiredFields = (field, value, dispatch) => {
   })
 }
 
-const updateRequiredFields = (field, value, dispatch) => {
+const updateRequiredFields = (field: any, value: any, dispatch: any) => {
   const fieldValue = `${field.type}${field.id}`
   if (!field.isRequired) return {}
   if (field.type === "name") {
@@ -117,11 +117,11 @@ const updateRequiredFields = (field, value, dispatch) => {
   return dispatch({ type: "REMOVE_REQUIRED_FIELD", payload: fieldValue })
 }
 
-const validateValue = (field, value, dispatch) => {
+const validateValue = (field: any, value: any, dispatch: any) => {
   updateRequiredFields(field, value, dispatch)
 }
 
-const updateFormState = (field, value, dispatch) => {
+const updateFormState = (field: any, value: any, dispatch: any) => {
   const { type, id } = field
 
   validateValue(field, value, dispatch)
@@ -134,7 +134,7 @@ const updateFormState = (field, value, dispatch) => {
     const lastValueId = (last || last === "") && `${type}${id}LastValue`
     const suffixValueId = (suffix || suffix === "") && `${type}${id}SuffixValue`
 
-    let values
+    let values = {}
 
     if (prefix || prefix === "") {
       values = { ...values, [prefixValueId]: prefix }

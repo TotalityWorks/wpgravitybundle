@@ -5,20 +5,37 @@ import { useFormContext } from "../formContext"
 import FormsField from "./FormsField"
 import Button from "./Button"
 
-export default function Form({ form, buttonClass, onSubmit }) {
+interface GravityFormData {
+  form: any
+  buttonClass: any
+  onSubmit: any
+}
+
+export default function Form(props: GravityFormData) {
+  const { form, buttonClass, onSubmit } = props
   const fields = form.formFields.nodes
   const { button } = form
   const { state, dispatch } = useFormContext()
 
-  const requiredFields = fields.map(field => {
+  const requiredFields = fields.map((field: any) => {
     if (field.type === "name") {
       if (field.isRequired) {
         const value = `${field.type}${field.id}`
-        const prefixInput = field?.inputs?.find(input => input.key === "prefix")
-        const firstInput = field?.inputs?.find(input => input.key === "first")
-        const middleInput = field?.inputs?.find(input => input.key === "middle")
-        const lastInput = field?.inputs?.find(input => input.key === "last")
-        const suffixInput = field?.inputs?.find(input => input.key === "suffix")
+        const prefixInput = field?.inputs?.find(
+          (input: any) => input.key === "prefix"
+        )
+        const firstInput = field?.inputs?.find(
+          (input: any) => input.key === "first"
+        )
+        const middleInput = field?.inputs?.find(
+          (input: any) => input.key === "middle"
+        )
+        const lastInput = field?.inputs?.find(
+          (input: any) => input.key === "last"
+        )
+        const suffixInput = field?.inputs?.find(
+          (input: any) => input.key === "suffix"
+        )
 
         const prefix =
           (prefixInput && !prefixInput.isHidden && `${value}Prefix`) ||
@@ -71,9 +88,9 @@ export default function Form({ form, buttonClass, onSubmit }) {
   })
   const filteredRequiredFields = requiredFields
     .flat()
-    .filter(field => field !== "not required")
+    .filter((field: any) => field !== "not required")
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: any) => {
     e.preventDefault()
     const values = state.formData
     return onSubmit(values)
@@ -87,7 +104,7 @@ export default function Form({ form, buttonClass, onSubmit }) {
     <>
       <form onSubmit={handleSubmit}>
         {fields &&
-          fields.map(field => (
+          fields.map((field: any) => (
             <FormsField key={`${field.id}-${field.type}`} field={field} />
           ))}
 

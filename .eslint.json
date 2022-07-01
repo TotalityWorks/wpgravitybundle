@@ -16,5 +16,10 @@
       "error",
       "never"
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "project": "./my-path-to/tsconfig.json",
+    }
   }
 }

@@ -4,15 +4,19 @@ import React, { useState } from "react"
 import { useFormContext } from "../../formContext"
 import updateFormState from "../../updateFormState"
 
-export default function AddressField({ field }) {
+type Address = { [key: string]: undefined | string }
+
+export default function AddressField(props: any) {
+  const { field } = props
   const { id, formId, label, cssClass, inputs, size } = field
   const htmlId = `field_${formId}_${id}`
-  const [addressValue, setAddressValue] = useState()
+  const address: Address = {}
+  const [addressValue, setAddressValue] = useState(address)
   const classes = `${(size && size.toLowerCase()) || ""} ${cssClass}`.trim()
   const { state: formData, dispatch } = useFormContext()
   const context = { formData, dispatch }
 
-  const handleChange = event => {
+  const handleChange = (event: any) => {
     const { name, value } = event.target
     setAddressValue({ ...addressValue, [name]: value })
     const newAddressValue = { ...addressValue, [name]: value }
@@ -22,7 +26,7 @@ export default function AddressField({ field }) {
   return (
     <fieldset id={htmlId} className={classes}>
       <legend>{label}</legend>
-      {inputs?.map(input => {
+      {inputs?.map((input: any) => {
         const key = input?.key
         const inputLabel = input?.label || ""
         const placeholder = input?.placeholder || ""

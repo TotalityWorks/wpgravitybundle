@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react"
-import { createRoot } from "react-dom"
+import { createRoot } from "react-dom/client"
 import GravityForm, { useGravityFormMutation } from "../../src"
 
 import query from "../../src/data/query.json"
 
-function App(props) {
+function App(props: any) {
   const { form, buttonClass } = props
   const [data, setData] = useState()
 
-  const handleSubmit = values => {
+  const handleSubmit = (values: any) => {
     const formData = values
     return setData(formData)
   }

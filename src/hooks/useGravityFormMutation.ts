@@ -1,7 +1,7 @@
 import useFormData from "./useFormData"
 import useGravityMutation from "./useGravityMutation"
 
-const useGravityFormMutation = form => {
+const useGravityFormMutation = (form: any) => {
   // passes form data into useFormData to return GraphQL Mutation variables & values shape
   const { mutationVariables, fieldValuesShape } = useFormData(
     form.formFields.nodes

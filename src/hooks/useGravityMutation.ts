@@ -1,4 +1,8 @@
-const useGravityMutation = (formId, mutationVariables, fieldValuesShape) => {
+const useGravityMutation = (
+  formId: any,
+  mutationVariables: any,
+  fieldValuesShape: any
+) => {
   // uses mutationVariables and fieldValuesShape from useFormData to create
   // a ready-to-go GraphQL Mutation for your Gravity Forms form.
   const gravityFormMutation = `

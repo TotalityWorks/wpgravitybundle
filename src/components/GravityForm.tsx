@@ -1,9 +1,17 @@
+/* eslint-disable react/prop-types */
 import React from "react"
 import Form from "./Form"
 
 import { FormProvider } from "../formContext"
 
-function GravityForm({ form, buttonClass, onSubmit }) {
+interface GravityFormData {
+  form: any
+  buttonClass: any
+  onSubmit: any
+}
+
+function GravityForm(props: GravityFormData) {
+  const { form, buttonClass, onSubmit } = props
   return (
     <FormProvider>
       <Form form={form} buttonClass={buttonClass} onSubmit={onSubmit} />

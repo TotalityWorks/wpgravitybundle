@@ -3,7 +3,7 @@ import React from "react"
 
 import { useFormContext } from "../formContext"
 
-export default function Button(props) {
+export default function Button(props: any) {
   const { type, text, cssClass, onClick } = props
   const { state } = useFormContext()
   const disabled =

@@ -12,7 +12,8 @@ const Text = lazy(() => import("./FormFields/Text"))
 const TextArea = lazy(() => import("./FormFields/TextArea"))
 const Website = lazy(() => import("./FormFields/Website"))
 
-export default function FormsField({ field }) {
+export default function FormsField(props: any) {
+  const { field } = props
   switch (field.type) {
     case "address":
       return <Address field={field} />

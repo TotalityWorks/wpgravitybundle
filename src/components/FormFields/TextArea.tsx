@@ -3,41 +3,31 @@ import React, { useState } from "react"
 import { useFormContext } from "../../formContext"
 import updateFormState from "../../updateFormState"
 
-export default function TextField({ field }) {
-  const {
-    id,
-    formId,
-    type,
-    label,
-    description,
-    cssClass,
-    isRequired,
-    placeholder,
-    size,
-  } = field
+export default function TextAreaField(props: any) {
+  const { field } = props
+  const { id, formId, label, cssClass, isRequired, placeholder, size } = field
   const htmlId = `field_${formId}_${id}`
-  const [textValue, setTextValue] = useState("")
+  const [textAreaValue, setTextAreaValue] = useState("")
   const classes = `${(size && size.toLowerCase()) || ""} ${cssClass}`.trim()
   const { dispatch } = useFormContext()
 
-  const handleChange = event => {
+  const handleChange = (event: any) => {
     const { value } = event.target
-    setTextValue(value)
-    const newTextValue = value
-    return updateFormState(field, newTextValue, dispatch)
+    setTextAreaValue(value)
+    const newTextAreaValue = value
+    return updateFormState(field, newTextAreaValue, dispatch)
   }
 
   return (
     <div className={classes}>
       <label htmlFor={htmlId}>{label}</label>
-      <input
-        type="text"
+      <textarea
         name={id}
         id={htmlId}
         required={isRequired}
-        placeholder={placeholder || ""}
-        value={textValue}
+        value={textAreaValue}
         onChange={handleChange}
+        placeholder={placeholder || ""}
       />
     </div>
   )

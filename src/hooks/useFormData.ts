@@ -1,7 +1,7 @@
-const createMutationVariables = fields => {
+const createMutationVariables = (fields: any) => {
   // uses the form fields data to create a string literal for all
   // mutation variables your form will need.
-  const mappedMutationVariables = fields.map((field, key) => {
+  const mappedMutationVariables = fields.map((field: any, key: any) => {
     const { id, type, isRequired } = field
     const required = `${isRequired ? "!" : ""}`
     const value = `${type}${id}`
@@ -9,18 +9,18 @@ const createMutationVariables = fields => {
 
     const textFields = () => `${space}$${value}Value: String${required}`
 
-    const nameField = nField => {
+    const nameField = (nField: any) => {
       const isName = type === "name"
       const prefixInput =
-        isName && nField?.inputs?.find(input => input.key === "prefix")
+        isName && nField?.inputs?.find((input: any) => input.key === "prefix")
       const firstInput =
-        isName && nField?.inputs?.find(input => input.key === "first")
+        isName && nField?.inputs?.find((input: any) => input.key === "first")
       const middleInput =
-        isName && nField?.inputs?.find(input => input.key === "middle")
+        isName && nField?.inputs?.find((input: any) => input.key === "middle")
       const lastInput =
-        isName && nField?.inputs?.find(input => input.key === "last")
+        isName && nField?.inputs?.find((input: any) => input.key === "last")
       const suffixInput =
-        isName && nField?.inputs?.find(input => input.key === "suffix")
+        isName && nField?.inputs?.find((input: any) => input.key === "suffix")
       // currently not accurately giving us only the fields in use: name
       const prefix =
         (prefixInput &&
@@ -51,7 +51,7 @@ const createMutationVariables = fields => {
       return `${space}${prefix}${first}${middle}${last}${suffix}`
     }
 
-    const emailField = eField => {
+    const emailField = (eField: any) => {
       const isEmail = type === "email"
       const email = `$${value}Value: String${required}`
       const emailConfirmation =
@@ -80,37 +80,37 @@ const createMutationVariables = fields => {
       // case "checkbox":
       //     return `$${value}Value: String${required}`
       case "consent":
-        return textFields(field)
+        return textFields()
       case "email":
         return emailField(field)
       case "name":
         return nameField(field)
       case "phone":
-        return textFields(field)
+        return textFields()
       // case "select":
       //     return `$${value}Value: String${required}`
       case "text":
-        return textFields(field)
+        return textFields()
       case "textarea":
-        return textFields(field)
+        return textFields()
       case "website":
-        return textFields(field)
+        return textFields()
       default:
         return ""
     }
   })
 
   const filteredMutationVariables = mappedMutationVariables.filter(
-    i => i !== "" || null
+    (i: any) => i !== "" || null
   )
   const mutationVariables = filteredMutationVariables.toString()
 
   return mutationVariables
 }
 
-const createFieldValuesShape = fields => {
+const createFieldValuesShape = (fields: any) => {
   // uses form fields data to create the shape of your fieldValues array in your mutation
-  const mappedFieldValuesShape = fields.map(field => {
+  const mappedFieldValuesShape = fields.map((field: any) => {
     const { id, type } = field
     const value = `${type}${id}`
 
@@ -133,23 +133,23 @@ const createFieldValuesShape = fields => {
     const prefixInput =
       isName &&
       field.inputs &&
-      field?.inputs?.find(input => input.key === "prefix")
+      field?.inputs?.find((input: any) => input.key === "prefix")
     const firstInput =
       isName &&
       field.inputs &&
-      field?.inputs?.find(input => input.key === "first")
+      field?.inputs?.find((input: any) => input.key === "first")
     const middleInput =
       isName &&
       field.inputs &&
-      field?.inputs?.find(input => input.key === "middle")
+      field?.inputs?.find((input: any) => input.key === "middle")
     const lastInput =
       isName &&
       field.inputs &&
-      field?.inputs?.find(input => input.key === "last")
+      field?.inputs?.find((input: any) => input.key === "last")
     const suffixInput =
       isName &&
       field.inputs &&
-      field?.inputs?.find(input => input.key === "suffix")
+      field?.inputs?.find((input: any) => input.key === "suffix")
     const prefix =
       (prefixInput &&
         !prefixInput.isHidden &&
@@ -235,14 +235,14 @@ const createFieldValuesShape = fields => {
   })
 
   const filteredFieldValuesShape = mappedFieldValuesShape.filter(
-    i => i !== "" || null
+    (i: any) => i !== "" || null
   )
   const fieldValuesShape = filteredFieldValuesShape.join("\n")
 
   return fieldValuesShape
 }
 
-const useFormData = fields => {
+const useFormData = (fields: any) => {
   const mutationVariables = createMutationVariables(fields)
   const fieldValuesShape = createFieldValuesShape(fields)
   return { mutationVariables, fieldValuesShape }

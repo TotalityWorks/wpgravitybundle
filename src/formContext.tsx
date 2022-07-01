@@ -1,15 +1,19 @@
 /* eslint-disable react/prop-types */
 import React, { createContext, useContext, useReducer } from "react"
 
-const FormContext = createContext()
+interface State {
+  formData: {}
+  errors: {}
+  requiredFields: []
+}
 
-const initialState = {
+const initialState: State = {
   formData: {},
   errors: {},
   requiredFields: [],
 }
 
-function formReducer(state, action) {
+function formReducer(state: State, action: any) {
   switch (action.type) {
     case "UPDATE_FORM_DATA": {
       return {
@@ -57,7 +61,10 @@ function formReducer(state, action) {
   }
 }
 
-function FormProvider({ children }) {
+const FormContext = createContext<any>(undefined)
+
+function FormProvider(props: any) {
+  const { children } = props
   const [state, dispatch] = useReducer(formReducer, initialState)
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = { state, dispatch }

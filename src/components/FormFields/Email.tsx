@@ -3,18 +3,9 @@ import React, { useState } from "react"
 import { useFormContext } from "../../formContext"
 import updateFormState from "../../updateFormState"
 
-export default function EmailField({ field }) {
-  const {
-    id,
-    formId,
-    type,
-    label,
-    description,
-    cssClass,
-    isRequired,
-    placeholder,
-    size,
-  } = field
+export default function EmailField(props: any) {
+  const { field } = props
+  const { id, formId, label, cssClass, isRequired, placeholder, size } = field
   const htmlId = `field_${formId}_${id}`
   const [emailValue, setEmailValue] = useState("")
   const classes = `${(size && size.toLowerCase()) || ""} ${cssClass}`.trim()
@@ -28,7 +19,7 @@ export default function EmailField({ field }) {
   //   fieldValidationErrors.email = emailValid ? '' : ' is invalid';
   // }
 
-  const handleChange = event => {
+  const handleChange = (event: any) => {
     const { value } = event.target
     setEmailValue(value)
     const newEmailValue = value

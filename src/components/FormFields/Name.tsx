@@ -3,17 +3,23 @@ import React, { useState } from "react"
 import { useFormContext } from "../../formContext"
 import updateFormState from "../../updateFormState"
 
-export default function NameField({ field }) {
-  const { id, formId, type, label, description, cssClass, inputs, size } = field
+type Name = { [key: string]: undefined | string }
+
+export default function NameField(props: any) {
+  const { field } = props
+  const { id, formId, label, cssClass, inputs, size } = field
   const htmlId = `field_${formId}_${id}`
-  const prefixInput = inputs && inputs.find(input => input.key === "prefix")
-  const otherInputs = inputs?.filter(input => input?.key !== "prefix") || []
-  const [nameValue, setNameValue] = useState()
+  const prefixInput =
+    inputs && inputs.find((input: any) => input.key === "prefix")
+  const otherInputs =
+    inputs?.filter((input: any) => input?.key !== "prefix") || []
+  const nameDefault: Name = {}
+  const [nameValue, setNameValue] = useState(nameDefault)
   const classes = `${(size && size.toLowerCase()) || ""} ${cssClass}`.trim()
   const { state: formData, dispatch } = useFormContext()
   const context = { formData, dispatch }
 
-  const handleChange = event => {
+  const handleChange = (event: any) => {
     const { name, value } = event.target
     setNameValue({ ...nameValue, [name]: value })
     const newNameValue = { ...nameValue, [name]: value }
@@ -30,8 +36,9 @@ export default function NameField({ field }) {
           value={nameValue?.prefix}
           onChange={handleChange}
         >
+          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <option value="" />
-          {prefixInput.choices?.map(choice => (
+          {prefixInput.choices?.map((choice: any) => (
             <option key={choice?.value} value={String(choice?.value)}>
               {String(choice?.text)}
             </option>
@@ -39,13 +46,13 @@ export default function NameField({ field }) {
         </select>
       ) : null}
       {otherInputs &&
-        otherInputs.map(input => {
+        otherInputs.map((input: any) => {
           const { key } = input
           const inputLabel = input?.label || ""
           const placeholder = input?.placeholder || ""
           const isRequired = input?.isRequired || ""
           if (input.isHidden) {
-            return
+            return <div />
           }
           return (
             <div key={key}>

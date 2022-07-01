@@ -3,43 +3,31 @@ import React, { useState } from "react"
 import { useFormContext } from "../../formContext"
 import updateFormState from "../../updateFormState"
 
-export default function PhoneField({ field }) {
-  const {
-    id,
-    formId,
-    type,
-    label,
-    description,
-    cssClass,
-    isRequired,
-    placeholder,
-    phoneFormat,
-    size,
-    // phoneFormat is either "STANDARD" or "INTERNATIONAL"
-    // does not matter for return value, but does for field validation
-  } = field
+export default function WebsiteField(props: any) {
+  const { field } = props
+  const { id, formId, label, cssClass, isRequired, placeholder, size } = field
   const htmlId = `field_${formId}_${id}`
-  const [phoneValue, setPhoneValue] = useState("")
+  const [websiteValue, setWebsiteValue] = useState("")
   const classes = `${(size && size.toLowerCase()) || ""} ${cssClass}`.trim()
   const { dispatch } = useFormContext()
 
-  const handleChange = event => {
+  const handleChange = (event: any) => {
     const { value } = event.target
-    setPhoneValue(value)
-    const newPhoneValue = value
-    return updateFormState(field, newPhoneValue, dispatch)
+    setWebsiteValue(value)
+    const newWebsiteValue = value
+    return updateFormState(field, newWebsiteValue, dispatch)
   }
 
   return (
     <div className={classes}>
       <label htmlFor={htmlId}>{label}</label>
       <input
-        type="tel"
+        type="url"
         name={id}
         id={htmlId}
         required={isRequired}
         placeholder={placeholder || ""}
-        value={phoneValue}
+        value={websiteValue}
         onChange={handleChange}
       />
     </div>

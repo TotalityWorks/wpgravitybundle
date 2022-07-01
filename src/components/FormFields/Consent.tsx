@@ -3,23 +3,14 @@ import React, { useState } from "react"
 import { useFormContext } from "../../formContext"
 import updateFormState from "../../updateFormState"
 
-export default function ConsentField(props) {
-  const { field, state, setFormData, errors, setErrors, requiredFields } = props
-  const {
-    id,
-    formId,
-    type,
-    label,
-    description,
-    cssClass,
-    isRequired,
-    checkboxLabel,
-  } = field
+export default function ConsentField(props: any) {
+  const { field } = props
+  const { id, formId, label, cssClass, isRequired, checkboxLabel } = field
   const htmlId = `field_${formId}_${id}`
   const [isChecked, setIsChecked] = useState(false)
   const { dispatch } = useFormContext()
 
-  const handleChange = event => {
+  const handleChange = (event: any) => {
     const { value } = event.target
     setIsChecked(!isChecked)
     const newCheckedValue = isChecked ? null : value
