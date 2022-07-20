@@ -400,7 +400,7 @@
             "placeholder": "https://",
             "noDuplicates": false,
             "label": "Website",
-            "isRequired": true,
+            "isRequired": false,
             "description": null,
             "descriptionPlacement": null,
             "defaultValue": null,
