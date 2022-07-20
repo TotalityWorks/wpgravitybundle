@@ -1,114 +1,106 @@
-const updateNameRequiredField = (
-  value: any,
-  requiredFields: any,
-  nameFieldValue: any,
-  dispatch: any,
-  fieldName: any
-) => {
-  if (value === "") {
-    if (requiredFields.includes(`${nameFieldValue}${fieldName}`)) {
-      return {}
-    }
-    return dispatch({
-      type: "ADD_REQUIRED_FIELD",
-      payload: `${nameFieldValue}${fieldName}`,
-    })
-  }
-  if (value) {
-    return dispatch({
-      type: "REMOVE_REQUIRED_FIELD",
-      payload: `${nameFieldValue}${fieldName}`,
-    })
-  }
-  return {}
-}
-
-const updateNameRequiredFields = (field: any, value: any, dispatch: any) => {
-  const { prefix, first, middle, last, suffix } = value
-  const { formData } = dispatch
-  const { requiredFields } = formData
-  const nameFieldValue = `${field.type}${field.id}`
-  updateNameRequiredField(
-    prefix,
-    requiredFields,
-    nameFieldValue,
-    dispatch.dispatch,
-    "Prefix"
-  )
-  updateNameRequiredField(
-    first,
-    requiredFields,
-    nameFieldValue,
-    dispatch.dispatch,
-    "First"
-  )
-  updateNameRequiredField(
-    middle,
-    requiredFields,
-    nameFieldValue,
-    dispatch.dispatch,
-    "Middle"
-  )
-  updateNameRequiredField(
-    last,
-    requiredFields,
-    nameFieldValue,
-    dispatch.dispatch,
-    "Last"
-  )
-  updateNameRequiredField(
-    suffix,
-    requiredFields,
-    nameFieldValue,
-    dispatch.dispatch,
-    "Suffix"
-  )
-}
-
-const updateAddressRequiredFields = (field: any, value: any, dispatch: any) => {
-  const { street, city, state, zip, country } = value
-  const missingFields =
-    !street ||
-    street === "" ||
-    !city ||
-    city === "" ||
-    !state ||
-    state === "" ||
-    !zip ||
-    zip === "" ||
-    !country ||
-    country === ""
-  const { type, id } = field
-  const streetId = `${type}${id}Street`
-  const cityId = `${type}${id}City`
-  const stateId = `${type}${id}State`
-  const zipId = `${type}${id}Zip`
-  const countryId = `${type}${id}Country`
-  const addressFields = [streetId, cityId, stateId, zipId, countryId]
-
-  if (missingFields) {
-    if (dispatch.formData.requiredFields.includes(`${streetId}`)) {
-      return {}
-    }
-    return addressFields.map(addressField =>
-      dispatch.dispatch({ type: "ADD_REQUIRED_FIELD", payload: addressField })
-    )
-  }
-  return dispatch.dispatch({
-    type: "REMOVE_REQUIRED_FIELDS",
-    payload: addressFields,
-  })
-}
+// const validateValue = (field: any, value: any, dispatch: any) => {
+// switch (field.type) {
+//   case "address":
+//     return validateAddressField()
+//   case "consent":
+//     return validateConstentField()
+//   case "email":
+//     return validateEmailField()
+//   case "name":
+//     return validateNameFields()
+//   case "phone":
+//     return validatePhoneField()
+//   case "text":
+//     return validateTextField()
+//   case "textarea":
+//     return validateTextAreaField()
+//   case "website":
+//     return validateWebsiteField()
+//   default:
+//     return ""
+// }
+// }
 
 const updateRequiredFields = (field: any, value: any, dispatch: any) => {
   const fieldValue = `${field.type}${field.id}`
+
+  const updateNameRequiredFields = (updatedValue: any) => {
+    const { prefix, first, middle, last, suffix } = updatedValue
+    const { formData } = dispatch
+    const { requiredFields } = formData
+    const nameFieldValue = `${field.type}${field.id}`
+
+    const updateNameRequiredField = (
+      singleNameFieldValue: any,
+      fieldName: any
+    ) => {
+      if (singleNameFieldValue === "") {
+        if (requiredFields.includes(`${nameFieldValue}${fieldName}`)) {
+          return {}
+        }
+        return dispatch.dispatch({
+          type: "ADD_REQUIRED_FIELD",
+          payload: `${nameFieldValue}${fieldName}`,
+        })
+      }
+      if (singleNameFieldValue) {
+        return dispatch.dispatch({
+          type: "REMOVE_REQUIRED_FIELD",
+          payload: `${nameFieldValue}${fieldName}`,
+        })
+      }
+      return {}
+    }
+
+    updateNameRequiredField(prefix, "Prefix")
+    updateNameRequiredField(first, "First")
+    updateNameRequiredField(middle, "Middle")
+    updateNameRequiredField(last, "Last")
+    updateNameRequiredField(suffix, "Suffix")
+  }
+
+  const updateAddressRequiredFields = (updatedValue: any) => {
+    const { street, city, state, zip, country } = updatedValue
+    const missingFields =
+      !street ||
+      street === "" ||
+      !city ||
+      city === "" ||
+      !state ||
+      state === "" ||
+      !zip ||
+      zip === "" ||
+      !country ||
+      country === ""
+    const { type, id } = field
+    const streetId = `${type}${id}Street`
+    const cityId = `${type}${id}City`
+    const stateId = `${type}${id}State`
+    const zipId = `${type}${id}Zip`
+    const countryId = `${type}${id}Country`
+    const addressFields = [streetId, cityId, stateId, zipId, countryId]
+
+    if (missingFields) {
+      if (dispatch.formData.requiredFields.includes(`${streetId}`)) {
+        return {}
+      }
+      return addressFields.map(addressField =>
+        dispatch.dispatch({ type: "ADD_REQUIRED_FIELD", payload: addressField })
+      )
+    }
+    return dispatch.dispatch({
+      type: "REMOVE_REQUIRED_FIELDS",
+      payload: addressFields,
+    })
+  }
+
   if (!field.isRequired) return {}
   if (field.type === "name") {
-    return updateNameRequiredFields(field, value, dispatch)
+    return updateNameRequiredFields(value)
   }
 
   if (field.type === "address") {
-    return updateAddressRequiredFields(field, value, dispatch)
+    return updateAddressRequiredFields(value)
   }
 
   if (value === "" || value === null) {
@@ -117,14 +109,11 @@ const updateRequiredFields = (field: any, value: any, dispatch: any) => {
   return dispatch({ type: "REMOVE_REQUIRED_FIELD", payload: fieldValue })
 }
 
-const validateValue = (field: any, value: any, dispatch: any) => {
-  updateRequiredFields(field, value, dispatch)
-}
-
 const updateFormState = (field: any, value: any, dispatch: any) => {
   const { type, id } = field
 
-  validateValue(field, value, dispatch)
+  // validateValue(field, value, dispatch)
+  updateRequiredFields(field, value, dispatch)
 
   if (type === "name") {
     const { prefix, first, middle, last, suffix } = value

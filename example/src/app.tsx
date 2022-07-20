@@ -38,6 +38,6 @@ function App(props: any) {
 const form = query.data.gravityFormsForm
 const buttonClass = "btn btn-primary"
 
-const root = createRoot(document.getElementById("root"))
+const root = createRoot(document.getElementById("root")!)
 
 root.render(<App form={form} buttonClass={buttonClass} />)
