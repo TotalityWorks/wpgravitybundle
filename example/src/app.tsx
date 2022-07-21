@@ -1,0 +1,43 @@
+/* eslint-disable react/prop-types */
+import React, { useState } from "react"
+import { createRoot } from "react-dom/client"
+import GravityForm, { useGravityFormMutation } from "../../src"
+
+import query from "../../src/data/query.json"
+
+function App(props: any) {
+  const { form, buttonClass } = props
+  const [data, setData] = useState()
+
+  const handleSubmit = (values: any) => {
+    const formData = values
+    return setData(formData)
+  }
+
+  const gravityFormMutation = useGravityFormMutation(form)
+
+  return (
+    <>
+      {data ? (
+        <>
+          <p>Data Submitted</p>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
+        </>
+      ) : (
+        <GravityForm
+          form={form}
+          onSubmit={handleSubmit}
+          buttonClass={buttonClass}
+        />
+      )}
+      <pre>{gravityFormMutation}</pre>
+    </>
+  )
+}
+
+const form = query.data.gravityFormsForm
+const buttonClass = "btn btn-primary"
+
+const root = createRoot(document.getElementById("root")!)
+
+root.render(<App form={form} buttonClass={buttonClass} />)

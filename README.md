@@ -115,6 +115,12 @@ export const query = graphql`
 | Website     | {props}     | -->
 
 
+## Demos
+
+Check out https://WPGravityBundle.TotalityWorks.com to see it in action.
+![Example Form](./imgs/example.png)
+
+
 ## Inspiration
 
 This package was inspired by the work of Kellen Mace (https://twitter.com/kellenmace) of WP Engine and his public Github repository: https://github.com/kellenmace/gravity-forms-in-headless-wordpress-gatsby.
@@ -123,10 +129,3 @@ This package was inspired by the work of Kellen Mace (https://twitter.com/kellen
 
 If you enjoy using WPGravityBundle and want to say thank you, you can buy me a coffee:
 <a href="https://www.buymeacoffee.com/mosesintech" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;"></a>
-
-## I'm also currently looking for work!
-
-I am a React programmer through and through.
-I have been working with WordPRess for 13 years, and React/Node for 4.
-Headless WordPress is definitely a passion of mine, and I would love the opportunity to help your team with their headless projects.
-You can find me at moses@totalityworks.com!
