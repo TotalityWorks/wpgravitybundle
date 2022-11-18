@@ -6,7 +6,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 })
 
 module.exports = {
-  entry: path.join(__dirname, "./example/src/app.js"),
+  entry: path.join(__dirname, "./example/src/app.tsx"),
   output: {
     path: path.join(__dirname, "example/dist"),
     filename: "bundle.js",
@@ -14,15 +14,15 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
-        use: "babel-loader",
+        test: /\.tsx?$/,
+        loader: "ts-loader",
         exclude: /node_modules/,
       },
     ],
   },
   plugins: [htmlWebpackPlugin],
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".tsx", ".ts", ".js", ".jsx"],
   },
   devServer: {
     port: 3001,
