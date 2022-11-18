@@ -1,7 +1,7 @@
 {
   "name": "wpgravitybundle",
   "version": "0.18.2",
-  "description": "A collection of form templates to use for your headless WordPress React application, using Gravity Forms.",
+  "description": "A component and a hook to simplify your headless WordPress React application using Gravity Forms.",
   "author": "@totalityworks",
   "license": "MIT",
   "main": "dist/index.js",
