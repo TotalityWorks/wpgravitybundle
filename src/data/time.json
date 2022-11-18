@@ -1,9 +1,0 @@
-{
-    "type": "time",
-    "id": 7,
-    "formId": 2,
-    "label": "Time",
-    "description": null,
-    "cssClass": "event-time",
-    "isRequired": true
-}
