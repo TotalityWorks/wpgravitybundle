@@ -3,11 +3,14 @@ import React, { createContext, useContext, useReducer } from "react"
 interface State {
   formData: { [key: string]: any }
   errors: {}
-  requiredFields: []
+  requiredFields: string[]
 }
 
 export enum ActionTypes {
   Update = "UPDATE_FORM_DATA",
+  AddRequired = "ADD_REQUIRED_FIELDS",
+  AddRequiredField = "ADD_REQUIRED_FIELD",
+  RemoveRequiredField = "REMOVE_REQUIRED_FIELD",
 }
 
 interface Action {
@@ -39,6 +42,29 @@ function formReducer(state: State, action: Action): State {
           ...state.formData,
           ...action.payload,
         },
+      }
+    }
+    case ActionTypes.AddRequired: {
+      return {
+        ...state,
+        requiredFields: action.payload,
+      }
+    }
+    case ActionTypes.AddRequiredField: {
+      const requiredFieldsCopy = [...state.requiredFields]
+      requiredFieldsCopy.push(action.payload)
+      return {
+        ...state,
+        requiredFields: requiredFieldsCopy,
+      }
+    }
+    case ActionTypes.RemoveRequiredField: {
+      const filteredRequiredFields = state.requiredFields.filter(
+        field => field !== action.payload
+      )
+      return {
+        ...state,
+        requiredFields: [...filteredRequiredFields],
       }
     }
     default: {

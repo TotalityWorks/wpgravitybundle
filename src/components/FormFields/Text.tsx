@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import { useFormContext, ActionTypes } from "../../formContext"
 import { TextFieldProps } from "../../interfaces"
@@ -23,6 +23,14 @@ const TextField: React.FC<TextFieldProps> = props => {
     const { value } = event.currentTarget
     return dispatch({ type: ActionTypes.Update, payload: { [valueId]: value } })
   }
+
+  useEffect(() => {
+    if (!isRequired) return undefined
+    if (state.formData?.[valueId]?.length === 0) {
+      return dispatch({ type: ActionTypes.AddRequiredField, payload: valueId })
+    }
+    dispatch({ type: ActionTypes.RemoveRequiredField, payload: valueId })
+  }, [state.formData?.[valueId]])
 
   return (
     <div className={classes}>
