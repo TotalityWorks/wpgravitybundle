@@ -10,8 +10,8 @@
     "url": "https://github.com/TotalityWorks/wpgravitybundle.git"
   },
   "scripts": {
-    "prettier": "prettier --write '**/*.{ts, tsx}'",
-    "lint": "eslint '**/*.{ts, tsx}'",
+    "prettier": "prettier --write '**/*.{tsx,ts}'",
+    "lint": "eslint '**/*.{tsx,ts}'",
     "lint:fix": "npm run lint -- --fix",
     "format": "npm run prettier && npm run lint:fix",
     "commit": "cz",
@@ -20,7 +20,7 @@
     "deploy": "webpack --config publish.config.js --mode production && npm publish"
   },
   "lint-staged": {
-    "src/**/*.ts": [
+    "src/**/*.{ts,tsx}": [
       "npm run format"
     ]
   },
