@@ -52,7 +52,7 @@ const TextField: React.FC<TextFieldProps> = props => {
       <label htmlFor={htmlId}>{label}</label>
       <input
         type="text"
-        name={id}
+        name={htmlId}
         id={htmlId}
         required={isRequired}
         placeholder={placeholderValue}

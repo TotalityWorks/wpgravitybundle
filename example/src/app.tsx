@@ -2,12 +2,13 @@ import React, { useState } from "react"
 import { createRoot } from "react-dom/client"
 import GravityForm, { useGravityFormMutation } from "../../src"
 
+import type { Form } from '../../src/interfaces'
 import query from "../data/query.json"
 const form = query.data.gravityFormsForm
 // const buttonClass = "btn btn-primary"
 
 interface GravityFormData {
-  form: any
+  form: Form
 }
 
 const App: React.FC<GravityFormData> = ({ form }) => {
@@ -18,7 +19,7 @@ const App: React.FC<GravityFormData> = ({ form }) => {
     return setData(formData)
   }
 
-  // const gravityFormMutation = useGravityFormMutation(form)
+  const gravityFormMutation = useGravityFormMutation(form)
 
   return (
     <>
@@ -36,7 +37,7 @@ const App: React.FC<GravityFormData> = ({ form }) => {
           />
         </>
       )}
-      {/* <pre>{gravityFormMutation}</pre> */}
+      <pre>{gravityFormMutation}</pre>
     </>
   )
 }
