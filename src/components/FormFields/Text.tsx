@@ -15,12 +15,27 @@ const TextField: React.FC<TextFieldProps> = props => {
   const classes = `${sizeClass} ${cssClass}`.trim()
   const { state, dispatch } = useFormContext()
 
-  // handle field verification
-  // handle field requirement
+  const errorMessage = state.errors.find(error => {
+    return error.name.toString() === valueId
+  })
+
+  function validateField(value: string): void {
+    if (isRequired && value.length === 0) {
+      return dispatch({
+        type: ActionTypes.AddError,
+        payload: { name: [valueId], message: "Field cannot be empty" },
+      })
+    }
+    return dispatch({
+      type: ActionTypes.RemoveError,
+      payload: [valueId],
+    })
+  }
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     event.preventDefault()
     const { value } = event.currentTarget
+    validateField(value)
     return dispatch({ type: ActionTypes.Update, payload: { [valueId]: value } })
   }
 
@@ -44,9 +59,7 @@ const TextField: React.FC<TextFieldProps> = props => {
         defaultValue={state.formData?.[valueId]}
         onChange={handleChange}
       />
-      {/* {validateText && validateText.error && (
-        <p className="error-message">{validateText.error.issues[0].message}</p>
-      )} */}
+      <p className="error-message">{errorMessage?.message}</p>
     </div>
   )
 }

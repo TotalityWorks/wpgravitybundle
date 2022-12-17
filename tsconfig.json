@@ -10,6 +10,7 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node",
+    "downlevelIteration": true,
     "strict": true
   }
 }

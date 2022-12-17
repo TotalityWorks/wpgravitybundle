@@ -1,8 +1,13 @@
 import React, { createContext, useContext, useReducer } from "react"
 
+interface Error {
+  name: string
+  message: string
+}
+
 interface State {
   formData: { [key: string]: any }
-  errors: {}
+  errors: Error[]
   requiredFields: string[]
 }
 
@@ -11,6 +16,8 @@ export enum ActionTypes {
   AddRequired = "ADD_REQUIRED_FIELDS",
   AddRequiredField = "ADD_REQUIRED_FIELD",
   RemoveRequiredField = "REMOVE_REQUIRED_FIELD",
+  AddError = "ADD_ERROR_MESSAGE",
+  RemoveError = "REMOVE_ERROR_MESSAGE",
 }
 
 interface Action {
@@ -29,7 +36,7 @@ type Context = DefinedContext | undefined
 
 const initialState: State = {
   formData: {},
-  errors: {},
+  errors: [],
   requiredFields: [],
 }
 
@@ -65,6 +72,21 @@ function formReducer(state: State, action: Action): State {
       return {
         ...state,
         requiredFields: [...filteredRequiredFields],
+      }
+    }
+    case ActionTypes.AddError: {
+      return {
+        ...state,
+        errors: [...state.errors, action.payload],
+      }
+    }
+    case ActionTypes.RemoveError: {
+      const filteredErrors = state.errors.filter(
+        error => error.name === action.payload
+      )
+      return {
+        ...state,
+        errors: [...filteredErrors],
       }
     }
     default: {
