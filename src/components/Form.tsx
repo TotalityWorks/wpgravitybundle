@@ -3,23 +3,22 @@ import React, { useEffect } from "react"
 // import components
 import { useFormContext, ActionTypes } from "../formContext"
 import FormsField from "./FormsField"
+import Button from "./Button"
 import { supportedFields } from "../constants"
 
 // import types
-import { Field } from "../interfaces"
+import type { Form } from "../interfaces"
 
 interface GravityFormData {
-  form: {
-    formFields: {
-      nodes: Field[]
-    }
-  }
+  form: Form
   onSubmit: Function
+  buttonClass?: string
 }
 
-const Form: React.FC<GravityFormData> = props => {
-  const { form, onSubmit } = props
+const FormComponent: React.FC<GravityFormData> = props => {
+  const { form, buttonClass, onSubmit } = props
   const fields = form.formFields.nodes
+  const button = form.button
   const { state, dispatch } = useFormContext()
 
   const handleSubmit = (e: React.SyntheticEvent): Function => {
@@ -36,7 +35,7 @@ const Form: React.FC<GravityFormData> = props => {
       .map(field => {
         const valueId = `${field.type}${field.id}Value`
 
-        if (field.isRequired === false) return null
+        if (!field.isRequired) return null
         return valueId
       })
       .filter(field => field !== null)
@@ -50,10 +49,19 @@ const Form: React.FC<GravityFormData> = props => {
           fields.map(field => (
             <FormsField key={`${field.id}-${field.type}`} field={field} />
           ))}
+
+        {Boolean(button) && (
+          <Button
+            type={button.type}
+            text={button.text}
+            cssClass={buttonClass}
+            onClick={handleSubmit}
+          />
+        )}
       </form>
       <pre>{JSON.stringify(state, null, 2)}</pre>
     </>
   )
 }
 
-export default Form
+export default FormComponent

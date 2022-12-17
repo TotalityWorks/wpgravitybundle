@@ -18,7 +18,7 @@ export interface Form {
 }
 
 interface Button {
-  type: string
+  type?: string
   text: string
   imageUrl: string
   conditionalLogic: null

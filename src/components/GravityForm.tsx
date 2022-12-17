@@ -1,19 +1,25 @@
 import React from "react"
-import Form from "./Form"
+import FormComponent from "./Form"
 
 import { FormProvider } from "../formContext"
+import type { Form } from "../interfaces"
 
 interface GravityFormData {
-  form: any
-  onSubmit: any
+  form: Form
+  onSubmit: Function
+  buttonClass?: string
 }
 
 const GravityForm: React.FC<GravityFormData> = props => {
-  const { form, onSubmit } = props
+  const { form, buttonClass, onSubmit } = props
 
   return (
     <FormProvider>
-      <Form form={form} onSubmit={onSubmit} />
+      <FormComponent
+        form={form}
+        onSubmit={onSubmit}
+        buttonClass={buttonClass}
+      />
     </FormProvider>
   )
 }

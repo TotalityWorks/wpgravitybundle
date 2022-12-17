@@ -5,14 +5,15 @@ import GravityForm, { useGravityFormMutation } from "../../src"
 import type { Form } from '../../src/interfaces'
 import query from "../data/query.json"
 const form = query.data.gravityFormsForm
-// const buttonClass = "btn btn-primary"
 
 interface GravityFormData {
   form: Form
+  // validation?: {}
 }
 
 const App: React.FC<GravityFormData> = ({ form }) => {
   const [data, setData] = useState()
+  const buttonClass = "btn btn-primary"
 
   const handleSubmit = (values: any) => {
     const formData = values
@@ -33,7 +34,7 @@ const App: React.FC<GravityFormData> = ({ form }) => {
           <GravityForm
             form={form}
             onSubmit={handleSubmit}
-            // buttonClass={buttonClass}
+            buttonClass={buttonClass}
           />
         </>
       )}
