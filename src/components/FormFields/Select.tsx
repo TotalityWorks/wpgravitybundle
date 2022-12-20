@@ -16,29 +16,26 @@ const SelectField: React.FC<SelectFieldProps> = props => {
     choices,
     size,
   } = field
-  const [selectValue, setSelectValue] = useState(defaultValue)
   const valueId = `${type}${id}Value`
   const htmlId = `field_${formId}_${id}`
   const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
   const classes = `${sizeClass} ${otherClasses}`
+  const selectedDefault =
+    defaultValue === null ? choices[0].value : defaultValue
   const { state, dispatch } = useFormContext()
+  const [selectValue, setSelectValue] = useState(selectedDefault)
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
   })
 
   useEffect(() => {
-    dispatch({ type: ActionTypes.Update, payload: { [valueId]: defaultValue } })
+    dispatch({
+      type: ActionTypes.Update,
+      payload: { [valueId]: selectedDefault },
+    })
   }, [])
-
-  useEffect(() => {
-    if (!(isRequired ?? false)) return undefined
-    if (state.formData?.[valueId]?.length === 0) {
-      return dispatch({ type: ActionTypes.AddRequiredField, payload: valueId })
-    }
-    dispatch({ type: ActionTypes.RemoveRequiredField, payload: valueId })
-  }, [state.formData?.[valueId]])
 
   const handleChange = (event: React.FormEvent<HTMLSelectElement>): void => {
     const { value } = event.currentTarget
