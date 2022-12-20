@@ -1,16 +1,32 @@
 import React, { useEffect } from "react"
 
 import { useFormContext, ActionTypes } from "../../formContext"
-import { TextFieldProps } from "../../interfaces"
+import { PhoneFieldProps } from "../../interfaces"
 
-const TextField: React.FC<TextFieldProps> = props => {
-  const { field, validationRules } = props
-  const { id, type, formId, label, cssClass, isRequired, placeholder, size } =
-    field
+const PhoneField: React.FC<PhoneFieldProps> = props => {
+  const {
+    field,
+    // validationRules
+  } = props
+  const {
+    id,
+    type,
+    formId,
+    label,
+    cssClass,
+    isRequired,
+    placeholder,
+    size,
+    // phoneFormat,
+  } = field
   const valueId = `${type}${id}Value`
   const htmlId = `field_${formId}_${id}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
+  // const format =
+  //   phoneFormat === undefined || phoneFormat === null
+  //     ? ""
+  //     : `${phoneFormat.toLowerCase()}`
   const otherClasses =
     cssClass === undefined || cssClass === null ? "" : `${cssClass}`
   const placeholderValue =
@@ -19,14 +35,22 @@ const TextField: React.FC<TextFieldProps> = props => {
       : `${placeholder.toLowerCase()}`
   const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
-  const validationRule = validationRules?.find(rule => rule.id === id)
+  // const validationRule = validationRules?.find(rule => rule.id === id)
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
   })
 
   function validateField(value: string): void {
-    const validation = validationRule != null ? validationRule.regex : /[a-z]+/g
+    // const neededLength = format === "standard" ? 10 : 13
+    // const validation =
+    //   validationRule != null
+    //     ? validationRule.regex
+    //     : format === "standard"
+    //     ? /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+    //     : format === "international"
+    //     ? /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
+    //     : /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
 
     if ((isRequired ?? false) && value.length === 0) {
       return dispatch({
@@ -34,12 +58,21 @@ const TextField: React.FC<TextFieldProps> = props => {
         payload: { name: valueId, message: "Field cannot be empty" },
       })
     }
-    if (!validation.test(value)) {
-      return dispatch({
-        type: ActionTypes.AddError,
-        payload: { name: valueId, message: "Invalid characters." },
-      })
-    }
+    // if (value.length < neededLength) {
+    //   return dispatch({
+    //     type: ActionTypes.AddError,
+    //     payload: {
+    //       name: valueId,
+    //       message: `Phone should be ${neededLength} characters`,
+    //     },
+    //   })
+    // }
+    // if (!validation.test(value)) {
+    //   return dispatch({
+    //     type: ActionTypes.AddError,
+    //     payload: { name: valueId, message: "Invalid characters." },
+    //   })
+    // }
     return dispatch({
       type: ActionTypes.RemoveError,
       payload: valueId,
@@ -78,4 +111,4 @@ const TextField: React.FC<TextFieldProps> = props => {
   )
 }
 
-export default TextField
+export default PhoneField

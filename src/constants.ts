@@ -1,1 +1,1 @@
-export const supportedFields = ["text", "textarea", "select"]
+export const supportedFields = ["phone", "select", "text", "textarea"]

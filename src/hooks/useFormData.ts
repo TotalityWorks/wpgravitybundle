@@ -15,6 +15,8 @@ const createMutationVariables = (fields: Field[]): string => {
     const required = isRequired ?? false ? "!" : ""
 
     switch (type) {
+      case "phone":
+        return `${space}$${value}Value: String${required}`
       case "select":
         return `${space}$${value}Value: String${required}`
       case "text":
@@ -41,6 +43,11 @@ const createFieldValuesShape = (fields: Field[]): string => {
     const value = `${type}${id}`
 
     switch (type) {
+      case "phone":
+        return `{
+                  id: ${id}
+                  value: $${value}Value
+                }`
       case "select":
         return `{
                   id: ${id}
@@ -53,8 +60,8 @@ const createFieldValuesShape = (fields: Field[]): string => {
                 }`
       case "textarea":
         return `{
-                    id: ${id}
-                    value: $${value}Value
+                  id: ${id}
+                  value: $${value}Value
                 }`
       default:
         return ""

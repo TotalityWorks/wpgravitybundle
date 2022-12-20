@@ -21,19 +21,28 @@ const SelectField: React.FC<SelectFieldProps> = props => {
   const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
   const classes = `${sizeClass} ${otherClasses}`
-  const selectedDefault =
-    defaultValue === null ? choices[0].value : defaultValue
   const { state, dispatch } = useFormContext()
-  const [selectValue, setSelectValue] = useState(selectedDefault)
+  const [selectValue, setSelectValue] = useState("")
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
   })
 
   useEffect(() => {
+    // defaultValue could be undefined if not included in the query
+    // defaultValue could be null if not provided
+    if (defaultValue === undefined || defaultValue === null) {
+      setSelectValue(choices[0].value)
+      return dispatch({
+        type: ActionTypes.Update,
+        payload: { [valueId]: choices[0].value },
+      })
+    }
+
+    setSelectValue(defaultValue)
     dispatch({
       type: ActionTypes.Update,
-      payload: { [valueId]: selectedDefault },
+      payload: { [valueId]: defaultValue },
     })
   }, [])
 

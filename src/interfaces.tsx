@@ -58,6 +58,15 @@ export interface Field {
   [key: string]: any
 }
 
+export interface PhoneField extends Field {
+  formId: string
+  label?: string
+  cssClass?: string
+  placeholder?: string
+  size?: string
+  phoneFormat?: string
+}
+
 interface RadioSelectFieldChoice {
   isSelected: Boolean
   text: string
@@ -88,6 +97,11 @@ export interface TextAreaField extends Field {
   cssClass?: string
   placeholder?: string
   size?: string
+}
+
+export interface PhoneFieldProps {
+  field: PhoneField
+  validationRules?: ValidationRule[]
 }
 
 export interface SelectFieldProps {

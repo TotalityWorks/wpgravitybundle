@@ -9,10 +9,14 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
     field
   const valueId = `${type}${id}Value`
   const htmlId = `field_${formId}_${id}`
-  const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
-  const otherClasses = cssClass === undefined ? "" : `${cssClass}`
+  const sizeClass =
+    size === undefined || size === null ? "" : `${size.toLowerCase()}`
+  const otherClasses =
+    cssClass === undefined || cssClass === null ? "" : `${cssClass}`
   const placeholderValue =
-    placeholder === undefined ? "" : `${placeholder.toLowerCase()}`
+    placeholder === undefined || placeholder === null
+      ? ""
+      : `${placeholder.toLowerCase()}`
   const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
   const validationRule = validationRules?.find(rule => rule.id === id)
@@ -22,8 +26,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
   })
 
   function validateField(value: string): void {
-    const validation =
-      validationRule != null ? validationRule.regex : /[a-z][A-Z][0-9]+/g
+    const validation = validationRule != null ? validationRule.regex : /[a-z]+/g
 
     if ((isRequired ?? false) && value.length === 0) {
       return dispatch({
@@ -31,7 +34,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
         payload: { name: valueId, message: "Field cannot be empty" },
       })
     }
-    if (validation.test(value)) {
+    if (!validation.test(value)) {
       return dispatch({
         type: ActionTypes.AddError,
         payload: { name: valueId, message: "Invalid characters." },
