@@ -4,7 +4,7 @@ import { useFormContext, ActionTypes } from "../../formContext"
 import { TextFieldProps } from "../../interfaces"
 
 const TextField: React.FC<TextFieldProps> = props => {
-  const { field } = props
+  const { field, validationRules } = props
   const { id, type, formId, label, cssClass, isRequired, placeholder, size } =
     field
   const valueId = `${type}${id}Value`
@@ -14,21 +14,31 @@ const TextField: React.FC<TextFieldProps> = props => {
     placeholder === undefined ? "" : `${placeholder.toLowerCase()}`
   const classes = `${sizeClass} ${cssClass}`.trim()
   const { state, dispatch } = useFormContext()
+  const validationRule = validationRules?.find(rule => rule.id === id)
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
   })
 
   function validateField(value: string): void {
+    const validation =
+      validationRule != null ? validationRule.regex : /[a-z][A-Z][0-9]+/g
+
     if (isRequired && value.length === 0) {
       return dispatch({
         type: ActionTypes.AddError,
-        payload: { name: [valueId], message: "Field cannot be empty" },
+        payload: { name: valueId, message: "Field cannot be empty" },
+      })
+    }
+    if (validation.test(value)) {
+      return dispatch({
+        type: ActionTypes.AddError,
+        payload: { name: valueId, message: "Invalid characters." },
       })
     }
     return dispatch({
       type: ActionTypes.RemoveError,
-      payload: [valueId],
+      payload: valueId,
     })
   }
 

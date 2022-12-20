@@ -7,16 +7,17 @@ import Button from "./Button"
 import { supportedFields } from "../constants"
 
 // import types
-import type { Form } from "../interfaces"
+import type { Form, ValidationRule } from "../interfaces"
 
 interface GravityFormData {
   form: Form
   onSubmit: Function
   buttonClass?: string
+  validation?: ValidationRule[]
 }
 
 const FormComponent: React.FC<GravityFormData> = props => {
-  const { form, buttonClass, onSubmit } = props
+  const { form, buttonClass, onSubmit, validation } = props
   const fields = form.formFields.nodes
   const button = form.button
   const { state, dispatch } = useFormContext()
@@ -47,7 +48,11 @@ const FormComponent: React.FC<GravityFormData> = props => {
       <form onSubmit={handleSubmit}>
         {Boolean(fields) &&
           fields.map(field => (
-            <FormsField key={`${field.id}-${field.type}`} field={field} />
+            <FormsField
+              key={`${field.id}-${field.type}`}
+              field={field}
+              validation={validation}
+            />
           ))}
 
         {Boolean(button) && (

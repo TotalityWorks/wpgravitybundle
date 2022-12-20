@@ -71,4 +71,10 @@ export interface TextField {
 
 export interface TextFieldProps {
   field: TextField
+  validationRules?: ValidationRule[]
+}
+
+export interface ValidationRule {
+  id: number
+  regex: RegExp
 }

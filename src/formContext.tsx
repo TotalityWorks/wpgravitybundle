@@ -75,6 +75,21 @@ function formReducer(state: State, action: Action): State {
       }
     }
     case ActionTypes.AddError: {
+      const errorExists = state.errors.filter(
+        err => err.name.toString() === action.payload.name
+      )
+      if (errorExists.length > 0) {
+        const updatedErrors = state.errors.map(err => {
+          if (err.name.toString() === action.payload.name) {
+            return { name: err.name, message: action.payload.message }
+          }
+          return err
+        })
+        return {
+          ...state,
+          errors: updatedErrors,
+        }
+      }
       return {
         ...state,
         errors: [...state.errors, action.payload],
@@ -82,7 +97,7 @@ function formReducer(state: State, action: Action): State {
     }
     case ActionTypes.RemoveError: {
       const filteredErrors = state.errors.filter(
-        error => error.name === action.payload
+        error => error.name.toString() !== action.payload
       )
       return {
         ...state,
