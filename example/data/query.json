@@ -466,6 +466,19 @@
             "isRequired": true,
             "description": null,
             "checkboxLabel": "I agree to the privacy policy."
+          },
+          {
+            "id": 28,
+            "formId": 3,
+            "type": "upload",
+            "cssClass": null,
+            "pageNumber": 2,
+            "layoutGridColumnSpan": null,
+            "layoutSpacerGridColumnSpan": null,
+            "visibility": "VISIBLE",
+            "label": "Upload",
+            "isRequired": true,
+            "description": null
           }
         ]
       }

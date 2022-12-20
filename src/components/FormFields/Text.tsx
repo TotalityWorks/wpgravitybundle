@@ -10,9 +10,10 @@ const TextField: React.FC<TextFieldProps> = props => {
   const valueId = `${type}${id}Value`
   const htmlId = `field_${formId}_${id}`
   const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
+  const otherClasses = cssClass === undefined ? "" : `${cssClass}`
   const placeholderValue =
     placeholder === undefined ? "" : `${placeholder.toLowerCase()}`
-  const classes = `${sizeClass} ${cssClass}`.trim()
+  const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
   const validationRule = validationRules?.find(rule => rule.id === id)
 
@@ -24,7 +25,7 @@ const TextField: React.FC<TextFieldProps> = props => {
     const validation =
       validationRule != null ? validationRule.regex : /[a-z][A-Z][0-9]+/g
 
-    if (isRequired && value.length === 0) {
+    if ((isRequired ?? false) && value.length === 0) {
       return dispatch({
         type: ActionTypes.AddError,
         payload: { name: valueId, message: "Field cannot be empty" },
@@ -50,7 +51,7 @@ const TextField: React.FC<TextFieldProps> = props => {
   }
 
   useEffect(() => {
-    if (!isRequired) return undefined
+    if (!(isRequired ?? false)) return undefined
     if (state.formData?.[valueId]?.length === 0) {
       return dispatch({ type: ActionTypes.AddRequiredField, payload: valueId })
     }

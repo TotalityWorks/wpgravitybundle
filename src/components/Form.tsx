@@ -36,7 +36,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
       .map(field => {
         const valueId = `${field.type}${field.id}Value`
 
-        if (!field.isRequired) return null
+        if (!(field.isRequired ?? false)) return null
         return valueId
       })
       .filter(field => field !== null)

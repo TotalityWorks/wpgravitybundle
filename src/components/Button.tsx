@@ -4,7 +4,7 @@ import { useFormContext } from "../formContext"
 
 interface ButtonProps {
   type?: string
-  text: string
+  text?: string
   cssClass?: string
   onClick: React.MouseEventHandler<HTMLInputElement>
 }

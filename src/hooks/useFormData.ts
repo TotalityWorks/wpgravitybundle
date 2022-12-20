@@ -9,21 +9,18 @@ const createMutationVariables = (fields: Field[]): string => {
   // uses the form fields data to create a string literal for all
   // mutation variables your form will need.
   const mappedMutationVariables = fields.map((field, key) => {
-    const { type } = field
+    const { type, id, isRequired } = field
     const space = key === 0 ? "" : " "
-
-    const textFields = (field: Field): string => {
-      const { id, type, isRequired } = field
-      const required = isRequired ? "!" : ""
-      const value = `${type}${id}`
-      return `${space}$${value}Value: String${required}`
-    }
+    const value = `${type}${id}`
+    const required = isRequired ?? false ? "!" : ""
 
     switch (type) {
+      case "select":
+        return `${space}$${value}Value: String${required}`
       case "text":
-        return textFields(field)
+        return `${space}$${value}Value: String${required}`
       case "textarea":
-        return textFields(field)
+        return `${space}$${value}Value: String${required}`
       default:
         return ``
     }
@@ -44,11 +41,16 @@ const createFieldValuesShape = (fields: Field[]): string => {
     const value = `${type}${id}`
 
     switch (type) {
+      case "select":
+        return `{
+                  id: ${id}
+                  value: $${value}Value
+                }`
       case "text":
         return `{
                   id: ${id}
                   value: $${value}Value
-              }`
+                }`
       case "textarea":
         return `{
                     id: ${id}
