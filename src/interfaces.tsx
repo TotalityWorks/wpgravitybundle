@@ -69,8 +69,24 @@ export interface TextField {
   size?: string
 }
 
+export interface TextAreaField {
+  id: number
+  type: string
+  formId: string
+  label: string
+  cssClass: string
+  isRequired: boolean
+  placeholder: string
+  size?: string
+}
+
 export interface TextFieldProps {
   field: TextField
+  validationRules?: ValidationRule[]
+}
+
+export interface TextAreaFieldProps {
+  field: TextAreaField
   validationRules?: ValidationRule[]
 }
 
