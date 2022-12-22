@@ -4,6 +4,7 @@ import React, { lazy } from "react"
 import {
   Field,
   ConsentField,
+  EmailField,
   PhoneField,
   SelectField,
   TextField,
@@ -14,6 +15,7 @@ import {
 
 // import components
 const Consent = lazy(async () => await import("./FormFields/Consent"))
+const Email = lazy(async () => await import("./FormFields/Email"))
 const Phone = lazy(async () => await import("./FormFields/Phone"))
 const Select = lazy(async () => await import("./FormFields/Select"))
 const Text = lazy(async () => await import("./FormFields/Text"))
@@ -28,6 +30,8 @@ const FormsField: React.FC<{
   switch (field.type) {
     case "consent":
       return <Consent field={field as ConsentField} />
+    case "email":
+      return <Email field={field as EmailField} validationRules={validation} />
     case "phone":
       return <Phone field={field as PhoneField} validationRules={validation} />
     case "select":

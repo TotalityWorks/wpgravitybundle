@@ -67,6 +67,15 @@ export interface ConsentField extends Field {
   phoneFormat?: string
 }
 
+export interface EmailField extends Field {
+  formId: string
+  label?: string
+  cssClass?: string
+  placeholder?: string
+  size?: string
+  phoneFormat?: string
+}
+
 export interface PhoneField extends Field {
   formId: string
   label?: string
@@ -124,6 +133,11 @@ export interface ValidationRule {
 
 export interface ConsentFieldProps {
   field: ConsentField
+  validationRules?: ValidationRule[]
+}
+
+export interface EmailFieldProps {
+  field: EmailField
   validationRules?: ValidationRule[]
 }
 

@@ -14,6 +14,16 @@ const createMutationVariables = (fields: Field[]): string => {
     const value: string = `${type}${id}`
     const required = isRequired ?? false ? "!" : ""
 
+    const emailField = (): string => {
+      const email = `$${value}Value: String${required}`
+      const emailConfirmed = field.emailConfirmEnabled !== null
+      const emailConfirmation = emailConfirmed
+        ? `, $${value}ConfirmationValue: String${required}`
+        : ""
+
+      return `${space}${email}${emailConfirmation}`
+    }
+
     switch (type) {
       case "consent":
       case "phone":
@@ -22,6 +32,8 @@ const createMutationVariables = (fields: Field[]): string => {
       case "textarea":
       case "website":
         return `${space}$${value}Value: String${required}`
+      case "email":
+        return emailField()
       default:
         return ``
     }
@@ -41,6 +53,13 @@ const createFieldValuesShape = (fields: Field[]): string => {
     const { id, type } = field
     const value = `${type}${id}`
 
+    const isEmail = type === "email"
+    const emailConfirmed = field.emailConfirmEnabled !== null
+    const emailConfirmEnabled = isEmail && emailConfirmed
+    const emailConfirmation = emailConfirmEnabled
+      ? `confirmationValue: $${value}ConfirmationValue`
+      : ""
+
     switch (type) {
       case "consent":
       case "phone":
@@ -51,6 +70,14 @@ const createFieldValuesShape = (fields: Field[]): string => {
         return `{
                   id: ${id}
                   value: $${value}Value
+                }`
+      case "email":
+        return `{
+                  id: ${id}
+                  emailValues: {
+                      value: $${value}Value
+                      ${emailConfirmation}
+                  }
                 }`
       default:
         return ""
