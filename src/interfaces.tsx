@@ -64,7 +64,6 @@ export interface ConsentField extends Field {
   cssClass?: string
   placeholder?: string
   size?: string
-  phoneFormat?: string
 }
 
 export interface EmailField extends Field {
@@ -73,7 +72,27 @@ export interface EmailField extends Field {
   cssClass?: string
   placeholder?: string
   size?: string
-  phoneFormat?: string
+}
+
+interface NameInputChoice {
+  text?: string
+  value?: string
+}
+
+export interface NameInput {
+  key?: string
+  label?: string
+  isHidden?: boolean
+  placeholder?: string
+  choices?: NameInputChoice[]
+}
+
+export interface NameField extends Field {
+  formId: string
+  label?: string
+  cssClass?: string
+  size?: string
+  inputs?: NameInput[]
 }
 
 export interface PhoneField extends Field {
@@ -138,6 +157,11 @@ export interface ConsentFieldProps {
 
 export interface EmailFieldProps {
   field: EmailField
+  validationRules?: ValidationRule[]
+}
+
+export interface NameFieldProps {
+  field: NameField
   validationRules?: ValidationRule[]
 }
 

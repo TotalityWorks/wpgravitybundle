@@ -1,4 +1,4 @@
-import type { Field } from "../interfaces"
+import type { Field, NameInput } from "../interfaces"
 
 interface MutationInfo {
   mutationVariables: string
@@ -24,6 +24,41 @@ const createMutationVariables = (fields: Field[]): string => {
       return `${space}${email}${emailConfirmation}`
     }
 
+    const nameField = (): string => {
+      const prefixInput: NameInput | undefined = field?.inputs?.find(
+        (input: NameInput) => input.key === "prefix"
+      )
+      const firstInput: NameInput | undefined = field?.inputs?.find(
+        (input: NameInput) => input.key === "first"
+      )
+      const middleInput: NameInput | undefined = field?.inputs?.find(
+        (input: NameInput) => input.key === "middle"
+      )
+      const lastInput: NameInput | undefined = field?.inputs?.find(
+        (input: NameInput) => input.key === "last"
+      )
+      const suffixInput: NameInput | undefined = field?.inputs?.find(
+        (input: NameInput) => input.key === "suffix"
+      )
+      const prefix = !(prefixInput?.isHidden ?? false)
+        ? `$${value}PrefixValue: String${required}, `
+        : ""
+      const first = !(firstInput?.isHidden ?? false)
+        ? `$${value}FirstValue: String${required}, `
+        : ""
+      const middle = !(middleInput?.isHidden ?? false)
+        ? `$${value}MiddleValue: String${required}, `
+        : ""
+      const last = !(lastInput?.isHidden ?? false)
+        ? `$${value}LastValue: String${required}`
+        : ""
+      const suffix = !(suffixInput?.isHidden ?? false)
+        ? `, $${value}SuffixValue: String${required}`
+        : ""
+
+      return `${space}${prefix}${first}${middle}${last}${suffix}`
+    }
+
     switch (type) {
       case "consent":
       case "phone":
@@ -34,6 +69,8 @@ const createMutationVariables = (fields: Field[]): string => {
         return `${space}$${value}Value: String${required}`
       case "email":
         return emailField()
+      case "name":
+        return nameField()
       default:
         return ``
     }
@@ -60,6 +97,36 @@ const createFieldValuesShape = (fields: Field[]): string => {
       ? `confirmationValue: $${value}ConfirmationValue`
       : ""
 
+    const isName = type === "name"
+    const prefixInput: NameInput | undefined =
+      isName &&
+      field?.inputs?.find((input: NameInput) => input.key === "prefix")
+    const firstInput: NameInput | undefined =
+      isName && field?.inputs?.find((input: NameInput) => input.key === "first")
+    const middleInput: NameInput | undefined =
+      isName &&
+      field?.inputs?.find((input: NameInput) => input.key === "middle")
+    const lastInput: NameInput | undefined =
+      isName && field?.inputs?.find((input: NameInput) => input.key === "last")
+    const suffixInput: NameInput | undefined =
+      isName &&
+      field?.inputs?.find((input: NameInput) => input.key === "suffix")
+    const prefix = !(prefixInput?.isHidden ?? false)
+      ? `prefix: $${value}PrefixValue`
+      : ""
+    const first = !(firstInput?.isHidden ?? false)
+      ? `first: $${value}FirstValue`
+      : ""
+    const middle = !(middleInput?.isHidden ?? false)
+      ? `middle: $${value}MiddleValue`
+      : ""
+    const last = !(lastInput?.isHidden ?? false)
+      ? `last: $${value}LastValue`
+      : ""
+    const suffix = !(suffixInput?.isHidden ?? false)
+      ? `suffix: $${value}SuffixValue`
+      : ""
+
     switch (type) {
       case "consent":
       case "phone":
@@ -77,6 +144,17 @@ const createFieldValuesShape = (fields: Field[]): string => {
                   emailValues: {
                       value: $${value}Value
                       ${emailConfirmation}
+                  }
+                }`
+      case "name":
+        return `{
+                  id: ${id}
+                  nameValues: {
+                    ${prefix}
+                    ${first}
+                    ${middle}
+                    ${last}
+                    ${suffix}
                   }
                 }`
       default:

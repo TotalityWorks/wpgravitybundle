@@ -7,7 +7,7 @@ import Button from "./Button"
 import { supportedFields } from "../constants"
 
 // import types
-import type { Form, ValidationRule } from "../interfaces"
+import type { Form, ValidationRule, NameInput } from "../interfaces"
 
 interface GravityFormData {
   form: Form
@@ -34,11 +34,52 @@ const FormComponent: React.FC<GravityFormData> = props => {
     )
     const requiredFields = allSupportedFields
       .map(field => {
-        const valueId = `${field.type}${field.id}Value`
-
         if (!(field.isRequired ?? false)) return null
+        if (field.type === "name") {
+          const value = `${field.type}${field.id}`
+          const prefixInput: NameInput | undefined = field?.inputs?.find(
+            (input: NameInput) => input.key === "prefix"
+          )
+          const firstInput: NameInput | undefined = field?.inputs?.find(
+            (input: NameInput) => input.key === "first"
+          )
+          const middleInput: NameInput | undefined = field?.inputs?.find(
+            (input: NameInput) => input.key === "middle"
+          )
+          const lastInput: NameInput | undefined = field?.inputs?.find(
+            (input: NameInput) => input.key === "last"
+          )
+          const suffixInput: NameInput | undefined = field?.inputs?.find(
+            (input: NameInput) => input.key === "suffix"
+          )
+
+          const prefix = !(prefixInput?.isHidden ?? false)
+            ? `${value}PrefixValue`
+            : "not required"
+          const first = !(firstInput?.isHidden ?? false)
+            ? `${value}FirstValue`
+            : "not required"
+          const middle = !(middleInput?.isHidden ?? false)
+            ? `${value}MiddleValue`
+            : "not required"
+          const last = !(lastInput?.isHidden ?? false)
+            ? `${value}LastValue`
+            : "not required"
+          const suffix = !(suffixInput?.isHidden ?? false)
+            ? `${value}SuffixValue`
+            : "not required"
+          const requiredNameFields = [prefix, first, middle, last, suffix]
+          const filterNameFields = requiredNameFields.filter(
+            field => field !== "not required"
+          )
+
+          return filterNameFields
+        }
+
+        const valueId = `${field.type}${field.id}Value`
         return valueId
       })
+      .flat()
       .filter(field => field !== null)
     dispatch({ type: ActionTypes.AddRequired, payload: requiredFields })
   }, [])

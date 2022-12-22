@@ -60,9 +60,11 @@ function formReducer(state: State, action: Action): State {
     case ActionTypes.AddRequiredField: {
       const requiredFieldsCopy = [...state.requiredFields]
       requiredFieldsCopy.push(action.payload)
+      const uniqueRequiredFields = new Set(requiredFieldsCopy)
+      const updatedRequiredFields = [...uniqueRequiredFields]
       return {
         ...state,
-        requiredFields: requiredFieldsCopy,
+        requiredFields: updatedRequiredFields,
       }
     }
     case ActionTypes.RemoveRequiredField: {
