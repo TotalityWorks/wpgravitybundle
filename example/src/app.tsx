@@ -15,7 +15,7 @@ const App: React.FC<GravityFormData> = ({ form }) => {
   const [data, setData] = useState()
   const buttonClass = "btn btn-primary"
 
-  const validation = [{id: 98, regex: /[0-9]+/g}]
+  const validation = [{id: 98, regex: /[0-9]+/g, message: "I don't like letters! Only numbers."}]
 
   const handleSubmit = (values: any) => {
     const formData = values

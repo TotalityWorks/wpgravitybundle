@@ -108,9 +108,18 @@ export interface TextAreaField extends Field {
   size?: string
 }
 
+export interface WebsiteField extends Field {
+  formId: string
+  label?: string
+  cssClass?: string
+  placeholder?: string
+  size?: string
+}
+
 export interface ValidationRule {
   id: number
-  regex: RegExp
+  regex?: RegExp
+  message?: string
 }
 
 export interface ConsentFieldProps {
@@ -135,5 +144,10 @@ export interface TextFieldProps {
 
 export interface TextAreaFieldProps {
   field: TextAreaField
+  validationRules?: ValidationRule[]
+}
+
+export interface WebsiteFieldProps {
+  field: TextField
   validationRules?: ValidationRule[]
 }

@@ -4,4 +4,5 @@ export const supportedFields = [
   "select",
   "text",
   "textarea",
+  "website",
 ]

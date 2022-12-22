@@ -1,9 +1,9 @@
 import React, { useEffect } from "react"
 
 import { useFormContext, ActionTypes } from "../../formContext"
-import { TextAreaFieldProps } from "../../interfaces"
+import { WebsiteFieldProps } from "../../interfaces"
 
-const TextAreaField: React.FC<TextAreaFieldProps> = props => {
+const WebsiteField: React.FC<WebsiteFieldProps> = props => {
   const { field, validationRules } = props
   const { id, type, formId, label, cssClass, isRequired, placeholder, size } =
     field
@@ -27,11 +27,13 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
 
   function validateField(value: string): void {
     const validationRegex =
-      validationRule?.regex != null ? validationRule.regex : /[a-z]+/g
+      validationRule?.regex != null
+        ? validationRule.regex
+        : /https:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)+/g
     const validationMessage =
       validationRule?.message != null
         ? validationRule.message
-        : "Please enter valid characters."
+        : "Please enter a valid web address starting with https://."
 
     if ((isRequired ?? false) && value.length === 0) {
       return dispatch({
@@ -42,7 +44,10 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
     if (!validationRegex.test(value)) {
       return dispatch({
         type: ActionTypes.AddError,
-        payload: { name: valueId, message: validationMessage },
+        payload: {
+          name: valueId,
+          message: validationMessage,
+        },
       })
     }
     return dispatch({
@@ -51,7 +56,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
     })
   }
 
-  const handleChange = (event: React.FormEvent<HTMLTextAreaElement>): void => {
+  const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     event.preventDefault()
     const { value } = event.currentTarget
     validateField(value)
@@ -69,17 +74,18 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
   return (
     <div className={classes}>
       <label htmlFor={htmlId}>{label}</label>
-      <textarea
+      <input
+        type="text"
         name={htmlId}
         id={htmlId}
         required={isRequired}
-        onChange={handleChange}
         placeholder={placeholderValue}
         defaultValue={state.formData?.[valueId]}
+        onChange={handleChange}
       />
       <p className="error-message">{errorMessage?.message}</p>
     </div>
   )
 }
 
-export default TextAreaField
+export default WebsiteField

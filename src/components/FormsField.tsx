@@ -8,6 +8,7 @@ import {
   SelectField,
   TextField,
   TextAreaField,
+  WebsiteField,
   ValidationRule,
 } from "../interfaces"
 
@@ -17,6 +18,7 @@ const Phone = lazy(async () => await import("./FormFields/Phone"))
 const Select = lazy(async () => await import("./FormFields/Select"))
 const Text = lazy(async () => await import("./FormFields/Text"))
 const TextArea = lazy(async () => await import("./FormFields/TextArea"))
+const Website = lazy(async () => await import("./FormFields/Website"))
 
 const FormsField: React.FC<{
   field: Field
@@ -35,6 +37,10 @@ const FormsField: React.FC<{
     case "textarea":
       return (
         <TextArea field={field as TextAreaField} validationRules={validation} />
+      )
+    case "website":
+      return (
+        <Website field={field as WebsiteField} validationRules={validation} />
       )
     default:
       return (

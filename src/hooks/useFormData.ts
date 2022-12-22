@@ -20,6 +20,7 @@ const createMutationVariables = (fields: Field[]): string => {
       case "select":
       case "text":
       case "textarea":
+      case "website":
         return `${space}$${value}Value: String${required}`
       default:
         return ``
@@ -46,6 +47,7 @@ const createFieldValuesShape = (fields: Field[]): string => {
       case "select":
       case "text":
       case "textarea":
+      case "website":
         return `{
                   id: ${id}
                   value: $${value}Value

@@ -26,7 +26,12 @@ const TextField: React.FC<TextFieldProps> = props => {
   })
 
   function validateField(value: string): void {
-    const validation = validationRule != null ? validationRule.regex : /[a-z]+/g
+    const validationRegex =
+      validationRule?.regex != null ? validationRule.regex : /[a-z]+/g
+    const validationMessage =
+      validationRule?.message != null
+        ? validationRule.message
+        : "Please enter valid characters."
 
     if ((isRequired ?? false) && value.length === 0) {
       return dispatch({
@@ -34,10 +39,10 @@ const TextField: React.FC<TextFieldProps> = props => {
         payload: { name: valueId, message: "Field cannot be empty" },
       })
     }
-    if (!validation.test(value)) {
+    if (!validationRegex.test(value)) {
       return dispatch({
         type: ActionTypes.AddError,
-        payload: { name: valueId, message: "Invalid characters." },
+        payload: { name: valueId, message: validationMessage },
       })
     }
     return dispatch({
