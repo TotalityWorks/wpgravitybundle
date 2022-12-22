@@ -3,6 +3,7 @@ import React, { lazy } from "react"
 // import types
 import {
   Field,
+  ConsentField,
   PhoneField,
   SelectField,
   TextField,
@@ -11,6 +12,7 @@ import {
 } from "../interfaces"
 
 // import components
+const Consent = lazy(async () => await import("./FormFields/Consent"))
 const Phone = lazy(async () => await import("./FormFields/Phone"))
 const Select = lazy(async () => await import("./FormFields/Select"))
 const Text = lazy(async () => await import("./FormFields/Text"))
@@ -22,6 +24,8 @@ const FormsField: React.FC<{
 }> = props => {
   const { field, validation } = props
   switch (field.type) {
+    case "consent":
+      return <Consent field={field as ConsentField} />
     case "phone":
       return <Phone field={field as PhoneField} validationRules={validation} />
     case "select":

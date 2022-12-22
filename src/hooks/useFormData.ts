@@ -10,17 +10,15 @@ const createMutationVariables = (fields: Field[]): string => {
   // mutation variables your form will need.
   const mappedMutationVariables = fields.map((field, key) => {
     const { type, id, isRequired } = field
-    const space = key === 0 ? "" : " "
-    const value = `${type}${id}`
+    const space: string = key === 0 ? "" : " "
+    const value: string = `${type}${id}`
     const required = isRequired ?? false ? "!" : ""
 
     switch (type) {
+      case "consent":
       case "phone":
-        return `${space}$${value}Value: String${required}`
       case "select":
-        return `${space}$${value}Value: String${required}`
       case "text":
-        return `${space}$${value}Value: String${required}`
       case "textarea":
         return `${space}$${value}Value: String${required}`
       default:
@@ -43,21 +41,10 @@ const createFieldValuesShape = (fields: Field[]): string => {
     const value = `${type}${id}`
 
     switch (type) {
+      case "consent":
       case "phone":
-        return `{
-                  id: ${id}
-                  value: $${value}Value
-                }`
       case "select":
-        return `{
-                  id: ${id}
-                  value: $${value}Value
-                }`
       case "text":
-        return `{
-                  id: ${id}
-                  value: $${value}Value
-                }`
       case "textarea":
         return `{
                   id: ${id}

@@ -58,6 +58,15 @@ export interface Field {
   [key: string]: any
 }
 
+export interface ConsentField extends Field {
+  formId: string
+  label?: string
+  cssClass?: string
+  placeholder?: string
+  size?: string
+  phoneFormat?: string
+}
+
 export interface PhoneField extends Field {
   formId: string
   label?: string
@@ -99,6 +108,16 @@ export interface TextAreaField extends Field {
   size?: string
 }
 
+export interface ValidationRule {
+  id: number
+  regex: RegExp
+}
+
+export interface ConsentFieldProps {
+  field: ConsentField
+  validationRules?: ValidationRule[]
+}
+
 export interface PhoneFieldProps {
   field: PhoneField
   validationRules?: ValidationRule[]
@@ -117,9 +136,4 @@ export interface TextFieldProps {
 export interface TextAreaFieldProps {
   field: TextAreaField
   validationRules?: ValidationRule[]
-}
-
-export interface ValidationRule {
-  id: number
-  regex: RegExp
 }

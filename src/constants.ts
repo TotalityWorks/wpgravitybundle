@@ -1,1 +1,7 @@
-export const supportedFields = ["phone", "select", "text", "textarea"]
+export const supportedFields = [
+  "consent",
+  "phone",
+  "select",
+  "text",
+  "textarea",
+]
