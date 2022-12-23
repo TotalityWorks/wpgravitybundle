@@ -58,6 +58,21 @@ export interface Field {
   [key: string]: any
 }
 
+interface AddressInput {
+  key?: string
+  label?: string
+  placeholder?: string
+}
+
+export interface AddressField extends Field {
+  formId: string
+  label?: string
+  cssClass?: string
+  placeholder?: string
+  size?: string
+  inputs?: AddressInput[]
+}
+
 export interface ConsentField extends Field {
   formId: string
   label?: string
@@ -148,6 +163,11 @@ export interface ValidationRule {
   id: number
   regex?: RegExp
   message?: string
+}
+
+export interface AddressFieldProps {
+  field: AddressField
+  validationRules?: ValidationRule[]
 }
 
 export interface ConsentFieldProps {

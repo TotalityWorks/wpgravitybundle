@@ -75,6 +75,24 @@ const FormComponent: React.FC<GravityFormData> = props => {
 
           return filterNameFields
         }
+        if (field.type === "address") {
+          const { type, id } = field
+          const streetId = `${type}${id}StreetValue`
+          // lineTwo is not needed for required fields
+          const cityId = `${type}${id}CityValue`
+          const stateId = `${type}${id}StateValue`
+          const zipId = `${type}${id}ZipValue`
+          const countryId = `${type}${id}CountryValue`
+          const requiredAddressFields = [
+            streetId,
+            cityId,
+            stateId,
+            zipId,
+            countryId,
+          ]
+
+          return requiredAddressFields
+        }
 
         const valueId = `${field.type}${field.id}Value`
         return valueId

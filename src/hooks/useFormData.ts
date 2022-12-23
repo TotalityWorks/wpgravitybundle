@@ -14,6 +14,17 @@ const createMutationVariables = (fields: Field[]): string => {
     const value: string = `${type}${id}`
     const required = isRequired ?? false ? "!" : ""
 
+    const addressField = (): string => {
+      const street = `$${value}StreetValue: String${required}`
+      const lineTwo = `$${value}LineTwoValue: String${required}`
+      const city = `$${value}CityValue: String${required}`
+      const state = `$${value}StateValue: String${required}`
+      const zip = `$${value}ZipValue: String${required}`
+      const country = `$${value}CountryValue: String${required}`
+
+      return `${space}${street}, ${lineTwo}, ${city}, ${state}, ${zip}, ${country}`
+    }
+
     const emailField = (): string => {
       const email = `$${value}Value: String${required}`
       const emailConfirmed = field.emailConfirmEnabled !== null
@@ -67,6 +78,8 @@ const createMutationVariables = (fields: Field[]): string => {
       case "textarea":
       case "website":
         return `${space}$${value}Value: String${required}`
+      case "address":
+        return addressField()
       case "email":
         return emailField()
       case "name":
@@ -89,6 +102,13 @@ const createFieldValuesShape = (fields: Field[]): string => {
   const mappedFieldValuesShape = fields.map(field => {
     const { id, type } = field
     const value = `${type}${id}`
+
+    const street = `street: $${value}StreetValue`
+    const lineTwo = `lineTwo: $${value}LineTwoValue`
+    const city = `city: $${value}CityValue`
+    const state = `state: $${value}StateValue`
+    const zip = `zip: $${value}ZipValue`
+    const country = `country: $${value}CountryValue`
 
     const isEmail = type === "email"
     const emailConfirmed = field.emailConfirmEnabled !== null
@@ -138,6 +158,18 @@ const createFieldValuesShape = (fields: Field[]): string => {
                   id: ${id}
                   value: $${value}Value
                 }`
+      case "address":
+        return `{
+                  id: ${id}
+                  addressValues: {
+                      ${street}
+                      ${lineTwo}
+                      ${city}
+                      ${state}
+                      ${zip}
+                      ${country}
+                    }
+                  }`
       case "email":
         return `{
                   id: ${id}

@@ -1,4 +1,5 @@
 export const supportedFields = [
+  "address",
   "consent",
   "email",
   "name",
