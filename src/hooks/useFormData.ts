@@ -12,7 +12,7 @@ const createMutationVariables = (fields: Field[]): string => {
     const { type, id, isRequired } = field
     const space: string = key === 0 ? "" : " "
     const value: string = `${type}${id}`
-    const required = isRequired ?? false ? "!" : ""
+    const required: string = isRequired ?? false ? "!" : ""
 
     const addressField = (): string => {
       const street = `$${value}StreetValue: String${required}`
@@ -71,18 +71,18 @@ const createMutationVariables = (fields: Field[]): string => {
     }
 
     switch (type) {
-      case "consent":
-      case "phone":
-      case "select":
-      case "text":
-      case "textarea":
-      case "website":
+      case "CONSENT":
+      case "PHONE":
+      case "SELECT":
+      case "TEXT":
+      case "TEXTAREA":
+      case "WEBSITE":
         return `${space}$${value}Value: String${required}`
-      case "address":
+      case "ADDRESS":
         return addressField()
-      case "email":
+      case "EMAIL":
         return emailField()
-      case "name":
+      case "NAME":
         return nameField()
       default:
         return ``
@@ -110,14 +110,14 @@ const createFieldValuesShape = (fields: Field[]): string => {
     const zip = `zip: $${value}ZipValue`
     const country = `country: $${value}CountryValue`
 
-    const isEmail = type === "email"
+    const isEmail = type === "EMAIL"
     const emailConfirmed = field.emailConfirmEnabled !== null
     const emailConfirmEnabled = isEmail && emailConfirmed
     const emailConfirmation = emailConfirmEnabled
       ? `confirmationValue: $${value}ConfirmationValue`
       : ""
 
-    const isName = type === "name"
+    const isName = type === "NAME"
     const prefixInput: NameInput | undefined =
       isName &&
       field?.inputs?.find((input: NameInput) => input.key === "prefix")
@@ -148,17 +148,17 @@ const createFieldValuesShape = (fields: Field[]): string => {
       : ""
 
     switch (type) {
-      case "consent":
-      case "phone":
-      case "select":
-      case "text":
-      case "textarea":
-      case "website":
+      case "CONSENT":
+      case "PHONE":
+      case "SELECT":
+      case "TEXT":
+      case "TEXTAREA":
+      case "WEBSITE":
         return `{
                   id: ${id}
                   value: $${value}Value
                 }`
-      case "address":
+      case "ADDRESS":
         return `{
                   id: ${id}
                   addressValues: {
@@ -170,7 +170,7 @@ const createFieldValuesShape = (fields: Field[]): string => {
                       ${country}
                     }
                   }`
-      case "email":
+      case "EMAIL":
         return `{
                   id: ${id}
                   emailValues: {
@@ -178,7 +178,7 @@ const createFieldValuesShape = (fields: Field[]): string => {
                       ${emailConfirmation}
                   }
                 }`
-      case "name":
+      case "NAME":
         return `{
                   id: ${id}
                   nameValues: {

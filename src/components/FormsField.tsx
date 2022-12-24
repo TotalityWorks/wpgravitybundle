@@ -32,25 +32,25 @@ const FormsField: React.FC<{
 }> = props => {
   const { field, validation } = props
   switch (field.type) {
-    case "address":
+    case "ADDRESS":
       return <Address field={field as AddressField} />
-    case "consent":
+    case "CONSENT":
       return <Consent field={field as ConsentField} />
-    case "email":
+    case "EMAIL":
       return <Email field={field as EmailField} validationRules={validation} />
-    case "name":
+    case "NAME":
       return <Name field={field as NameField} validationRules={validation} />
-    case "phone":
+    case "PHONE":
       return <Phone field={field as PhoneField} validationRules={validation} />
-    case "select":
+    case "SELECT":
       return <Select field={field as SelectField} />
-    case "text":
+    case "TEXT":
       return <Text field={field as TextField} validationRules={validation} />
-    case "textarea":
+    case "TEXTAREA":
       return (
         <TextArea field={field as TextAreaField} validationRules={validation} />
       )
-    case "website":
+    case "WEBSITE":
       return (
         <Website field={field as WebsiteField} validationRules={validation} />
       )

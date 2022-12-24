@@ -3,8 +3,7 @@ import { createRoot } from "react-dom/client"
 import GravityForm, { useGravityFormMutation } from "../../src"
 
 import type { Form, ValidationRule } from '../../src/interfaces'
-import query from "../data/query.json"
-const form = query.data.gravityFormsForm
+import data from "../data/query.json"
 
 interface GravityFormData {
   form: Form
@@ -48,4 +47,4 @@ const App: React.FC<GravityFormData> = ({ form }) => {
 
 const root = createRoot(document.getElementById("root")!)
 
-root.render(<App form={form} />)
+root.render(<App form={data.form} />)

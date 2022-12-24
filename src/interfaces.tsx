@@ -1,47 +1,76 @@
 export interface Form {
   id: string
-  formId: number
-  title?: string
-  isActive?: Boolean
+  databaseId: number
+  cssClass?: string | null
+  customRequiredIndicator?: null
+  dateCreated?: string
+  dateCreatedGmt?: string
   description?: string
   descriptionPlacement?: string
-  cssClass?: null
-  cssClassList?: null
+  firstPageCssClass?: string
+  hasConditionalLogicAnimation?: boolean
+  hasHoneypot?: boolean
+  hasValidationSummary?: boolean
+  isActive?: boolean
+  isTrash?: boolean
   labelPlacement?: string
+  markupVersion?: number
+  nextFieldId?: number
+  nodeType?: string
+  requiredIndicator?: null
   subLabelPlacement?: null
-  validationSummary?: null
+  title?: string
+  version?: string
   confirmations?: Confirmation[]
-  button: Button
-  lastPageButton?: LastPageButton
   pagination?: Pagination
+  saveAndContinue?: null
+  scheduling?: Scheduling
+  submitButton: Button
   formFields: { nodes: Field[] }
 }
 
 interface Button {
+  imageUrl?: string | null
+  layoutGridColumnSpan?: null
+  location?: null
   type?: string
   text?: string
-  imageUrl?: string
+  width?: null
   conditionalLogic?: null
-}
-
-interface LastPageButton {
-  imageUrl?: string
-  text?: string
-  type?: string
 }
 
 interface Pagination {
   type?: string
   style?: string
-  pages?: string[]
+  pageNames?: string[]
   color?: null
   backgroundColor?: null
   progressbarCompletionText?: null
-  displayProgressbarOnConfirmation?: Boolean
+  hasProgressbarOnConfirmation?: Boolean
+}
+
+interface Scheduling {
+  closedMessage: null
+  hasSchedule: boolean
+  pendingMessage: null
+  startDetails: {
+    amPm: null
+    dateGmt: null
+    hour: null
+    minute: null
+  }
+  endDetails: {
+    amPm: null
+    dateGmt: null
+    hour: null
+    minute: null
+  }
 }
 
 interface Confirmation {
   id?: string
+  isActive: boolean
+  isAutoformatted: boolean
   isDefault?: boolean
   message?: string
   name?: string
@@ -49,6 +78,7 @@ interface Confirmation {
   queryString?: string
   type?: string
   url?: string
+  conditionalLogic: null
 }
 
 export interface Field {

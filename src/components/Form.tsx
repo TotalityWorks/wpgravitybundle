@@ -19,7 +19,7 @@ interface GravityFormData {
 const FormComponent: React.FC<GravityFormData> = props => {
   const { form, buttonClass, onSubmit, validation } = props
   const fields = form.formFields.nodes
-  const button = form.button
+  const button = form.submitButton
   const { state, dispatch } = useFormContext()
 
   const handleSubmit = (e: React.SyntheticEvent): Function => {

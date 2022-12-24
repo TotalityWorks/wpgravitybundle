@@ -11,7 +11,7 @@ export const useGravityFormMutation = (form: Form): string => {
       mutation SubmitForm(${mutationVariables}) {
           submitGravityFormsForm(
               input: {
-                  formId: ${form.formId}
+                  formId: ${form.databaseId}
                   fieldValues: [${fieldValuesShape}]
                   saveAsDraft: false
                   sourcePage: 1
