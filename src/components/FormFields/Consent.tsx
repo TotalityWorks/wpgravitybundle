@@ -5,9 +5,9 @@ import { ConsentFieldProps } from "../../interfaces"
 
 const ConsentField: React.FC<ConsentFieldProps> = props => {
   const { field } = props
-  const { id, formId, type, label, cssClass, isRequired, checkboxLabel } = field
+  const { id, type, label, cssClass, isRequired, checkboxLabel } = field
   const valueId = `${type}${id}Value`
-  const htmlId = `field_${formId}_${id}`
+  const htmlId = `field_${id}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
   const [isChecked, setIsChecked] = useState(false)
   const { state, dispatch } = useFormContext()

@@ -5,19 +5,10 @@ import { SelectFieldProps } from "../../interfaces"
 
 const SelectField: React.FC<SelectFieldProps> = props => {
   const { field } = props
-  const {
-    id,
-    type,
-    formId,
-    label,
-    cssClass,
-    isRequired,
-    defaultValue,
-    choices,
-    size,
-  } = field
+  const { id, type, label, cssClass, isRequired, defaultValue, choices, size } =
+    field
   const valueId = `${type}${id}Value`
-  const htmlId = `field_${formId}_${id}`
+  const htmlId = `field_${id}`
   const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
   const classes = `${sizeClass} ${otherClasses}`

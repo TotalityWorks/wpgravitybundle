@@ -70,7 +70,7 @@ export const query = graphql`
     query {
         gravityFormsForm(id: 50, idType: DATABASE_ID) {
             title
-            formId
+            databaseId
             cssClass
             formFields {
                 nodes {

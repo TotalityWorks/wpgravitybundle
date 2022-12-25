@@ -95,7 +95,6 @@ interface AddressInput {
 }
 
 export interface AddressField extends Field {
-  formId: string
   label?: string
   cssClass?: string
   placeholder?: string
@@ -104,7 +103,6 @@ export interface AddressField extends Field {
 }
 
 export interface ConsentField extends Field {
-  formId: string
   label?: string
   cssClass?: string
   placeholder?: string
@@ -112,7 +110,6 @@ export interface ConsentField extends Field {
 }
 
 export interface EmailField extends Field {
-  formId: string
   label?: string
   cssClass?: string
   placeholder?: string
@@ -133,7 +130,6 @@ export interface NameInput {
 }
 
 export interface NameField extends Field {
-  formId: string
   label?: string
   cssClass?: string
   size?: string
@@ -141,7 +137,6 @@ export interface NameField extends Field {
 }
 
 export interface PhoneField extends Field {
-  formId: string
   label?: string
   cssClass?: string
   placeholder?: string
@@ -156,7 +151,6 @@ interface RadioSelectFieldChoice {
 }
 
 export interface SelectField extends Field {
-  formId: string
   label?: string
   description?: string
   cssClass?: string
@@ -166,7 +160,6 @@ export interface SelectField extends Field {
 }
 
 export interface TextField extends Field {
-  formId: string
   label?: string
   cssClass?: string
   placeholder?: string
@@ -174,7 +167,6 @@ export interface TextField extends Field {
 }
 
 export interface TextAreaField extends Field {
-  formId: string
   label?: string
   cssClass?: string
   placeholder?: string
@@ -182,7 +174,6 @@ export interface TextAreaField extends Field {
 }
 
 export interface WebsiteField extends Field {
-  formId: string
   label?: string
   cssClass?: string
   placeholder?: string

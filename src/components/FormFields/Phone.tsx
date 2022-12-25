@@ -11,7 +11,6 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
   const {
     id,
     type,
-    formId,
     label,
     cssClass,
     isRequired,
@@ -20,7 +19,7 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
     // phoneFormat,
   } = field
   const valueId = `${type}${id}Value`
-  const htmlId = `field_${formId}_${id}`
+  const htmlId = `field_${id}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   // const format =

@@ -5,10 +5,9 @@ import { TextAreaFieldProps } from "../../interfaces"
 
 const TextAreaField: React.FC<TextAreaFieldProps> = props => {
   const { field, validationRules } = props
-  const { id, type, formId, label, cssClass, isRequired, placeholder, size } =
-    field
+  const { id, type, label, cssClass, isRequired, placeholder, size } = field
   const valueId = `${type}${id}Value`
-  const htmlId = `field_${formId}_${id}`
+  const htmlId = `field_${id}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const otherClasses =

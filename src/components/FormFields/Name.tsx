@@ -9,9 +9,9 @@ interface NameValue {
 
 const NameField: React.FC<NameFieldProps> = props => {
   const { field, validationRules } = props
-  const { id, formId, type, label, cssClass, isRequired, size, inputs } = field
+  const { id, type, label, cssClass, isRequired, size, inputs } = field
   const valueId = `${type}${id}Value`
-  const htmlId = `field_${formId}_${id}`
+  const htmlId = `field_${id}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const otherClasses =
@@ -166,7 +166,7 @@ const NameField: React.FC<NameFieldProps> = props => {
         <>
           <select
             name={String(prefixInput?.key)}
-            id={`input_${formId}_${id}_${String(prefixInput?.key)}`}
+            id={`input_${id}_${String(prefixInput?.key)}`}
             value={nameValue?.prefix}
             onChange={handleChange}
           >
@@ -192,11 +192,11 @@ const NameField: React.FC<NameFieldProps> = props => {
         }
         return (
           <div key={key}>
-            <label htmlFor={`input_${formId}_${id}_${key}`}>{inputLabel}</label>
+            <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>
             <input
               name={String(key)}
               type="text"
-              id={`input_${formId}_${id}_${key}`}
+              id={`input_${id}_${key}`}
               placeholder={placeholderValue}
               required={isRequired}
               value={nameValue?.[key]}

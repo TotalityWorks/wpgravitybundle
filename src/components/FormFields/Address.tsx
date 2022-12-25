@@ -9,9 +9,9 @@ interface AddressValue {
 
 const AddressField: React.FC<AddressFieldProps> = props => {
   const { field, validationRules } = props
-  const { id, formId, type, label, cssClass, inputs, size, isRequired } = field
+  const { id, type, label, cssClass, inputs, size, isRequired } = field
   const valueId = `${type}${id}Value`
-  const htmlId = `field_${formId}_${id}`
+  const htmlId = `field_${id}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const otherClasses =
@@ -152,12 +152,12 @@ const AddressField: React.FC<AddressFieldProps> = props => {
             <input
               type="text"
               name={String(key)}
-              id={`input_${formId}_${id}_${key}`}
+              id={`input_${id}_${key}`}
               placeholder={placeholder}
               value={addressValue?.[key]}
               onChange={handleChange}
             />
-            <label htmlFor={`input_${formId}_${id}_${key}`}>{inputLabel}</label>
+            <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>
           </div>
         )
       })}
