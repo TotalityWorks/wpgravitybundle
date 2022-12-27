@@ -8,6 +8,7 @@ import {
   EmailField,
   NameField,
   NumberField,
+  PageField,
   PhoneField,
   RadioField,
   SelectField,
@@ -23,6 +24,7 @@ const Consent = lazy(async () => await import("./FormFields/Consent"))
 const Email = lazy(async () => await import("./FormFields/Email"))
 const Name = lazy(async () => await import("./FormFields/Name"))
 const Number = lazy(async () => await import("./FormFields/Number"))
+const Page = lazy(async () => await import("./FormFields/Page"))
 const Phone = lazy(async () => await import("./FormFields/Phone"))
 const Radio = lazy(async () => await import("./FormFields/Radio"))
 const Select = lazy(async () => await import("./FormFields/Select"))
@@ -48,6 +50,8 @@ const FormsField: React.FC<{
       return (
         <Number field={field as NumberField} validationRules={validation} />
       )
+    case "PAGE":
+      return <Page field={field as PageField} />
     case "PHONE":
       return <Phone field={field as PhoneField} validationRules={validation} />
     case "RADIO":
@@ -66,7 +70,11 @@ const FormsField: React.FC<{
       )
     default:
       return (
-        <p>{`This Gravity Forms field type is not currently supported: ${field.type}.`}</p>
+        <>
+          {console.log(
+            `This Gravity Forms field type is not currently supported: ${field.type}.`
+          )}
+        </>
       )
   }
 }

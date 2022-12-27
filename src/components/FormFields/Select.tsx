@@ -5,15 +5,28 @@ import { SelectFieldProps } from "../../interfaces"
 
 const SelectField: React.FC<SelectFieldProps> = props => {
   const { field } = props
-  const { id, type, label, cssClass, isRequired, defaultValue, choices, size } =
-    field
+  const {
+    id,
+    type,
+    label,
+    cssClass,
+    isRequired,
+    defaultValue,
+    choices,
+    size,
+    pageNumber,
+  } = field
   const valueId = `${type}${id}Value`
   const htmlId = `field_${id}`
   const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
+  const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
   const [selectValue, setSelectValue] = useState("")
+
+  const isCurrentPage = state.currentPage === page
+  const activePageStyle = isCurrentPage ? "block" : "none"
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -48,7 +61,7 @@ const SelectField: React.FC<SelectFieldProps> = props => {
   }
 
   return (
-    <div className={classes}>
+    <div className={classes} style={{ display: activePageStyle }}>
       <label htmlFor={htmlId}>{label}</label>
       <select
         name={htmlId}

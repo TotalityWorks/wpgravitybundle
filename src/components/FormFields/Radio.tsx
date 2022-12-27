@@ -5,14 +5,19 @@ import { RadioFieldProps } from "../../interfaces"
 
 const RadioField: React.FC<RadioFieldProps> = props => {
   const { field } = props
-  const { id, type, label, cssClass, isRequired, choices, size } = field
+  const { id, type, label, cssClass, isRequired, choices, size, pageNumber } =
+    field
   const valueId = `${type}${id}Value`
   const htmlId = `field_${id}`
   const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
+  const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
   const [radioValue, setRadioValue] = useState("")
+
+  const isCurrentPage = state.currentPage === page
+  const activePageStyle = isCurrentPage ? "block" : "none"
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -50,7 +55,11 @@ const RadioField: React.FC<RadioFieldProps> = props => {
   }
 
   return (
-    <fieldset id={htmlId} className={classes}>
+    <fieldset
+      id={htmlId}
+      className={classes}
+      style={{ display: activePageStyle }}
+    >
       <legend>{label}</legend>
       {choices?.map(input => {
         const text = input?.text

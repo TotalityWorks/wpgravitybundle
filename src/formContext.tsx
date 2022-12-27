@@ -9,6 +9,8 @@ interface State {
   formData: { [key: string]: any }
   errors: Error[]
   requiredFields: string[]
+  currentPage: number
+  totalPageCount: number
 }
 
 export enum ActionTypes {
@@ -18,6 +20,8 @@ export enum ActionTypes {
   RemoveRequiredField = "REMOVE_REQUIRED_FIELD",
   AddError = "ADD_ERROR_MESSAGE",
   RemoveError = "REMOVE_ERROR_MESSAGE",
+  ChangePageNumber = "CHANGE_PAGE_NUMBER",
+  UpdateTotalPageCount = "UPDATE_TOTAL_PAGE_COUNT",
 }
 
 interface Action {
@@ -38,6 +42,8 @@ const initialState: State = {
   formData: {},
   errors: [],
   requiredFields: [],
+  currentPage: 1,
+  totalPageCount: 1,
 }
 
 function formReducer(state: State, action: Action): State {
@@ -104,6 +110,18 @@ function formReducer(state: State, action: Action): State {
       return {
         ...state,
         errors: [...filteredErrors],
+      }
+    }
+    case ActionTypes.ChangePageNumber: {
+      return {
+        ...state,
+        currentPage: action.payload,
+      }
+    }
+    case ActionTypes.UpdateTotalPageCount: {
+      return {
+        ...state,
+        totalPageCount: action.payload,
       }
     }
     default: {

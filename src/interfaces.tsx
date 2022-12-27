@@ -85,6 +85,7 @@ export interface Field {
   id: number
   type: string
   isRequired?: boolean
+  pageNumber?: number
   [key: string]: any
 }
 
@@ -141,6 +142,18 @@ export interface NumberField extends Field {
   cssClass?: string
   placeholder?: string
   size?: string
+}
+
+interface PageButton {
+  imageUrl?: string
+  text?: string
+  type?: string
+}
+
+export interface PageField extends Field {
+  cssClass?: string
+  nextButton: PageButton
+  previousButton: PageButton
 }
 
 export interface PhoneField extends Field {
@@ -230,6 +243,11 @@ export interface NameFieldProps {
 
 export interface NumberFieldProps {
   field: NumberField
+  validationRules?: ValidationRule[]
+}
+
+export interface PageFieldProps {
+  field: PageField
   validationRules?: ValidationRule[]
 }
 

@@ -5,7 +5,16 @@ import { TextFieldProps } from "../../interfaces"
 
 const TextField: React.FC<TextFieldProps> = props => {
   const { field, validationRules } = props
-  const { id, type, label, cssClass, isRequired, placeholder, size } = field
+  const {
+    id,
+    type,
+    label,
+    cssClass,
+    isRequired,
+    placeholder,
+    size,
+    pageNumber,
+  } = field
   const valueId = `${type}${id}Value`
   const htmlId = `field_${id}`
   const sizeClass =
@@ -16,9 +25,13 @@ const TextField: React.FC<TextFieldProps> = props => {
     placeholder === undefined || placeholder === null
       ? ""
       : `${placeholder.toLowerCase()}`
+  const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
   const validationRule = validationRules?.find(rule => rule.id === id)
+
+  const isCurrentPage = state.currentPage === page
+  const activePageStyle = isCurrentPage ? "block" : "none"
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -66,7 +79,7 @@ const TextField: React.FC<TextFieldProps> = props => {
   }, [state.formData?.[valueId]])
 
   return (
-    <div className={classes}>
+    <div className={classes} style={{ display: activePageStyle }}>
       <label htmlFor={htmlId}>{label}</label>
       <input
         type="text"

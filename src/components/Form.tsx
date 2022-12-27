@@ -99,22 +99,58 @@ const FormComponent: React.FC<GravityFormData> = props => {
       })
       .flat()
       .filter(field => field !== null)
+
+    allSupportedFields.map(field => {
+      if (Number(field?.pageNumber) <= state.totalPageCount) return null
+      return dispatch({
+        type: ActionTypes.UpdateTotalPageCount,
+        payload: field.pageNumber,
+      })
+    })
     dispatch({ type: ActionTypes.AddRequired, payload: requiredFields })
   }, [])
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        {Boolean(fields) &&
-          fields.map(field => (
-            <FormsField
-              key={`${field.id}-${field.type}`}
-              field={field}
-              validation={validation}
-            />
-          ))}
+        {Boolean(fields) && (
+          <>
+            {fields.map(field => {
+              if (field.type === "PAGE")
+                return (
+                  <React.Fragment
+                    key={`${field.id}-${field.type}`}
+                  ></React.Fragment>
+                )
+              return (
+                <FormsField
+                  key={`${field.id}-${field.type}`}
+                  field={field}
+                  validation={validation}
+                />
+              )
+            })}
 
-        {Boolean(button) && (
+            {/* PAGE returns Next/Previous buttons for form pages */}
+            {fields.map(field => {
+              if (field.type !== "PAGE")
+                return (
+                  <React.Fragment
+                    key={`${field.id}-${field.type}`}
+                  ></React.Fragment>
+                )
+              return (
+                <FormsField
+                  key={`${field.id}-${field.type}`}
+                  field={field}
+                  validation={validation}
+                />
+              )
+            })}
+          </>
+        )}
+
+        {Boolean(button) && state.totalPageCount === state.currentPage && (
           <Button
             type={button.type}
             text={button.text}

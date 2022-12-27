@@ -9,13 +9,15 @@ interface NameValue {
 
 const NameField: React.FC<NameFieldProps> = props => {
   const { field, validationRules } = props
-  const { id, type, label, cssClass, isRequired, size, inputs } = field
+  const { id, type, label, cssClass, isRequired, size, inputs, pageNumber } =
+    field
   const valueId = `${type}${id}Value`
   const htmlId = `field_${id}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const otherClasses =
     cssClass === undefined || cssClass === null ? "" : `${cssClass}`
+  const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const classes = `${sizeClass} ${otherClasses}`
   const prefixInput = inputs?.find(input => input.key === "prefix")
   const otherInputs = inputs?.filter(input => input.key !== "prefix") ?? []
@@ -24,6 +26,9 @@ const NameField: React.FC<NameFieldProps> = props => {
   const [nameValue, setNameValue] = useState<NameValue>({})
   const { state, dispatch } = useFormContext()
   const validationRule = validationRules?.find(rule => rule.id === id)
+
+  const isCurrentPage = state.currentPage === page
+  const activePageStyle = isCurrentPage ? "block" : "none"
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -160,7 +165,11 @@ const NameField: React.FC<NameFieldProps> = props => {
   }, [nameValue])
 
   return (
-    <fieldset id={htmlId} className={classes}>
+    <fieldset
+      id={htmlId}
+      className={classes}
+      style={{ display: activePageStyle }}
+    >
       <legend>{label}</legend>
       {Boolean(prefixInput) && !hiddenPrefix ? (
         <>

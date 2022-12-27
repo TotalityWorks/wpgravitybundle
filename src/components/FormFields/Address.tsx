@@ -9,11 +9,13 @@ interface AddressValue {
 
 const AddressField: React.FC<AddressFieldProps> = props => {
   const { field, validationRules } = props
-  const { id, type, label, cssClass, inputs, size, isRequired } = field
+  const { id, type, label, cssClass, inputs, size, isRequired, pageNumber } =
+    field
   const valueId = `${type}${id}Value`
   const htmlId = `field_${id}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
+  const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const otherClasses =
     cssClass === undefined || cssClass === null ? "" : `${cssClass}`
   const classes = `${sizeClass} ${otherClasses}`
@@ -26,6 +28,9 @@ const AddressField: React.FC<AddressFieldProps> = props => {
   const stateId = `${type}${id}StateValue`
   const zipId = `${type}${id}ZipValue`
   const countryId = `${type}${id}CountryValue`
+
+  const isCurrentPage = state.currentPage === page
+  const activePageStyle = isCurrentPage ? "block" : "none"
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -140,7 +145,11 @@ const AddressField: React.FC<AddressFieldProps> = props => {
   }, [state.formData?.[countryId]])
 
   return (
-    <fieldset id={htmlId} className={classes}>
+    <fieldset
+      id={htmlId}
+      className={classes}
+      style={{ display: activePageStyle }}
+    >
       <legend>{label}</legend>
       {inputs?.map(input => {
         const key = String(input?.key)

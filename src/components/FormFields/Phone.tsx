@@ -16,6 +16,7 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
     isRequired,
     placeholder,
     size,
+    pageNumber,
     // phoneFormat,
   } = field
   const valueId = `${type}${id}Value`
@@ -32,9 +33,13 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
     placeholder === undefined || placeholder === null
       ? ""
       : `${placeholder.toLowerCase()}`
+  const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
   // const validationRule = validationRules?.find(rule => rule.id === id)
+
+  const isCurrentPage = state.currentPage === page
+  const activePageStyle = isCurrentPage ? "block" : "none"
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -94,7 +99,7 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
   }, [state.formData?.[valueId]])
 
   return (
-    <div className={classes}>
+    <div className={classes} style={{ display: activePageStyle }}>
       <label htmlFor={htmlId}>{label}</label>
       <input
         type="text"
