@@ -1,0 +1,77 @@
+import React, { useState, useEffect } from "react"
+
+import { useFormContext, ActionTypes } from "../../formContext"
+import { RadioFieldProps } from "../../interfaces"
+
+const RadioField: React.FC<RadioFieldProps> = props => {
+  const { field } = props
+  const { id, type, label, cssClass, isRequired, choices, size } = field
+  const valueId = `${type}${id}Value`
+  const htmlId = `field_${id}`
+  const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
+  const otherClasses = cssClass === undefined ? "" : `${cssClass}`
+  const classes = `${sizeClass} ${otherClasses}`
+  const { state, dispatch } = useFormContext()
+  const [radioValue, setRadioValue] = useState("")
+
+  const errorMessage = state.errors.find(error => {
+    return error.name.toString() === valueId
+  })
+
+  useEffect(() => {
+    choices.forEach(input => {
+      if (input.isSelected) {
+        setRadioValue(input.value)
+
+        return dispatch({
+          type: ActionTypes.Update,
+          payload: { [valueId]: input.value },
+        })
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!(isRequired ?? false)) return undefined
+    if (state.formData?.[valueId]?.length === 0) {
+      return dispatch({ type: ActionTypes.AddRequiredField, payload: valueId })
+    }
+    dispatch({ type: ActionTypes.RemoveRequiredField, payload: valueId })
+  }, [state.formData?.[valueId]])
+
+  const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
+    const { value } = event.currentTarget
+    setRadioValue(value)
+    const newSelectValue = value
+    return dispatch({
+      type: ActionTypes.Update,
+      payload: { [valueId]: newSelectValue },
+    })
+  }
+
+  return (
+    <fieldset id={htmlId} className={classes}>
+      <legend>{label}</legend>
+      {choices?.map(input => {
+        const text = input?.text
+        const inputValue = input?.value
+        return (
+          <div key={inputValue}>
+            <input
+              type="radio"
+              name={String(id)}
+              id={`choice_${htmlId}_${inputValue}`}
+              value={inputValue}
+              onChange={handleChange}
+              checked={radioValue === inputValue}
+            />
+            <label htmlFor={`choice_${htmlId}_${inputValue}`}>{text}</label>
+          </div>
+        )
+      })}
+      <p className="error-message">{errorMessage?.message}</p>
+    </fieldset>
+  )
+}
+
+export default RadioField

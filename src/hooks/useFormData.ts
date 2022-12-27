@@ -74,6 +74,7 @@ const createMutationVariables = (fields: Field[]): string => {
       case "CONSENT":
       case "NUMBER":
       case "PHONE":
+      case "RADIO":
       case "SELECT":
       case "TEXT":
       case "TEXTAREA":
@@ -152,6 +153,7 @@ const createFieldValuesShape = (fields: Field[]): string => {
       case "CONSENT":
       case "NUMBER":
       case "PHONE":
+      case "RADIO":
       case "SELECT":
       case "TEXT":
       case "TEXTAREA":

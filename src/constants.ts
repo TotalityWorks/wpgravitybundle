@@ -5,6 +5,7 @@ export const supportedFields = [
   "NAME",
   "NUMBER",
   "PHONE",
+  "RADIO",
   "SELECT",
   "TEXT",
   "TEXTAREA",

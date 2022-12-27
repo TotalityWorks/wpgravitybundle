@@ -146,6 +146,7 @@ const AddressField: React.FC<AddressFieldProps> = props => {
         const key = String(input?.key)
         const inputLabel = input?.label
         const placeholder = input?.placeholder
+        const fieldValueId = `${key}Id`
 
         return (
           <div key={key}>
@@ -154,7 +155,7 @@ const AddressField: React.FC<AddressFieldProps> = props => {
               name={String(key)}
               id={`input_${id}_${key}`}
               placeholder={placeholder}
-              value={addressValue?.[key]}
+              defaultValue={state.formData?.[fieldValueId]}
               onChange={handleChange}
             />
             <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>

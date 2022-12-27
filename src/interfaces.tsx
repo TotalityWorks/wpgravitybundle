@@ -46,7 +46,7 @@ interface Pagination {
   color?: null
   backgroundColor?: null
   progressbarCompletionText?: null
-  hasProgressbarOnConfirmation?: Boolean
+  hasProgressbarOnConfirmation?: boolean
 }
 
 interface Scheduling {
@@ -151,8 +151,23 @@ export interface PhoneField extends Field {
   phoneFormat?: string
 }
 
-interface RadioSelectFieldChoice {
-  isSelected: Boolean
+interface RadioFieldChoice {
+  isOtherChoice?: null
+  isSelected: boolean
+  text: string
+  value: string
+}
+
+export interface RadioField extends Field {
+  label?: string
+  description?: string
+  cssClass?: string
+  choices: RadioFieldChoice[]
+  size?: string
+}
+
+interface SelectFieldChoice {
+  isSelected: boolean
   text: string
   value: string
 }
@@ -162,7 +177,7 @@ export interface SelectField extends Field {
   description?: string
   cssClass?: string
   defaultValue?: string
-  choices: RadioSelectFieldChoice[]
+  choices: SelectFieldChoice[]
   size?: string
 }
 
@@ -220,6 +235,11 @@ export interface NumberFieldProps {
 
 export interface PhoneFieldProps {
   field: PhoneField
+  validationRules?: ValidationRule[]
+}
+
+export interface RadioFieldProps {
+  field: RadioField
   validationRules?: ValidationRule[]
 }
 
