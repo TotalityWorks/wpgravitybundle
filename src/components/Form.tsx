@@ -21,6 +21,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
   const fields = form.formFields.nodes
   const button = form.submitButton
   const { state, dispatch } = useFormContext()
+  const disabled = state.errors.length > 0 || state.requiredFields.length > 0
 
   const handleSubmit = (e: React.SyntheticEvent): Function => {
     e.preventDefault()
@@ -156,6 +157,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
             text={button.text}
             cssClass={buttonClass}
             onClick={handleSubmit}
+            disabled={disabled}
           />
         )}
       </form>

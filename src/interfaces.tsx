@@ -117,6 +117,15 @@ export interface EmailField extends Field {
   size?: string
 }
 
+export interface FileUploadField extends Field {
+  label?: string
+  cssClass?: string
+  maxFiles?: string
+  maxFileSize?: string
+  allowedExtensions?: string[]
+  canAcceptMultipleFiles?: boolean
+}
+
 interface NameInputChoice {
   text?: string
   value?: string
@@ -233,6 +242,11 @@ export interface ConsentFieldProps {
 
 export interface EmailFieldProps {
   field: EmailField
+  validationRules?: ValidationRule[]
+}
+
+export interface FileUploadFieldProps {
+  field: FileUploadField
   validationRules?: ValidationRule[]
 }
 

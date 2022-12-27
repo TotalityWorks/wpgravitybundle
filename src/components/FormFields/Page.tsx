@@ -42,6 +42,7 @@ const PageField: React.FC<PageFieldProps> = props => {
               text={nextButton.text}
               cssClass={classes}
               onClick={e => handleClick(e, "next")}
+              disabled={false}
             />
           )}
 

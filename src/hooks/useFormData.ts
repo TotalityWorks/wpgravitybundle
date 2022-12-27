@@ -84,6 +84,8 @@ const createMutationVariables = (fields: Field[]): string => {
         return addressField()
       case "EMAIL":
         return emailField()
+      case "FILEUPLOAD":
+        return `${space}$${value}Value: [ Upload ]${required}`
       case "NAME":
         return nameField()
       default:
@@ -181,6 +183,11 @@ const createFieldValuesShape = (fields: Field[]): string => {
                       value: $${value}Value
                       ${emailConfirmation}
                   }
+                }`
+      case "FILEUPLOAD":
+        return `{
+                  id: ${id}
+                  fileUploadValues: $${value}Value
                 }`
       case "NAME":
         return `{
