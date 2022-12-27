@@ -3,6 +3,7 @@ export const supportedFields = [
   "CONSENT",
   "EMAIL",
   "NAME",
+  "NUMBER",
   "PHONE",
   "SELECT",
   "TEXT",

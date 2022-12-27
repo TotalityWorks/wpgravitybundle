@@ -136,6 +136,13 @@ export interface NameField extends Field {
   inputs?: NameInput[]
 }
 
+export interface NumberField extends Field {
+  label?: string
+  cssClass?: string
+  placeholder?: string
+  size?: string
+}
+
 export interface PhoneField extends Field {
   label?: string
   cssClass?: string
@@ -203,6 +210,11 @@ export interface EmailFieldProps {
 
 export interface NameFieldProps {
   field: NameField
+  validationRules?: ValidationRule[]
+}
+
+export interface NumberFieldProps {
+  field: NumberField
   validationRules?: ValidationRule[]
 }
 
