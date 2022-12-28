@@ -200,6 +200,12 @@ interface SelectFieldChoice {
   value: string
 }
 
+export interface SectionField extends Field {
+  label?: string
+  description?: string
+  cssClass?: string
+}
+
 export interface SelectField extends Field {
   label?: string
   description?: string
@@ -243,7 +249,6 @@ export interface AddressFieldProps {
 
 export interface ConsentFieldProps {
   field: ConsentField
-  validationRules?: ValidationRule[]
 }
 
 export interface EmailFieldProps {
@@ -272,7 +277,6 @@ export interface NumberFieldProps {
 
 export interface PageFieldProps {
   field: PageField
-  validationRules?: ValidationRule[]
 }
 
 export interface PhoneFieldProps {
@@ -285,9 +289,12 @@ export interface RadioFieldProps {
   validationRules?: ValidationRule[]
 }
 
+export interface SectionFieldProps {
+  field: SectionField
+}
+
 export interface SelectFieldProps {
   field: SelectField
-  validationRules?: ValidationRule[]
 }
 
 export interface TextFieldProps {

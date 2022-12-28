@@ -13,6 +13,7 @@ import {
   PageField,
   PhoneField,
   RadioField,
+  SectionField,
   SelectField,
   TextField,
   TextAreaField,
@@ -31,6 +32,7 @@ const Number = lazy(async () => await import("./FormFields/Number"))
 const Page = lazy(async () => await import("./FormFields/Page"))
 const Phone = lazy(async () => await import("./FormFields/Phone"))
 const Radio = lazy(async () => await import("./FormFields/Radio"))
+const Section = lazy(async () => await import("./FormFields/Section"))
 const Select = lazy(async () => await import("./FormFields/Select"))
 const Text = lazy(async () => await import("./FormFields/Text"))
 const TextArea = lazy(async () => await import("./FormFields/TextArea"))
@@ -69,6 +71,8 @@ const FormsField: React.FC<{
       return <Phone field={field as PhoneField} validationRules={validation} />
     case "RADIO":
       return <Radio field={field as RadioField} />
+    case "SECTION":
+      return <Section field={field as SectionField} />
     case "SELECT":
       return <Select field={field as SelectField} />
     case "TEXT":

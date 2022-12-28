@@ -8,6 +8,7 @@ export const supportedFields = [
   "NUMBER",
   "PHONE",
   "RADIO",
+  "SECTION",
   "SELECT",
   "TEXT",
   "TEXTAREA",
