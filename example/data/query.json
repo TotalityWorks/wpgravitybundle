@@ -286,7 +286,7 @@
           "pageNumber": 1,
           "visibility": "VISIBLE",
           "canPrepopulate": false,
-          "defaultValue": null,
+          "defaultValue": "This is the value in the hidden field!",
           "displayOnly": false,
           "inputName": null,
           "inputType": null,

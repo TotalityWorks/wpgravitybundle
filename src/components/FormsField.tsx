@@ -7,6 +7,7 @@ import {
   ConsentField,
   EmailField,
   FileUploadField,
+  HiddenField,
   HTMLField,
   NameField,
   NumberField,
@@ -26,6 +27,7 @@ const Address = lazy(async () => await import("./FormFields/Address"))
 const Consent = lazy(async () => await import("./FormFields/Consent"))
 const Email = lazy(async () => await import("./FormFields/Email"))
 const FileUpload = lazy(async () => await import("./FormFields/FileUpload"))
+const Hidden = lazy(async () => await import("./FormFields/Hidden"))
 const HTML = lazy(async () => await import("./FormFields/HTML"))
 const Name = lazy(async () => await import("./FormFields/Name"))
 const Number = lazy(async () => await import("./FormFields/Number"))
@@ -57,6 +59,8 @@ const FormsField: React.FC<{
           validationRules={validation}
         />
       )
+    case "HIDDEN":
+      return <Hidden field={field as HiddenField} />
     case "HTML":
       return <HTML field={field as HTMLField} />
     case "NAME":
