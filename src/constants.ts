@@ -3,6 +3,7 @@ export const supportedFields = [
   "CONSENT",
   "EMAIL",
   "FILEUPLOAD",
+  "HTML",
   "NAME",
   "NUMBER",
   "PHONE",

@@ -126,6 +126,12 @@ export interface FileUploadField extends Field {
   canAcceptMultipleFiles?: boolean
 }
 
+export interface HTMLField extends Field {
+  label?: string
+  cssClass?: string
+  content?: string
+}
+
 interface NameInputChoice {
   text?: string
   value?: string
@@ -248,6 +254,10 @@ export interface EmailFieldProps {
 export interface FileUploadFieldProps {
   field: FileUploadField
   validationRules?: ValidationRule[]
+}
+
+export interface HTMLFieldProps {
+  field: HTMLField
 }
 
 export interface NameFieldProps {
