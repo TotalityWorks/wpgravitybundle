@@ -5,6 +5,7 @@ import {
   Field,
   AddressField,
   ConsentField,
+  DateField,
   EmailField,
   FileUploadField,
   HiddenField,
@@ -25,6 +26,7 @@ import {
 // import components
 const Address = lazy(async () => await import("./FormFields/Address"))
 const Consent = lazy(async () => await import("./FormFields/Consent"))
+const Date = lazy(async () => await import("./FormFields/Date"))
 const Email = lazy(async () => await import("./FormFields/Email"))
 const FileUpload = lazy(async () => await import("./FormFields/FileUpload"))
 const Hidden = lazy(async () => await import("./FormFields/Hidden"))
@@ -50,6 +52,8 @@ const FormsField: React.FC<{
       return <Address field={field as AddressField} />
     case "CONSENT":
       return <Consent field={field as ConsentField} />
+    case "DATE":
+      return <Date field={field as DateField} validationRules={validation} />
     case "EMAIL":
       return <Email field={field as EmailField} validationRules={validation} />
     case "FILEUPLOAD":

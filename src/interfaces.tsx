@@ -110,6 +110,18 @@ export interface ConsentField extends Field {
   size?: string
 }
 
+export interface DateField extends Field {
+  label?: string
+  cssClass?: string
+  placeholder?: string
+  size?: string
+  calendarIconType?: string
+  calendarIconUrl?: string
+  dateFormat?: string
+  dateType?: string
+  defaultValue?: string
+}
+
 export interface EmailField extends Field {
   label?: string
   cssClass?: string
@@ -255,6 +267,11 @@ export interface AddressFieldProps {
 
 export interface ConsentFieldProps {
   field: ConsentField
+}
+
+export interface DateFieldProps {
+  field: DateField
+  validationRules?: ValidationRule[]
 }
 
 export interface EmailFieldProps {

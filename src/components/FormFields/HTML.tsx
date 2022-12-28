@@ -19,7 +19,7 @@ const HTMLField: React.FC<HTMLFieldProps> = props => {
   return (
     <div className={`${classes}`} style={{ display: activePageStyle }}>
       <p>{label}</p>
-      <p>{parsedContent}</p>
+      {parsedContent}
     </div>
   )
 }

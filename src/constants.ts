@@ -1,6 +1,7 @@
 export const supportedFields = [
   "ADDRESS",
   "CONSENT",
+  "DATE",
   "EMAIL",
   "FILEUPLOAD",
   "HIDDEN",
