@@ -1,5 +1,6 @@
 export const supportedFields = [
   "ADDRESS",
+  "CAPTCHA",
   "CONSENT",
   "DATE",
   "EMAIL",

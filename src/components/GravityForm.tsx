@@ -9,10 +9,15 @@ interface GravityFormData {
   onSubmit: Function
   buttonClass?: string
   validation?: ValidationRule[]
+  captcha?: {
+    captchaSiteKey: string
+    captchaSecretKey: string
+    type: string
+  }
 }
 
 const GravityForm: React.FC<GravityFormData> = props => {
-  const { form, buttonClass, onSubmit, validation } = props
+  const { form, buttonClass, onSubmit, validation, captcha } = props
 
   return (
     <FormProvider>
@@ -21,6 +26,7 @@ const GravityForm: React.FC<GravityFormData> = props => {
         onSubmit={onSubmit}
         buttonClass={buttonClass}
         validation={validation}
+        captcha={captcha}
       />
     </FormProvider>
   )

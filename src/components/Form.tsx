@@ -14,10 +14,15 @@ interface GravityFormData {
   onSubmit: Function
   buttonClass?: string
   validation?: ValidationRule[]
+  captcha?: {
+    captchaSiteKey: string
+    captchaSecretKey: string
+    type: string
+  }
 }
 
 const FormComponent: React.FC<GravityFormData> = props => {
-  const { form, buttonClass, onSubmit, validation } = props
+  const { form, buttonClass, onSubmit, validation, captcha } = props
   const fields = form.formFields.nodes
   const button = form.submitButton
   const { state, dispatch } = useFormContext()
@@ -35,8 +40,12 @@ const FormComponent: React.FC<GravityFormData> = props => {
     )
     const requiredFields = allSupportedFields
       .map(field => {
+        if (field.type === "CAPTCHA") {
+          if (captcha?.type.toLowerCase() === "invisible") return null
+          return `${field.type}${field.id}Value`
+        }
         if (!(field.isRequired ?? false)) return null
-        if (field.type === "name") {
+        if (field.type === "NAME") {
           const value = `${field.type}${field.id}`
           const prefixInput: NameInput | undefined = field?.inputs?.find(
             (input: NameInput) => input.key === "prefix"
@@ -76,7 +85,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
 
           return filterNameFields
         }
-        if (field.type === "address") {
+        if (field.type === "ADDRESS") {
           const { type, id } = field
           const streetId = `${type}${id}StreetValue`
           // lineTwo is not needed for required fields
@@ -128,6 +137,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
                   key={`${field.id}-${field.type}`}
                   field={field}
                   validation={validation}
+                  captcha={captcha}
                 />
               )
             })}

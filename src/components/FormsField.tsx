@@ -4,6 +4,7 @@ import React, { lazy } from "react"
 import {
   Field,
   AddressField,
+  CaptchaField,
   ConsentField,
   DateField,
   EmailField,
@@ -25,6 +26,7 @@ import {
 
 // import components
 const Address = lazy(async () => await import("./FormFields/Address"))
+const Captcha = lazy(async () => await import("./FormFields/Captcha"))
 const Consent = lazy(async () => await import("./FormFields/Consent"))
 const Date = lazy(async () => await import("./FormFields/Date"))
 const Email = lazy(async () => await import("./FormFields/Email"))
@@ -45,11 +47,24 @@ const Website = lazy(async () => await import("./FormFields/Website"))
 const FormsField: React.FC<{
   field: Field
   validation?: ValidationRule[]
+  captcha?: {
+    captchaSiteKey: string
+    captchaSecretKey: string
+    type: string
+  }
 }> = props => {
-  const { field, validation } = props
+  const { field, validation, captcha } = props
+  const definedCaptcha = {
+    captchaSiteKey: String(captcha?.captchaSiteKey),
+    captchaSecretKey: String(captcha?.captchaSecretKey),
+    type: String(captcha?.type),
+  }
+
   switch (field.type) {
     case "ADDRESS":
       return <Address field={field as AddressField} />
+    case "CAPTCHA":
+      return <Captcha field={field as CaptchaField} captcha={definedCaptcha} />
     case "CONSENT":
       return <Consent field={field as ConsentField} />
     case "DATE":

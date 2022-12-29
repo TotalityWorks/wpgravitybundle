@@ -71,6 +71,7 @@ const createMutationVariables = (fields: Field[]): string => {
     }
 
     switch (type) {
+      case "CAPTCHA":
       case "CONSENT":
       case "DATE":
       case "HIDDEN":
@@ -154,6 +155,7 @@ const createFieldValuesShape = (fields: Field[]): string => {
       : ""
 
     switch (type) {
+      case "CAPTCHA":
       case "CONSENT":
       case "DATE":
       case "HIDDEN":

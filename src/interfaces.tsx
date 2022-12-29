@@ -103,6 +103,18 @@ export interface AddressField extends Field {
   inputs?: AddressInput[]
 }
 
+export interface CaptchaField extends Field {
+  label?: string
+  cssClass?: string
+  captchaBadgePosition?: string
+  captchaLanguage?: string
+  captchaTheme?: string
+  captchaType?: string
+  simpleCaptchaBackgroundColor?: string
+  simpleCaptchaFontColor?: string
+  simpleCaptchaSize?: string
+}
+
 export interface ConsentField extends Field {
   label?: string
   cssClass?: string
@@ -263,6 +275,15 @@ export interface ValidationRule {
 export interface AddressFieldProps {
   field: AddressField
   validationRules?: ValidationRule[]
+}
+
+export interface CaptchaFieldProps {
+  field: ConsentField
+  captcha: {
+    captchaSiteKey: string
+    captchaSecretKey: string
+    type: string
+  }
 }
 
 export interface ConsentFieldProps {

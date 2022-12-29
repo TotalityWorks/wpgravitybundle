@@ -33,7 +33,9 @@
   },
   "dependencies": {
     "date-fns": "^2.29.3",
-    "html-react-parser": "^3.0.6"
+    "dotenv": "^16.0.3",
+    "html-react-parser": "^3.0.6",
+    "react-google-recaptcha": "^2.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
@@ -45,6 +47,7 @@
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
+    "@types/react-google-recaptcha": "^2.1.5",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "babel-loader": "^9.1.0",
     "commitizen": "^4.2.5",
