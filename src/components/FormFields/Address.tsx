@@ -40,7 +40,7 @@ const AddressField: React.FC<AddressFieldProps> = props => {
     const validationRegex =
       validationRule?.regex != null
         ? validationRule.regex
-        : /[a-z0-9!#$%&'*+/=?^_`{|}~-]/
+        : /[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]/
 
     const validationMessage =
       validationRule?.message != null
