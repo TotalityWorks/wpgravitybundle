@@ -13,11 +13,11 @@ interface GravityFormData {
 const App: React.FC<GravityFormData> = ({ form }) => {
   const [data, setData] = useState()
   const buttonClass = "btn btn-primary"
-  const captchaSiteKey = String(process.env.GOOGLE_INVISIBLE_CAPTCHA_SITE_KEY)
-  const captchaSecretKey = String(process.env.GOODLE_INVISIBLE_CAPTCHA_SECRET_KEY)
+  // const captchaSiteKey = String(process.env.GOOGLE_INVISIBLE_CAPTCHA_SITE_KEY)
+  // const captchaSecretKey = String(process.env.GOODLE_INVISIBLE_CAPTCHA_SECRET_KEY)
 
   const validation = [{id: 98, regex: /[0-9]+/g, message: "I don't like letters! Only numbers."}]
-  const captcha = { captchaSiteKey: captchaSiteKey, captchaSecretKey: captchaSecretKey, type: "Invisible" }
+  // const captcha = { captchaSiteKey: captchaSiteKey, captchaSecretKey: captchaSecretKey, type: "Invisible" }
 
   const handleSubmit = (values: any) => {
     const formData = values
@@ -40,7 +40,8 @@ const App: React.FC<GravityFormData> = ({ form }) => {
             onSubmit={handleSubmit}
             buttonClass={buttonClass}
             validation={validation}
-            captcha={captcha}
+            // captcha={captcha}
+            debug={true}
           />
         </>
       )}

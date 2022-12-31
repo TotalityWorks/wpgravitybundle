@@ -1,4 +1,4 @@
-import React, { lazy } from "react"
+import React from "react"
 
 // import types
 import {
@@ -25,24 +25,24 @@ import {
 } from "../interfaces"
 
 // import components
-const Address = lazy(async () => await import("./FormFields/Address"))
-const Captcha = lazy(async () => await import("./FormFields/Captcha"))
-const Consent = lazy(async () => await import("./FormFields/Consent"))
-const Date = lazy(async () => await import("./FormFields/Date"))
-const Email = lazy(async () => await import("./FormFields/Email"))
-const FileUpload = lazy(async () => await import("./FormFields/FileUpload"))
-const Hidden = lazy(async () => await import("./FormFields/Hidden"))
-const HTML = lazy(async () => await import("./FormFields/HTML"))
-const Name = lazy(async () => await import("./FormFields/Name"))
-const Number = lazy(async () => await import("./FormFields/Number"))
-const Page = lazy(async () => await import("./FormFields/Page"))
-const Phone = lazy(async () => await import("./FormFields/Phone"))
-const Radio = lazy(async () => await import("./FormFields/Radio"))
-const Section = lazy(async () => await import("./FormFields/Section"))
-const Select = lazy(async () => await import("./FormFields/Select"))
-const Text = lazy(async () => await import("./FormFields/Text"))
-const TextArea = lazy(async () => await import("./FormFields/TextArea"))
-const Website = lazy(async () => await import("./FormFields/Website"))
+import Address from "./FormFields/Address"
+import Captcha from "./FormFields/Captcha"
+import Consent from "./FormFields/Consent"
+import Date from "./FormFields/Date"
+import Email from "./FormFields/Email"
+import FileUpload from "./FormFields/FileUpload"
+import Hidden from "./FormFields/Hidden"
+import HTML from "./FormFields/HTML"
+import Name from "./FormFields/Name"
+import Number from "./FormFields/Number"
+import Page from "./FormFields/Page"
+import Phone from "./FormFields/Phone"
+import Radio from "./FormFields/Radio"
+import Section from "./FormFields/Section"
+import Select from "./FormFields/Select"
+import Text from "./FormFields/Text"
+import TextArea from "./FormFields/TextArea"
+import Website from "./FormFields/Website"
 
 const FormsField: React.FC<{
   field: Field
