@@ -311,6 +311,7 @@ export interface HiddenFieldProps {
 
 export interface HTMLFieldProps {
   field: HTMLField
+  parser: Function
 }
 
 export interface NameFieldProps {

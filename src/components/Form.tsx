@@ -19,11 +19,13 @@ interface GravityFormData {
     captchaSecretKey: string
     type: string
   }
+  parser?: Function
   debug?: boolean
 }
 
 const FormComponent: React.FC<GravityFormData> = props => {
-  const { form, buttonClass, onSubmit, validation, captcha, debug } = props
+  const { form, buttonClass, onSubmit, validation, captcha, parser, debug } =
+    props
   const fields = form.formFields.nodes
   const button = form.submitButton
   const { state, dispatch } = useFormContext()
@@ -139,6 +141,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
                   field={field}
                   validation={validation}
                   captcha={captcha}
+                  parser={parser}
                 />
               )
             })}

@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { createRoot } from "react-dom/client"
 import GravityForm, { useGravityFormMutation } from "../../src"
+import Parser from 'html-react-parser'
 
 import type { Form, ValidationRule } from '../../src/interfaces'
 import data from "../data/query.json"
@@ -40,6 +41,7 @@ const App: React.FC<GravityFormData> = ({ form }) => {
             onSubmit={handleSubmit}
             buttonClass={buttonClass}
             validation={validation}
+            parser={Parser}
             // captcha={captcha}
             debug={true}
           />

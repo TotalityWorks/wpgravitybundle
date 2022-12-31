@@ -52,13 +52,15 @@ const FormsField: React.FC<{
     captchaSecretKey: string
     type: string
   }
+  parser?: Function
 }> = props => {
-  const { field, validation, captcha } = props
+  const { field, validation, captcha, parser } = props
   const definedCaptcha = {
     captchaSiteKey: String(captcha?.captchaSiteKey),
     captchaSecretKey: String(captcha?.captchaSecretKey),
     type: String(captcha?.type),
   }
+  const definedParser = parser != null ? parser : () => {}
 
   switch (field.type) {
     case "ADDRESS":
@@ -81,7 +83,7 @@ const FormsField: React.FC<{
     case "HIDDEN":
       return <Hidden field={field as HiddenField} />
     case "HTML":
-      return <HTML field={field as HTMLField} />
+      return <HTML field={field as HTMLField} parser={definedParser} />
     case "NAME":
       return <Name field={field as NameField} validationRules={validation} />
     case "NUMBER":
