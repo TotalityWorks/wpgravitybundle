@@ -3,3 +3,38 @@ src
 
 # example files
 example
+
+# eslint
+.eslintignore
+.eslintrc.json
+
+# babel
+.babelrc
+
+# editorconfig
+.editorconfig
+
+# prettier
+.prettierignore
+.prettierrc
+
+# docs
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+imgs
+
+# husky
+.husky
+
+# env
+.env
+
+# commitlint
+.commitlint.config.cjs
+
+# .nvmrc
+.nvmrc
+
+# tsconfig
+tsconfig.json
