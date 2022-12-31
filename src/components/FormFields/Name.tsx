@@ -196,7 +196,7 @@ const NameField: React.FC<NameFieldProps> = props => {
         const placeholderValue =
           input?.placeholder === undefined || input?.placeholder === null
             ? ""
-            : `${input?.placeholder.toLowerCase()}`
+            : `${input?.placeholder}`
         if (input.isHidden ?? false) {
           return <></>
         }

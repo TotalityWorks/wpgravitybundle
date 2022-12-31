@@ -22,9 +22,7 @@ const EmailField: React.FC<EmailFieldProps> = props => {
   const otherClasses =
     cssClass === undefined || cssClass === null ? "" : `${cssClass}`
   const placeholderValue =
-    placeholder === undefined || placeholder === null
-      ? ""
-      : `${placeholder.toLowerCase()}`
+    placeholder === undefined || placeholder === null ? "" : `${placeholder}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
