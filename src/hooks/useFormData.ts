@@ -20,7 +20,7 @@ const createMutationVariables = (fields: Field[]): string => {
       const city = `$${value}CityValue: String${required}`
       const state = `$${value}StateValue: String${required}`
       const zip = `$${value}ZipValue: String${required}`
-      const country = `$${value}CountryValue: String${required}`
+      const country = `$${value}CountryValue: AddressFieldCountryEnum${required}`
 
       return `${space}${street}, ${lineTwo}, ${city}, ${state}, ${zip}, ${country}`
     }
