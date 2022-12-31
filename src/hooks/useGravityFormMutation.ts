@@ -11,22 +11,32 @@ export const useGravityFormMutation = (form: Form): string => {
       mutation SubmitForm(${mutationVariables}) {
           submitGfForm(
               input: {
-                  formId: ${form.databaseId}
+                  id: ${form.databaseId}
                   fieldValues: [${fieldValuesShape}]
                   saveAsDraft: false
                   sourcePage: 1
                   targetPage: 0
               }
           ) {
-              errors {
-                  id
-                  message
+            confirmation {
+              type    
+              message # The message HTML - if the confirmation type is a "MESSAGE".
+              url     # The redirect URL - if the confirmation type is a "REDIRECT".
+            }
+            errors {
+              id # The field that failed validation.
+              message
+            }
+            entry {
+              # See docs on querying Entries.
+              id
+              ... on GfSubmittedEntry {
+                databaseId
               }
-              entryId
-              resumeToken
-              entry {
-                  id
+              ... on GfDraftEntry {
+                resumeToken
               }
+            }
           }
       }
   `
