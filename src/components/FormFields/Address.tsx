@@ -28,40 +28,68 @@ const AddressField: React.FC<AddressFieldProps> = props => {
   const stateId = `${type}${id}StateValue`
   const zipId = `${type}${id}ZipValue`
   const countryId = `${type}${id}CountryValue`
+  const valudIds = [streetId, lineTwoId, cityId, stateId, zipId, countryId]
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
 
-  const errorMessage = state.errors.find(error => {
-    return error.name.toString() === valueId
+  const streetErrorMessage = state.errors.find(error => {
+    return error.name.toString() === streetId
+  })
+  const lineTwoErrorMessage = state.errors.find(error => {
+    return error.name.toString() === lineTwoId
+  })
+  const cityErrorMessage = state.errors.find(error => {
+    return error.name.toString() === cityId
+  })
+  const stateErrorMessage = state.errors.find(error => {
+    return error.name.toString() === stateId
+  })
+  const zipErrorMessage = state.errors.find(error => {
+    return error.name.toString() === zipId
+  })
+  const countyErrorMessage = state.errors.find(error => {
+    return error.name.toString() === countryId
   })
 
-  function validateField(value: string): void {
+  const errorMessages = [
+    streetErrorMessage,
+    lineTwoErrorMessage,
+    cityErrorMessage,
+    stateErrorMessage,
+    zipErrorMessage,
+    countyErrorMessage,
+  ]
+
+  function validateField(values: { [key: string]: string }): void {
     const validationRegex =
       validationRule?.regex != null
         ? validationRule.regex
-        : /[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]/
+        : /[a-zA-Z0-9 !#$%&'*+/=?^_`{|}~-]/
 
     const validationMessage =
       validationRule?.message != null
         ? validationRule.message
         : "Please enter valid characters."
 
-    if ((isRequired ?? false) && value.length === 0) {
+    valudIds.map(id => {
+      if ((isRequired ?? false) && values?.[id].length === 0) {
+        return dispatch({
+          type: ActionTypes.AddError,
+          payload: { name: id, message: "Field cannot be empty" },
+        })
+      }
+      if (!validationRegex.test(values?.[id])) {
+        if (values?.[id].length === 0) return null
+        return dispatch({
+          type: ActionTypes.AddError,
+          payload: { name: id, message: validationMessage },
+        })
+      }
       return dispatch({
-        type: ActionTypes.AddError,
-        payload: { name: valueId, message: "Field cannot be empty" },
+        type: ActionTypes.RemoveError,
+        payload: valueId,
       })
-    }
-    if (!validationRegex.test(value)) {
-      return dispatch({
-        type: ActionTypes.AddError,
-        payload: { name: valueId, message: validationMessage },
-      })
-    }
-    return dispatch({
-      type: ActionTypes.RemoveError,
-      payload: valueId,
     })
   }
 
@@ -82,9 +110,9 @@ const AddressField: React.FC<AddressFieldProps> = props => {
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     event.preventDefault()
     const { name, value } = event.currentTarget
-    validateField(value)
     const newAddressValue = { ...addressValue, [name]: value }
     const formattedValue = formatValuesForState(newAddressValue)
+    validateField(formattedValue)
     setAddressValue({ ...addressValue, [name]: value })
     return dispatch({
       type: ActionTypes.Update,
@@ -158,20 +186,27 @@ const AddressField: React.FC<AddressFieldProps> = props => {
         const fieldValueId = `${key}Id`
 
         return (
-          <div key={key}>
-            <input
-              type="text"
-              name={String(key)}
-              id={`input_${id}_${key}`}
-              placeholder={placeholder}
-              defaultValue={state.formData?.[fieldValueId]}
-              onChange={handleChange}
-            />
-            <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>
-          </div>
+          <>
+            <div key={key}>
+              <input
+                type="text"
+                name={String(key)}
+                id={`input_${id}_${key}`}
+                placeholder={placeholder}
+                defaultValue={state.formData?.[fieldValueId]}
+                onChange={handleChange}
+              />
+              <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>
+            </div>
+
+            {errorMessages.map(err => {
+              if (err?.name?.toLowerCase().includes(key.toLowerCase()) ?? false)
+                return <p className="error-message">{err?.message}</p>
+              return null
+            })}
+          </>
         )
       })}
-      <p className="error-message">{errorMessage?.message}</p>
     </fieldset>
   )
 }

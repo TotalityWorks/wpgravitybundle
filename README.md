@@ -129,6 +129,12 @@ export const query = graphql`
   `
 ```
 
+## Styling
+
+Admittedly, more work could be done to make styling easier and this is something we want to do for future releases.
+For now, the easiest way is to take advantage of `cssClass`. You can query for `cssClass` on the form and for every form field.
+Each form field is wrapped in a `<div className={`${cssClass}`}>`. Certain fields have the cssClass set on the fieldset element instead.
+
 ## Demos
 
 Check out https://WPGravityBundle.com to see it in action.

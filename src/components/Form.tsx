@@ -28,6 +28,10 @@ const FormComponent: React.FC<GravityFormData> = props => {
     props
   const fields = form.formFields.nodes
   const button = form.submitButton
+  const formClasses =
+    form.cssClass === undefined || form.cssClass === null
+      ? ""
+      : `${form.cssClass}`
   const { state, dispatch } = useFormContext()
   const disabled = state.errors.length > 0 || state.requiredFields.length > 0
 
@@ -125,7 +129,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={`${formClasses}`}>
         {Boolean(fields) && (
           <>
             {fields.map(field => {
@@ -177,6 +181,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
       </form>
 
       {Boolean(debug) && console.log(state)}
+      <pre>{JSON.stringify(state, null, 2)}</pre>
     </>
   )
 }
