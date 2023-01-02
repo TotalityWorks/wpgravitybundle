@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 
 import { useFormContext, ActionTypes } from "../../formContext"
 import { AddressFieldProps } from "../../interfaces"
+import { countries } from "../../constants"
 
 interface AddressValue {
   [key: string]: string
@@ -107,7 +108,9 @@ const AddressField: React.FC<AddressFieldProps> = props => {
     return values
   }
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
+  const handleChange = (
+    event: React.FormEvent<HTMLInputElement | HTMLSelectElement>
+  ): void => {
     event.preventDefault()
     const { name, value } = event.currentTarget
     const newAddressValue = { ...addressValue, [name]: value }
@@ -185,6 +188,26 @@ const AddressField: React.FC<AddressFieldProps> = props => {
         const placeholder = input?.placeholder
         const fieldValueId = `${key}Id`
 
+        if (key.toLowerCase() === "country") {
+          return (
+            <>
+              <select
+                name={String(key)}
+                id={`input_${id}_${key}`}
+                defaultValue={state.formData?.[fieldValueId]}
+                onChange={handleChange}
+              >
+                <option value=""></option>
+                {countries.map(choice => (
+                  <option key={choice.value} value={String(choice.value)}>
+                    {String(choice.text)}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>
+            </>
+          )
+        }
         return (
           <>
             <div key={key}>

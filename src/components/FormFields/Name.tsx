@@ -173,6 +173,9 @@ const NameField: React.FC<NameFieldProps> = props => {
       <legend>{label}</legend>
       {Boolean(prefixInput) && !hiddenPrefix ? (
         <>
+          <label htmlFor={`input_${id}_${String(prefixInput?.key)}`}>
+            {prefixInput?.label}
+          </label>
           <select
             name={String(prefixInput?.key)}
             id={`input_${id}_${String(prefixInput?.key)}`}
