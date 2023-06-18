@@ -1,10 +1,11 @@
 {
   "name": "wpgravitybundle",
-  "version": "1.0.0-alpha.11",
+  "version": "1.0.0-alpha.18",
   "description": "A component and a hook to simplify your headless WordPress React application using Gravity Forms.",
   "author": "@totalityworks",
   "license": "MIT",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/TotalityWorks/wpgravitybundle.git"
@@ -17,10 +18,10 @@
     "commit": "cz",
     "start": "webpack-dev-server --open --mode=development",
     "build": "webpack --mode=production",
-    "deploy": "webpack --config publish.config.js --mode=production && npm publish",
-    "deploy:alpha": "webpack --config publish.config.js --mode=production && npm publish --tag alpha",
-    "deploy:beta": "webpack --config publish.config.js --mode=production && npm publish --tag beta",
-    "deploy:next": "webpack --config publish.config.js --mode=production && npm publish --tag next"
+    "deploy": "webpack --mode=production --config publish.config.js && npm publish",
+    "deploy:alpha": "webpack --mode=production --config publish.config.js && npm publish --tag alpha",
+    "deploy:beta": "webpack --mode=production --config publish.config.js && npm publish --tag beta",
+    "deploy:next": "webpack --mode=production --config publish.config.js && npm publish --tag next"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
@@ -68,6 +69,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "ts-loader": "^9.4.1",
+    "types-webpack-bundler": "^1.0.2",
     "typescript": "^4.9.3",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.0",
