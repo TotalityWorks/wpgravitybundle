@@ -43,7 +43,7 @@ const App: React.FC<GravityFormData> = ({ form }) => {
             validation={validation}
             parser={Parser}
             // captcha={captcha}
-            debug={true}
+            debug={{console: true, ui: true}}
           />
         </>
       )}

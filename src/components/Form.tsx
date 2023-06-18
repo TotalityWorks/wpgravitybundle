@@ -184,9 +184,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
       </form>
 
       {Boolean(debug?.console) && console.log(state)}
-      {Boolean(debug?.ui) && (
-        <pre>{JSON.stringify(state.formData, null, 2)}</pre>
-      )}
+      {Boolean(debug?.ui) && <pre>{JSON.stringify(state, null, 2)}</pre>}
     </>
   )
 }

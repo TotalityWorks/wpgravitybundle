@@ -15,7 +15,10 @@ interface GravityFormData {
     type: string
   }
   parser?: Function
-  debug?: boolean
+  debug?: {
+    ui?: boolean
+    console?: boolean
+  }
 }
 
 const GravityForm: React.FC<GravityFormData> = props => {
