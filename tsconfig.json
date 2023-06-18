@@ -11,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node",
     "downlevelIteration": true,
-    "strict": true
+    "strict": true,
+    "declaration": true
   }
 }

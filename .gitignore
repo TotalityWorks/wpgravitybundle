@@ -3,3 +3,8 @@ node_modules
 
 # env
 .env
+
+# dist
+dist
+dist/index.js
+dist/index.js.LICENSE.txt
