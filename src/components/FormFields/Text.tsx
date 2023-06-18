@@ -37,10 +37,12 @@ const TextField: React.FC<TextFieldProps> = props => {
 
   function validateField(value: string): void {
     const validationRegex =
-      validationRule?.regex != null ? validationRule.regex : /[a-z]+/g
+      validationRule?.regex != null ? validationRule.regex : /[a-zA-Z0-9]+/g
     const validationMessage =
       validationRule?.message != null
         ? validationRule.message
+        : value === ""
+        ? ""
         : "Please enter valid characters."
 
     if ((isRequired ?? false) && value.length === 0) {

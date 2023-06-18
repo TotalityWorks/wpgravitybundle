@@ -125,7 +125,7 @@
           "hasRichTextEditor": false,
           "inputName": null,
           "inputType": null,
-          "isRequired": false,
+          "isRequired": true,
           "label": "TextArea",
           "labelPlacement": "INHERIT",
           "layoutGridColumnSpan": null,
