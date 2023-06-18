@@ -85,7 +85,6 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
         required={isRequired}
         onChange={handleChange}
         placeholder={placeholderValue}
-        defaultValue={state.formData?.[valueId]}
       />
       <p className="error-message">{errorMessage?.message}</p>
     </div>

@@ -1,12 +1,21 @@
 import React, { createContext, useContext, useReducer } from "react"
 
+interface File extends Blob {
+  name: string
+  type: string
+}
+
+export interface FormData {
+  [key: string]: File[] | File | string
+}
+
 interface Error {
   name: string
   message: string
 }
 
 interface State {
-  formData: { [key: string]: any }
+  formData: FormData
   errors: Error[]
   requiredFields: string[]
   currentPage: number

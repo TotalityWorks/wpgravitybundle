@@ -88,7 +88,6 @@ const EmailField: React.FC<EmailFieldProps> = props => {
         id={htmlId}
         required={isRequired}
         placeholder={placeholderValue}
-        defaultValue={state.formData?.[valueId]}
         onChange={handleChange}
       />
       <p className="error-message">{errorMessage?.message}</p>

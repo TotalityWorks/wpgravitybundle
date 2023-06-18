@@ -37,16 +37,19 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
     return error.name.toString() === valueId
   })
 
+  const allFiles = state?.formData?.[valueId] as File[]
+  const oneFile = state?.formData?.[valueId] as File
+
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     event.preventDefault()
     if (event.currentTarget.files == null) return
     if (multipleFiles) {
       let currentUploads: File[] = []
       if (state.formData?.[valueId]?.length > 0) {
-        if (state.formData?.[valueId]?.length === maxFiles) {
+        if (state.formData?.[valueId]?.length === Number(maxFiles)) {
           return setMaxFilesError("File Limit Reached")
         }
-        currentUploads = [...state.formData?.[valueId]]
+        currentUploads = [...(state.formData?.[valueId] as File[])]
       }
       const uploadedFiles = Array.prototype.slice.call(
         event.currentTarget.files
@@ -87,7 +90,6 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
         id={htmlId}
         required={isRequired}
         multiple={multipleFiles}
-        defaultValue={state.formData?.[valueId]}
         onChange={handleChange}
       />
       {Boolean(maxFileSize) && <p>Max File Size{maxFileSize}</p>}
@@ -98,19 +100,24 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
 
       {multipleFiles ? (
         <>
-          {state.formData?.[valueId]?.map((file: File) => {
-            return (
-              <>
-                <p>{file.name}</p>
-                <p>{file.type}</p>
-              </>
-            )
-          })}
+          {Boolean(allFiles) &&
+            allFiles.map((file: File) => {
+              return (
+                <>
+                  <p>{file?.name}</p>
+                  <p>{file?.type}</p>
+                </>
+              )
+            })}
         </>
       ) : (
         <>
-          <p>{JSON.stringify(state.formData?.[valueId]?.name, null, 2)}</p>
-          <p>{JSON.stringify(state.formData?.[valueId]?.type, null, 2)}</p>
+          {Boolean(oneFile) && (
+            <>
+              <p>{JSON.stringify(oneFile?.name, null, 2)}</p>
+              <p>{JSON.stringify(oneFile?.type, null, 2)}</p>
+            </>
+          )}
         </>
       )}
       <p>{maxFilesError}</p>

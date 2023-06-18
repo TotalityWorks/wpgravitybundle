@@ -198,11 +198,11 @@ const AddressField: React.FC<AddressFieldProps> = props => {
 
         if (key.toLowerCase() === "country") {
           return (
-            <>
+            <React.Fragment key={fieldValueId}>
               <select
                 name={String(key)}
                 id={`input_${databaseId}_${key}`}
-                defaultValue={state.formData?.[fieldValueId]}
+                defaultValue={String(state.formData?.[fieldValueId])}
                 onChange={handleChange}
               >
                 <option value=""></option>
@@ -213,18 +213,17 @@ const AddressField: React.FC<AddressFieldProps> = props => {
                 ))}
               </select>
               <label htmlFor={`input_${databaseId}_${key}`}>{inputLabel}</label>
-            </>
+            </React.Fragment>
           )
         }
         return (
           <>
-            <div key={key}>
+            <div key={fieldValueId}>
               <input
                 type="text"
                 name={String(key)}
                 id={`input_${databaseId}_${key}`}
                 placeholder={placeholder}
-                defaultValue={state.formData?.[fieldValueId]}
                 onChange={handleChange}
               />
               <label htmlFor={`input_${databaseId}_${key}`}>{inputLabel}</label>
@@ -232,8 +231,12 @@ const AddressField: React.FC<AddressFieldProps> = props => {
 
             {errorMessages.map(err => {
               if (err?.name?.toLowerCase().includes(key.toLowerCase()) ?? false)
-                return <p className="error-message">{err?.message}</p>
-              return null
+                return (
+                  <p className="error-message" key={err?.name}>
+                    {err?.message}
+                  </p>
+                )
+              return <React.Fragment key={key}></React.Fragment>
             })}
           </>
         )

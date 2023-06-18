@@ -20,7 +20,10 @@ interface GravityFormData {
     type: string
   }
   parser?: Function
-  debug?: boolean
+  debug?: {
+    ui?: boolean
+    console?: boolean
+  }
 }
 
 const FormComponent: React.FC<GravityFormData> = props => {
@@ -180,7 +183,10 @@ const FormComponent: React.FC<GravityFormData> = props => {
         )}
       </form>
 
-      {Boolean(debug) && console.log(state)}
+      {Boolean(debug?.console) && console.log(state)}
+      {Boolean(debug?.ui) && (
+        <pre>{JSON.stringify(state.formData, null, 2)}</pre>
+      )}
     </>
   )
 }

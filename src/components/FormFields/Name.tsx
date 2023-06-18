@@ -202,7 +202,6 @@ const NameField: React.FC<NameFieldProps> = props => {
 
       {otherInputs?.map(input => {
         const key = String(input.key)
-        const fieldValueId = `${key}Id`
         const inputLabel = input?.label
         const placeholderValue =
           input?.placeholder === undefined || input?.placeholder === null
@@ -220,7 +219,6 @@ const NameField: React.FC<NameFieldProps> = props => {
               id={`input_${databaseId}_${key}`}
               placeholder={placeholderValue}
               required={isRequired}
-              defaultValue={state.formData?.[fieldValueId]}
               onChange={handleChange}
             />
           </div>
