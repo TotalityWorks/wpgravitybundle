@@ -52,6 +52,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
       })
     }
     if (!validationRegex.test(value)) {
+      if (value === "") return
       return dispatch({
         type: ActionTypes.AddError,
         payload: { name: valueId, message: validationMessage },
