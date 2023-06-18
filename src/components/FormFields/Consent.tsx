@@ -5,10 +5,17 @@ import { ConsentFieldProps } from "../../interfaces"
 
 const ConsentField: React.FC<ConsentFieldProps> = props => {
   const { field } = props
-  const { id, type, label, cssClass, isRequired, checkboxLabel, pageNumber } =
-    field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const {
+    databaseId,
+    type,
+    label,
+    cssClass,
+    isRequired,
+    checkboxLabel,
+    pageNumber,
+  } = field
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const [isChecked, setIsChecked] = useState(false)
@@ -43,7 +50,7 @@ const ConsentField: React.FC<ConsentFieldProps> = props => {
       <label htmlFor={htmlId}>{label}</label>
       <input
         type="checkbox"
-        name={String(id)}
+        name={String(databaseId)}
         id={htmlId}
         onChange={handleChange}
         checked={isChecked}

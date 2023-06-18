@@ -7,7 +7,7 @@ import { CaptchaFieldProps } from "../../interfaces"
 const CaptchaField: React.FC<CaptchaFieldProps> = props => {
   const { field, captcha } = props
   const {
-    id,
+    databaseId,
     type,
     cssClass,
     captchaTheme,
@@ -15,7 +15,7 @@ const CaptchaField: React.FC<CaptchaFieldProps> = props => {
     simpleCaptchaSize,
     pageNumber,
   } = field
-  const valueId = `${type}${id}Value`
+  const valueId = `${type}${databaseId}Value`
   const classes =
     cssClass === undefined || cssClass === null ? "" : `${cssClass}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber

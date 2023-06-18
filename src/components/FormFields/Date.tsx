@@ -10,7 +10,7 @@ const DateField: React.FC<DateFieldProps> = props => {
     // validationRules
   } = props
   const {
-    id,
+    databaseId,
     type,
     label,
     cssClass,
@@ -19,8 +19,8 @@ const DateField: React.FC<DateFieldProps> = props => {
     size,
     pageNumber,
   } = field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const otherClasses =

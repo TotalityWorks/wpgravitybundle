@@ -5,10 +5,18 @@ import { RadioFieldProps } from "../../interfaces"
 
 const RadioField: React.FC<RadioFieldProps> = props => {
   const { field } = props
-  const { id, type, label, cssClass, isRequired, choices, size, pageNumber } =
-    field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const {
+    databaseId,
+    type,
+    label,
+    cssClass,
+    isRequired,
+    choices,
+    size,
+    pageNumber,
+  } = field
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
@@ -68,7 +76,7 @@ const RadioField: React.FC<RadioFieldProps> = props => {
           <div key={inputValue}>
             <input
               type="radio"
-              name={String(id)}
+              name={String(databaseId)}
               id={`choice_${htmlId}_${inputValue}`}
               value={inputValue}
               onChange={handleChange}

@@ -6,7 +6,7 @@ import { FileUploadFieldProps } from "../../interfaces"
 const FileUploadField: React.FC<FileUploadFieldProps> = props => {
   const { field } = props
   const {
-    id,
+    databaseId,
     type,
     label,
     cssClass,
@@ -17,8 +17,8 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
     allowedExtensions,
     canAcceptMultipleFiles,
   } = field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const otherClasses =
     cssClass === undefined || cssClass === null ? "" : `${cssClass}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber

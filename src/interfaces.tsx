@@ -1,5 +1,4 @@
 export interface Form {
-  id: string
   databaseId: number
   cssClass?: string | null
   customRequiredIndicator?: null
@@ -82,7 +81,7 @@ interface Confirmation {
 }
 
 export interface Field {
-  id: number
+  databaseId: number
   type: string
   isRequired?: boolean
   pageNumber?: number

@@ -49,11 +49,11 @@ const FormComponent: React.FC<GravityFormData> = props => {
       .map(field => {
         if (field.type === "CAPTCHA") {
           if (captcha?.type.toLowerCase() === "invisible") return null
-          return `${field.type}${field.id}Value`
+          return `${field.type}${field.databaseId}Value`
         }
         if (!(field.isRequired ?? false)) return null
         if (field.type === "NAME") {
-          const value = `${field.type}${field.id}`
+          const value = `${field.type}${field.databaseId}`
           const prefixInput: NameInput | undefined = field?.inputs?.find(
             (input: NameInput) => input.key === "prefix"
           )
@@ -93,13 +93,13 @@ const FormComponent: React.FC<GravityFormData> = props => {
           return filterNameFields
         }
         if (field.type === "ADDRESS") {
-          const { type, id } = field
-          const streetId = `${type}${id}StreetValue`
+          const { type, databaseId } = field
+          const streetId = `${type}${databaseId}StreetValue`
           // lineTwo is not needed for required fields
-          const cityId = `${type}${id}CityValue`
-          const stateId = `${type}${id}StateValue`
-          const zipId = `${type}${id}ZipValue`
-          const countryId = `${type}${id}CountryValue`
+          const cityId = `${type}${databaseId}CityValue`
+          const stateId = `${type}${databaseId}StateValue`
+          const zipId = `${type}${databaseId}ZipValue`
+          const countryId = `${type}${databaseId}CountryValue`
           const requiredAddressFields = [
             streetId,
             cityId,
@@ -111,7 +111,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
           return requiredAddressFields
         }
 
-        const valueId = `${field.type}${field.id}Value`
+        const valueId = `${field.type}${field.databaseId}Value`
         return valueId
       })
       .flat()
@@ -136,12 +136,12 @@ const FormComponent: React.FC<GravityFormData> = props => {
               if (field.type === "PAGE")
                 return (
                   <React.Fragment
-                    key={`${field.id}-${field.type}`}
+                    key={`${field.databaseId}-${field.type}`}
                   ></React.Fragment>
                 )
               return (
                 <FormsField
-                  key={`${field.id}-${field.type}`}
+                  key={`${field.databaseId}-${field.type}`}
                   field={field}
                   validation={validation}
                   captcha={captcha}
@@ -155,12 +155,12 @@ const FormComponent: React.FC<GravityFormData> = props => {
               if (field.type !== "PAGE")
                 return (
                   <React.Fragment
-                    key={`${field.id}-${field.type}`}
+                    key={`${field.databaseId}-${field.type}`}
                   ></React.Fragment>
                 )
               return (
                 <FormsField
-                  key={`${field.id}-${field.type}`}
+                  key={`${field.databaseId}-${field.type}`}
                   field={field}
                   validation={validation}
                 />
@@ -181,7 +181,6 @@ const FormComponent: React.FC<GravityFormData> = props => {
       </form>
 
       {Boolean(debug) && console.log(state)}
-      <pre>{JSON.stringify(state, null, 2)}</pre>
     </>
   )
 }

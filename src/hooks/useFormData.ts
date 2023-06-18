@@ -9,9 +9,9 @@ const createMutationVariables = (fields: Field[]): string => {
   // uses the form fields data to create a string literal for all
   // mutation variables your form will need.
   const mappedMutationVariables = fields.map((field, key) => {
-    const { type, id, isRequired } = field
+    const { type, databaseId, isRequired } = field
     const space: string = key === 0 ? "" : " "
-    const value: string = `${type}${id}`
+    const value: string = `${type}${databaseId}`
     const required: string = isRequired ?? false ? "!" : ""
 
     const addressField = (): string => {
@@ -107,8 +107,8 @@ const createMutationVariables = (fields: Field[]): string => {
 const createFieldValuesShape = (fields: Field[]): string => {
   // uses form fields data to create the shape of your fieldValues array in your mutation
   const mappedFieldValuesShape = fields.map(field => {
-    const { id, type } = field
-    const value = `${type}${id}`
+    const { databaseId, type } = field
+    const value = `${type}${databaseId}`
 
     const street = `street: $${value}StreetValue`
     const lineTwo = `lineTwo: $${value}LineTwoValue`
@@ -167,12 +167,12 @@ const createFieldValuesShape = (fields: Field[]): string => {
       case "TEXTAREA":
       case "WEBSITE":
         return `{
-                  id: ${id}
+                  id: ${databaseId}
                   value: $${value}Value
                 }`
       case "ADDRESS":
         return `{
-                  id: ${id}
+                  id: ${databaseId}
                   addressValues: {
                       ${street}
                       ${lineTwo}
@@ -184,7 +184,7 @@ const createFieldValuesShape = (fields: Field[]): string => {
                   }`
       case "EMAIL":
         return `{
-                  id: ${id}
+                  id: ${databaseId}
                   emailValues: {
                       value: $${value}Value
                       ${emailConfirmation}
@@ -192,12 +192,12 @@ const createFieldValuesShape = (fields: Field[]): string => {
                 }`
       case "FILEUPLOAD":
         return `{
-                  id: ${id}
+                  id: ${databaseId}
                   fileUploadValues: $${value}Value
                 }`
       case "NAME":
         return `{
-                  id: ${id}
+                  id: ${databaseId}
                   nameValues: {
                     ${prefix}
                     ${first}

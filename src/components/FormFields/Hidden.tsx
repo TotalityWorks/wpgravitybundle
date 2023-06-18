@@ -5,9 +5,9 @@ import { HiddenFieldProps } from "../../interfaces"
 
 const HiddenField: React.FC<HiddenFieldProps> = props => {
   const { field } = props
-  const { id, type, cssClass, label, defaultValue } = field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const { databaseId, type, cssClass, label, defaultValue } = field
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const classes =
     cssClass === undefined || cssClass === null ? "" : `${cssClass}`
   const { dispatch } = useFormContext()

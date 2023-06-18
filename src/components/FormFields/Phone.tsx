@@ -9,7 +9,7 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
     // validationRules
   } = props
   const {
-    id,
+    databaseId,
     type,
     label,
     cssClass,
@@ -19,8 +19,8 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
     pageNumber,
     // phoneFormat,
   } = field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   // const format =

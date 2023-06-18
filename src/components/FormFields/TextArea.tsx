@@ -6,7 +6,7 @@ import { TextAreaFieldProps } from "../../interfaces"
 const TextAreaField: React.FC<TextAreaFieldProps> = props => {
   const { field, validationRules } = props
   const {
-    id,
+    databaseId,
     type,
     label,
     cssClass,
@@ -15,8 +15,8 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
     size,
     pageNumber,
   } = field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const otherClasses =
@@ -26,7 +26,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
-  const validationRule = validationRules?.find(rule => rule.id === id)
+  const validationRule = validationRules?.find(rule => rule.id === databaseId)
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"

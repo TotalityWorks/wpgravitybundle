@@ -10,10 +10,18 @@ interface AddressValue {
 
 const AddressField: React.FC<AddressFieldProps> = props => {
   const { field, validationRules } = props
-  const { id, type, label, cssClass, inputs, size, isRequired, pageNumber } =
-    field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const {
+    databaseId,
+    type,
+    label,
+    cssClass,
+    inputs,
+    size,
+    isRequired,
+    pageNumber,
+  } = field
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
@@ -22,13 +30,13 @@ const AddressField: React.FC<AddressFieldProps> = props => {
   const classes = `${sizeClass} ${otherClasses}`
   const [addressValue, setAddressValue] = useState<AddressValue>({})
   const { state, dispatch } = useFormContext()
-  const validationRule = validationRules?.find(rule => rule.id === id)
-  const streetId = `${type}${id}StreetValue`
-  const lineTwoId = `${type}${id}LineTwoValue`
-  const cityId = `${type}${id}CityValue`
-  const stateId = `${type}${id}StateValue`
-  const zipId = `${type}${id}ZipValue`
-  const countryId = `${type}${id}CountryValue`
+  const validationRule = validationRules?.find(rule => rule.id === databaseId)
+  const streetId = `${type}${databaseId}StreetValue`
+  const lineTwoId = `${type}${databaseId}LineTwoValue`
+  const cityId = `${type}${databaseId}CityValue`
+  const stateId = `${type}${databaseId}StateValue`
+  const zipId = `${type}${databaseId}ZipValue`
+  const countryId = `${type}${databaseId}CountryValue`
   const valudIds = [streetId, lineTwoId, cityId, stateId, zipId, countryId]
 
   const isCurrentPage = state.currentPage === page
@@ -193,7 +201,7 @@ const AddressField: React.FC<AddressFieldProps> = props => {
             <>
               <select
                 name={String(key)}
-                id={`input_${id}_${key}`}
+                id={`input_${databaseId}_${key}`}
                 defaultValue={state.formData?.[fieldValueId]}
                 onChange={handleChange}
               >
@@ -204,7 +212,7 @@ const AddressField: React.FC<AddressFieldProps> = props => {
                   </option>
                 ))}
               </select>
-              <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>
+              <label htmlFor={`input_${databaseId}_${key}`}>{inputLabel}</label>
             </>
           )
         }
@@ -214,12 +222,12 @@ const AddressField: React.FC<AddressFieldProps> = props => {
               <input
                 type="text"
                 name={String(key)}
-                id={`input_${id}_${key}`}
+                id={`input_${databaseId}_${key}`}
                 placeholder={placeholder}
                 defaultValue={state.formData?.[fieldValueId]}
                 onChange={handleChange}
               />
-              <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>
+              <label htmlFor={`input_${databaseId}_${key}`}>{inputLabel}</label>
             </div>
 
             {errorMessages.map(err => {
