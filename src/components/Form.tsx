@@ -7,7 +7,7 @@ import Button from "./Button"
 import { supportedFields } from "../constants"
 
 // import types
-import type { Form, ValidationRule, NameInput } from "../interfaces"
+import type { Form, ValidationRule, NameInput, EmailField } from "../interfaces"
 
 interface GravityFormData {
   form: Form
@@ -46,6 +46,9 @@ const FormComponent: React.FC<GravityFormData> = props => {
       : `${form.cssClass}`
   const { state, dispatch } = useFormContext()
   const disabled = state.errors.length > 0 || state.requiredFields.length > 0
+  const allSupportedFields = fields.filter(field =>
+    supportedFields.includes(field.type)
+  )
 
   const handleSubmit = (e: React.SyntheticEvent): Function => {
     e.preventDefault()
@@ -54,9 +57,6 @@ const FormComponent: React.FC<GravityFormData> = props => {
   }
 
   useEffect(() => {
-    const allSupportedFields = fields.filter(field =>
-      supportedFields.includes(field.type)
-    )
     const requiredFields = allSupportedFields
       .map(field => {
         if (field.type === "CAPTCHA") {
@@ -129,6 +129,10 @@ const FormComponent: React.FC<GravityFormData> = props => {
       .flat()
       .filter(field => field !== null)
 
+    // set all required fields to state
+    dispatch({ type: ActionTypes.AddRequired, payload: requiredFields })
+
+    // sets total page count in state by finding largest pageNumber value among fields
     allSupportedFields.map(field => {
       if (Number(field?.pageNumber) <= state.totalPageCount) return null
       return dispatch({
@@ -136,7 +140,67 @@ const FormComponent: React.FC<GravityFormData> = props => {
         payload: field.pageNumber,
       })
     })
-    dispatch({ type: ActionTypes.AddRequired, payload: requiredFields })
+
+    const formDataKeys = allSupportedFields
+      .map(field => {
+        // these fields need no value
+        if (field.type === "HTML") return null
+        if (field.type === "SECTION") return null
+        // these fields should receive values from the user
+        if (field.type === "CONSENT") return null
+        if (field.type === "CAPTCHA") return null
+        // returns email value, and if needed the confirmation value
+        if (field.type === "EMAIL") {
+          const emailField = field as EmailField
+          const confirmation = `${field.type}${field.databaseId}ConfirmationValue`
+          const { hasEmailConfirmation } = emailField
+          if (hasEmailConfirmation !== undefined && hasEmailConfirmation)
+            return [confirmation, `${field.type}${field.databaseId}Value`]
+          return `${field.type}${field.databaseId}Value`
+        }
+        // returns all name field values
+        if (field.type === "NAME") {
+          const value = `${field.type}${field.databaseId}`
+          const prefix = `${value}PrefixValue`
+          const first = `${value}FirstValue`
+          const middle = `${value}MiddleValue`
+          const last = `${value}LastValue`
+          const suffix = `${value}SuffixValue`
+          const nameFields = [prefix, first, middle, last, suffix]
+
+          return nameFields
+        }
+        if (field.type === "ADDRESS") {
+          const { type, databaseId } = field
+          const streetId = `${type}${databaseId}StreetValue`
+          // lineTwo is needed here even if not a required field
+          const lineTwoId = `${type}${databaseId}LineTwoValue`
+          const cityId = `${type}${databaseId}CityValue`
+          const stateId = `${type}${databaseId}StateValue`
+          const zipId = `${type}${databaseId}ZipValue`
+          const countryId = `${type}${databaseId}CountryValue`
+          const requiredAddressFields = [
+            streetId,
+            lineTwoId,
+            cityId,
+            stateId,
+            zipId,
+            countryId,
+          ]
+
+          return requiredAddressFields
+        }
+
+        const valueId = `${field.type}${field.databaseId}Value`
+        return valueId
+      })
+      .flat()
+
+    // add all fields to state with empty strings as default
+    formDataKeys.map(key => {
+      if (key === null) return null
+      return dispatch({ type: ActionTypes.Update, payload: { [key]: "" } })
+    })
   }, [])
 
   return (

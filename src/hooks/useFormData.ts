@@ -27,7 +27,9 @@ const createMutationVariables = (fields: Field[]): string => {
 
     const emailField = (): string => {
       const email = `$${value}Value: String${required}`
-      const emailConfirmed = field.emailConfirmEnabled !== null
+      const emailConfirmed =
+        field.hasEmailConfirmation !== null &&
+        Boolean(field.hasEmailConfirmation)
       const emailConfirmation = emailConfirmed
         ? `, $${value}ConfirmationValue: String${required}`
         : ""
@@ -118,7 +120,8 @@ const createFieldValuesShape = (fields: Field[]): string => {
     const country = `country: $${value}CountryValue`
 
     const isEmail = type === "EMAIL"
-    const emailConfirmed = field.emailConfirmEnabled !== null
+    const emailConfirmed =
+      field.hasEmailConfirmation !== null && Boolean(field.hasEmailConfirmation)
     const emailConfirmEnabled = isEmail && emailConfirmed
     const emailConfirmation = emailConfirmEnabled
       ? `confirmationValue: $${value}ConfirmationValue`

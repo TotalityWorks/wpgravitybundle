@@ -138,6 +138,7 @@ export interface EmailField extends Field {
   cssClass?: string
   placeholder?: string
   size?: string
+  hasEmailConfirmation?: boolean
 }
 
 export interface FileUploadField extends Field {
