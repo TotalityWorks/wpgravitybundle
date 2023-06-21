@@ -15,16 +15,18 @@ const Button: React.FC<ButtonProps> = props => {
   const buttonType = type === "TEXT" ? "submit" : "image"
   const classes = `${cssClass === undefined ? "" : cssClass}`.trim()
   const disabledClasses = `${
-    disabled !== undefined && disabled ? `${String(disabledClass)}` : ""
-  }`
+    disabledClass === undefined ? "" : disabledClass
+  }`.trim()
+  const isDisabled = disabled !== undefined && disabled
 
   return (
-    <div className={`${classes} ${disabledClasses}`}>
+    <div>
       <input
         type={buttonType}
         onClick={onClick}
         disabled={disabled}
         value={buttonText}
+        className={`${isDisabled ? `${disabledClasses}` : `${classes}`}`}
       />
     </div>
   )
