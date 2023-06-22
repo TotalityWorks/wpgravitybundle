@@ -14,8 +14,10 @@ const EmailField: React.FC<EmailFieldProps> = props => {
     placeholder,
     size,
     pageNumber,
+    hasEmailConfirmation,
   } = field
   const valueId = `${type}${databaseId}Value`
+  const confirmationValueId = `${type}${databaseId}ConfirmationValue`
   const htmlId = `field_${databaseId}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
@@ -25,6 +27,9 @@ const EmailField: React.FC<EmailFieldProps> = props => {
     placeholder === undefined || placeholder === null ? "" : `${placeholder}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const classes = `${sizeClass} ${otherClasses}`
+  const emailConfirmed =
+    hasEmailConfirmation !== null && Boolean(hasEmailConfirmation)
+
   const { state, dispatch } = useFormContext()
   const validationRule = validationRules?.find(rule => rule.id === databaseId)
 
@@ -35,7 +40,28 @@ const EmailField: React.FC<EmailFieldProps> = props => {
     return error.name.toString() === valueId
   })
 
-  function validateField(value: string): void {
+  const confirmationErrorMessage = state.errors.find(error => {
+    return error.name.toString() === confirmationValueId
+  })
+
+  function validateField(name: string, value: string): void {
+    if (name === `${htmlId}_confirm`) {
+      if (state.formData?.[valueId] !== value) {
+        return dispatch({
+          type: ActionTypes.AddError,
+          payload: {
+            name: confirmationValueId,
+            message: "Email does not match",
+          },
+        })
+      }
+
+      return dispatch({
+        type: ActionTypes.RemoveError,
+        payload: confirmationValueId,
+      })
+    }
+
     const validationRegex =
       validationRule?.regex != null
         ? validationRule.regex
@@ -66,8 +92,14 @@ const EmailField: React.FC<EmailFieldProps> = props => {
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     event.preventDefault()
-    const { value } = event.currentTarget
-    validateField(value)
+    const { name, value } = event.currentTarget
+    validateField(name, value)
+    if (name === `${htmlId}_confirm`) {
+      return dispatch({
+        type: ActionTypes.Update,
+        payload: { [confirmationValueId]: value },
+      })
+    }
     return dispatch({ type: ActionTypes.Update, payload: { [valueId]: value } })
   }
 
@@ -79,19 +111,50 @@ const EmailField: React.FC<EmailFieldProps> = props => {
     dispatch({ type: ActionTypes.RemoveRequiredField, payload: valueId })
   }, [state.formData?.[valueId]])
 
+  useEffect(() => {
+    if (!emailConfirmed) return undefined
+    if (state.formData?.[valueId] !== state.formData?.[confirmationValueId]) {
+      return dispatch({
+        type: ActionTypes.AddError,
+        payload: {
+          name: confirmationValueId,
+          message: "Email does not match",
+        },
+      })
+    }
+  }, [state.formData?.[valueId], state.formData?.[confirmationValueId]])
+
   return (
-    <div className={classes} style={{ display: activePageStyle }}>
-      <label htmlFor={htmlId}>{label}</label>
-      <input
-        type="text"
-        name={htmlId}
-        id={htmlId}
-        required={isRequired}
-        placeholder={placeholderValue}
-        onChange={handleChange}
-      />
-      <p className="error-message">{errorMessage?.message}</p>
-    </div>
+    <>
+      <div className={classes} style={{ display: activePageStyle }}>
+        <label htmlFor={htmlId}>{label}</label>
+        <input
+          type="text"
+          name={htmlId}
+          id={htmlId}
+          required={isRequired}
+          placeholder={placeholderValue}
+          onChange={handleChange}
+        />
+        <p className="error-message">{errorMessage?.message}</p>
+      </div>
+
+      {emailConfirmed && (
+        <div className={classes} style={{ display: activePageStyle }}>
+          {/* Investigate using sub-labels for email/confirm email */}
+          <label htmlFor={`${htmlId}_confirm`}>{`Confirm Email`}</label>
+          <input
+            type="text"
+            name={`${htmlId}_confirm`}
+            id={`${htmlId}_confirm`}
+            required={isRequired}
+            placeholder={placeholderValue}
+            onChange={handleChange}
+          />
+          <p className="error-message">{confirmationErrorMessage?.message}</p>
+        </div>
+      )}
+    </>
   )
 }
 

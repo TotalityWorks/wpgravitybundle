@@ -732,7 +732,7 @@
           "displayOnly": false,
           "errorMessage": null,
           "hasAutocomplete": false,
-          "hasEmailConfirmation": false,
+          "hasEmailConfirmation": true,
           "inputType": null,
           "isRequired": false,
           "label": "Email",
