@@ -33,6 +33,11 @@ const EmailField: React.FC<EmailFieldProps> = props => {
   const { state, dispatch } = useFormContext()
   const validationRule = validationRules?.find(rule => rule.id === databaseId)
 
+  const confirmMessage =
+    validationRule?.confirmMessage != null
+      ? validationRule.confirmMessage
+      : "Email does not match"
+
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
 
@@ -45,11 +50,6 @@ const EmailField: React.FC<EmailFieldProps> = props => {
   })
 
   function validateField(name: string, value: string): void {
-    const confirmMessage =
-      validationRule?.confirmMessage != null
-        ? validationRule.confirmMessage
-        : "Email does not match"
-
     if (name === `${htmlId}_confirm`) {
       if (state.formData?.[valueId] !== value) {
         return dispatch({
@@ -123,7 +123,7 @@ const EmailField: React.FC<EmailFieldProps> = props => {
         type: ActionTypes.AddError,
         payload: {
           name: confirmationValueId,
-          message: "Email does not match",
+          message: confirmMessage,
         },
       })
     }

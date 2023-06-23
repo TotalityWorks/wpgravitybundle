@@ -143,6 +143,8 @@ const FormComponent: React.FC<GravityFormData> = props => {
 
     const formDataKeys = allSupportedFields
       .map(field => {
+        // this field has a default value added by the field component
+        if (field.type === "HIDDEN") return null
         // these fields need no value
         if (field.type === "HTML") return null
         if (field.type === "SECTION") return null

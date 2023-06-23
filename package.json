@@ -1,6 +1,6 @@
 {
   "name": "wpgravitybundle",
-  "version": "1.0.0-alpha.33",
+  "version": "1.0.0-alpha.35",
   "description": "A component and a hook to simplify your headless WordPress React application using Gravity Forms.",
   "author": "@totalityworks",
   "license": "MIT",
