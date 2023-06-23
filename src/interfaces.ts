@@ -270,6 +270,7 @@ export interface ValidationRule {
   id: number
   regex?: RegExp
   message?: string
+  confirmMessage?: string
 }
 
 export interface AddressFieldProps {
