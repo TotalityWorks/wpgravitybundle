@@ -105,13 +105,13 @@ export interface AddressField extends Field {
 export interface CaptchaField extends Field {
   label?: string
   cssClass?: string
-  captchaBadgePosition?: string
+  captchaBadgePosition?: "bottomright" | "bottomleft" | "inline"
   captchaLanguage?: string
-  captchaTheme?: string
-  captchaType?: string
+  captchaTheme?: "light" | "dark"
+  captchaType?: "image" | "audio"
   simpleCaptchaBackgroundColor?: string
   simpleCaptchaFontColor?: string
-  simpleCaptchaSize?: string
+  simpleCaptchaSize?: "compact" | "normal" | "invisible"
 }
 
 export interface ConsentField extends Field {
@@ -279,11 +279,11 @@ export interface AddressFieldProps {
 }
 
 export interface CaptchaFieldProps {
-  field: ConsentField
-  captcha: {
+  field: CaptchaField
+  captcha?: {
     captchaSiteKey: string
     captchaSecretKey: string
-    type: string
+    type: "COMPACT" | "NORMAL" | "INVISIBLE"
   }
 }
 

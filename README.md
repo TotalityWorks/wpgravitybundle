@@ -13,7 +13,7 @@ The following system is recommended:
 - WordPress 5.4.1+
 - WPGraphQL 1.9.0+
 - Gravity Forms 2.5+ (Recommend: v2.6+)
-- WPGraphQL for Gravity Forms 0.11.10
+- WPGraphQL for Gravity Forms 0.12.2
 - WPGraphQL Upload - used for File Upload
 
 Technically, this package simply needs data in JSON format so the above is not necessary. However, the shape of this data is dependant upon the shape that `WPGraphQL for Gravity Forms` gives you for your data and expects upon form submission.

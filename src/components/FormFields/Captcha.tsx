@@ -20,9 +20,11 @@ const CaptchaField: React.FC<CaptchaFieldProps> = props => {
     cssClass === undefined || cssClass === null ? "" : `${cssClass}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const size =
-    captcha.type.toLowerCase() === "invisible"
-      ? captcha.type.toLowerCase()
+    captcha?.type.toLowerCase() === "invisible"
+      ? "invisible"
       : simpleCaptchaSize
+  const captchaSiteKey = captcha?.captchaSiteKey
+  const siteKey = captchaSiteKey ?? ""
   const { state, dispatch } = useFormContext()
   const captchaRef = useRef(null)
 
@@ -46,7 +48,7 @@ const CaptchaField: React.FC<CaptchaFieldProps> = props => {
   return (
     <div className={classes} style={{ display: activePageStyle }}>
       <ReCAPTCHA
-        sitekey={captcha.captchaSiteKey}
+        sitekey={siteKey}
         theme={captchaTheme}
         badge={captchaBadgePosition}
         ref={captchaRef}

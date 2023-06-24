@@ -249,7 +249,7 @@
           "hasOtherChoice": false,
           "inputName": null,
           "inputType": null,
-          "isRequired": false,
+          "isRequired": true,
           "label": "Radio",
           "labelPlacement": "INHERIT",
           "layoutGridColumnSpan": null,
