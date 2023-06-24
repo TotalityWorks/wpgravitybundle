@@ -18,7 +18,7 @@ interface GravityFormData {
   captcha?: {
     captchaSiteKey: string
     captchaSecretKey: string
-    type: string
+    type: "COMPACT" | "NORMAL" | "INVISIBLE"
   }
   parser?: Function
   debug?: {
@@ -145,11 +145,11 @@ const FormComponent: React.FC<GravityFormData> = props => {
       .map(field => {
         // this field has a default value added by the field component
         if (field.type === "HIDDEN") return null
+        if (field.type === "RADIO") return null
         // these fields need no value
         if (field.type === "HTML") return null
         if (field.type === "SECTION") return null
         // these fields should receive values from the user
-        if (field.type === "CONSENT") return null
         if (field.type === "CAPTCHA") return null
         // returns email value, and if needed the confirmation value
         if (field.type === "EMAIL") {
@@ -201,6 +201,9 @@ const FormComponent: React.FC<GravityFormData> = props => {
     // add all fields to state with empty strings as default
     formDataKeys.map(key => {
       if (key === null) return null
+      if (key.includes("CONSENT")) {
+        return dispatch({ type: ActionTypes.Update, payload: { [key]: null } })
+      }
       return dispatch({ type: ActionTypes.Update, payload: { [key]: "" } })
     })
   }, [])
