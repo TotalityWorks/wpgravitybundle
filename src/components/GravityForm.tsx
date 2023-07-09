@@ -13,7 +13,7 @@ interface GravityFormData {
   captcha?: {
     captchaSiteKey: string
     captchaSecretKey: string
-    type: string
+    type: "COMPACT" | "NORMAL" | "INVISIBLE"
   }
   parser?: Function
   debug?: {

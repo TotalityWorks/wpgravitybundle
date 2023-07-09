@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = props => {
   const buttonType = type === "TEXT" ? "submit" : "image"
   const classes = `${cssClass === undefined ? "" : cssClass}`.trim()
   const disabledClasses = `${
-    disabledClass === undefined ? "" : disabledClass
+    disabledClass === undefined ? classes : disabledClass
   }`.trim()
   const isDisabled = disabled !== undefined && disabled
 

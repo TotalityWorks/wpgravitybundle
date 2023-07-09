@@ -201,9 +201,6 @@ const FormComponent: React.FC<GravityFormData> = props => {
     // add all fields to state with empty strings as default
     formDataKeys.map(key => {
       if (key === null) return null
-      if (key.includes("CONSENT")) {
-        return dispatch({ type: ActionTypes.Update, payload: { [key]: null } })
-      }
       return dispatch({ type: ActionTypes.Update, payload: { [key]: "" } })
     })
   }, [])

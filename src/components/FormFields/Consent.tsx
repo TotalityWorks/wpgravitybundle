@@ -27,7 +27,7 @@ const ConsentField: React.FC<ConsentFieldProps> = props => {
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget
     setIsChecked(!isChecked)
-    const newCheckedValue = isChecked ? null : value
+    const newCheckedValue = isChecked ? "" : value
     return dispatch({
       type: ActionTypes.Update,
       payload: { [valueId]: newCheckedValue },
