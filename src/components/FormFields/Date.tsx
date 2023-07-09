@@ -92,7 +92,7 @@ const DateField: React.FC<DateFieldProps> = props => {
   }, [state.formData?.[valueId]])
 
   return (
-    <div className={classes} style={{ display: activePageStyle }}>
+    <div style={{ display: activePageStyle }}>
       <label htmlFor={htmlId}>{label}</label>
       <input
         type="date"
@@ -101,6 +101,7 @@ const DateField: React.FC<DateFieldProps> = props => {
         required={isRequired}
         placeholder={placeholderValue}
         onChange={handleChange}
+        className={classes}
       />
       <p className="error-message">{errorMessage?.message}</p>
     </div>

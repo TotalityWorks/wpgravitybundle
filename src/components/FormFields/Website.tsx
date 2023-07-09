@@ -82,7 +82,7 @@ const WebsiteField: React.FC<WebsiteFieldProps> = props => {
   }, [state.formData?.[valueId]])
 
   return (
-    <div className={classes} style={{ display: activePageStyle }}>
+    <div style={{ display: activePageStyle }}>
       <label htmlFor={htmlId}>{label}</label>
       <input
         type="text"
@@ -91,6 +91,7 @@ const WebsiteField: React.FC<WebsiteFieldProps> = props => {
         required={isRequired}
         placeholder={placeholderValue}
         onChange={handleChange}
+        className={classes}
       />
       <p className="error-message">{errorMessage?.message}</p>
     </div>

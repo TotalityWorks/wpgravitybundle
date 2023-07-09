@@ -131,7 +131,7 @@ const EmailField: React.FC<EmailFieldProps> = props => {
 
   return (
     <>
-      <div className={classes} style={{ display: activePageStyle }}>
+      <div style={{ display: activePageStyle }}>
         <label htmlFor={htmlId}>{label}</label>
         <input
           type="text"
@@ -140,12 +140,13 @@ const EmailField: React.FC<EmailFieldProps> = props => {
           required={isRequired}
           placeholder={placeholderValue}
           onChange={handleChange}
+          className={classes}
         />
         <p className="error-message">{errorMessage?.message}</p>
       </div>
 
       {emailConfirmed && (
-        <div className={classes} style={{ display: activePageStyle }}>
+        <div style={{ display: activePageStyle }}>
           {/* Investigate using sub-labels for email/confirm email */}
           <label htmlFor={`${htmlId}_confirm`}>{`Confirm Email`}</label>
           <input
@@ -155,6 +156,7 @@ const EmailField: React.FC<EmailFieldProps> = props => {
             required={isRequired}
             placeholder={placeholderValue}
             onChange={handleChange}
+            className={classes}
           />
           <p className="error-message">{confirmationErrorMessage?.message}</p>
         </div>

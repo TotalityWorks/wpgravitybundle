@@ -80,7 +80,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
   }, [state.formData?.[valueId]])
 
   return (
-    <div className={classes} style={{ display: activePageStyle }}>
+    <div style={{ display: activePageStyle }}>
       <label htmlFor={htmlId}>{label}</label>
       <textarea
         name={htmlId}
@@ -88,6 +88,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = props => {
         required={isRequired}
         onChange={handleChange}
         placeholder={placeholderValue}
+        className={classes}
       />
       <p className="error-message">{errorMessage?.message}</p>
     </div>
