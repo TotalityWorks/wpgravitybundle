@@ -1,8 +1,13 @@
+export enum RequiredIndicator {
+  TEXT = "TEXT",
+  ASTERISK = "ASTERISK",
+  CUSTOM = "CUSTOM",
+}
+
 export interface Form {
-  id: string
   databaseId: number
   cssClass?: string | null
-  customRequiredIndicator?: null
+  customRequiredIndicator?: string | null
   dateCreated?: string
   dateCreatedGmt?: string
   description?: string
@@ -17,7 +22,7 @@ export interface Form {
   markupVersion?: number
   nextFieldId?: number
   nodeType?: string
-  requiredIndicator?: null
+  requiredIndicator?: RequiredIndicator | null
   subLabelPlacement?: null
   title?: string
   version?: string
@@ -82,7 +87,7 @@ interface Confirmation {
 }
 
 export interface Field {
-  id: number
+  databaseId: number
   type: string
   isRequired?: boolean
   pageNumber?: number
@@ -103,16 +108,22 @@ export interface AddressField extends Field {
   inputs?: AddressInput[]
 }
 
+export enum CaptchaSize {
+  COMPACT = "compact",
+  NORMAL = "normal",
+  INVISIBLE = "invisible",
+}
+
 export interface CaptchaField extends Field {
   label?: string
   cssClass?: string
-  captchaBadgePosition?: string
+  captchaBadgePosition?: "bottomright" | "bottomleft" | "inline"
   captchaLanguage?: string
-  captchaTheme?: string
-  captchaType?: string
+  captchaTheme?: "light" | "dark"
+  captchaType?: "image" | "audio"
   simpleCaptchaBackgroundColor?: string
   simpleCaptchaFontColor?: string
-  simpleCaptchaSize?: string
+  simpleCaptchaSize?: CaptchaSize
 }
 
 export interface ConsentField extends Field {
@@ -139,6 +150,7 @@ export interface EmailField extends Field {
   cssClass?: string
   placeholder?: string
   size?: string
+  hasEmailConfirmation?: boolean
 }
 
 export interface FileUploadField extends Field {
@@ -270,6 +282,7 @@ export interface ValidationRule {
   id: number
   regex?: RegExp
   message?: string
+  confirmMessage?: string
 }
 
 export interface AddressFieldProps {
@@ -278,11 +291,11 @@ export interface AddressFieldProps {
 }
 
 export interface CaptchaFieldProps {
-  field: ConsentField
-  captcha: {
+  field: CaptchaField
+  captcha?: {
     captchaSiteKey: string
     captchaSecretKey: string
-    type: string
+    type: CaptchaSize
   }
 }
 

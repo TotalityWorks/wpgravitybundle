@@ -31,7 +31,13 @@ imgs
 .env
 
 # commitlint
-.commitlint.config.cjs
+commitlint.config.cjs
+
+# publish
+publish.config.js
+
+# webpack
+webpack.config.js
 
 # .nvmrc
 .nvmrc

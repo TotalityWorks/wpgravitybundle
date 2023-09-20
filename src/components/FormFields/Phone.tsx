@@ -9,7 +9,7 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
     // validationRules
   } = props
   const {
-    id,
+    databaseId,
     type,
     label,
     cssClass,
@@ -19,8 +19,8 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
     pageNumber,
     // phoneFormat,
   } = field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   // const format =
@@ -38,6 +38,11 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -97,16 +102,29 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
   }, [state.formData?.[valueId]])
 
   return (
-    <div className={classes} style={{ display: activePageStyle }}>
-      <label htmlFor={htmlId}>{label}</label>
+    <div style={{ display: activePageStyle }}>
+      <label htmlFor={htmlId}>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </label>
       <input
         type="text"
         name={htmlId}
         id={htmlId}
         required={isRequired}
         placeholder={placeholderValue}
-        defaultValue={state.formData?.[valueId]}
         onChange={handleChange}
+        className={classes}
       />
       <p className="error-message">{errorMessage?.message}</p>
     </div>

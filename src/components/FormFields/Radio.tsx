@@ -5,10 +5,18 @@ import { RadioFieldProps } from "../../interfaces"
 
 const RadioField: React.FC<RadioFieldProps> = props => {
   const { field } = props
-  const { id, type, label, cssClass, isRequired, choices, size, pageNumber } =
-    field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const {
+    databaseId,
+    type,
+    label,
+    cssClass,
+    isRequired,
+    choices,
+    size,
+    pageNumber,
+  } = field
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
@@ -18,6 +26,11 @@ const RadioField: React.FC<RadioFieldProps> = props => {
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -60,7 +73,20 @@ const RadioField: React.FC<RadioFieldProps> = props => {
       className={classes}
       style={{ display: activePageStyle }}
     >
-      <legend>{label}</legend>
+      <legend>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </legend>
       {choices?.map(input => {
         const text = input?.text
         const inputValue = input?.value
@@ -68,7 +94,7 @@ const RadioField: React.FC<RadioFieldProps> = props => {
           <div key={inputValue}>
             <input
               type="radio"
-              name={String(id)}
+              name={String(databaseId)}
               id={`choice_${htmlId}_${inputValue}`}
               value={inputValue}
               onChange={handleChange}

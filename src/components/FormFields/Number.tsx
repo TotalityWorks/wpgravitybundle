@@ -6,7 +6,7 @@ import { NumberFieldProps } from "../../interfaces"
 const NumberField: React.FC<NumberFieldProps> = props => {
   const { field, validationRules } = props
   const {
-    id,
+    databaseId,
     type,
     label,
     cssClass,
@@ -15,8 +15,8 @@ const NumberField: React.FC<NumberFieldProps> = props => {
     size,
     pageNumber,
   } = field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const otherClasses =
@@ -28,10 +28,15 @@ const NumberField: React.FC<NumberFieldProps> = props => {
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
-  const validationRule = validationRules?.find(rule => rule.id === id)
+  const validationRule = validationRules?.find(rule => rule.id === databaseId)
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -79,16 +84,29 @@ const NumberField: React.FC<NumberFieldProps> = props => {
   }, [state.formData?.[valueId]])
 
   return (
-    <div className={classes} style={{ display: activePageStyle }}>
-      <label htmlFor={htmlId}>{label}</label>
+    <div style={{ display: activePageStyle }}>
+      <label htmlFor={htmlId}>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </label>
       <input
         type="number"
         name={htmlId}
         id={htmlId}
         required={isRequired}
         placeholder={placeholderValue}
-        defaultValue={state.formData?.[valueId]}
         onChange={handleChange}
+        className={classes}
       />
       <p className="error-message">{errorMessage?.message}</p>
     </div>

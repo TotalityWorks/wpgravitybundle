@@ -7,33 +7,57 @@ import Button from "./Button"
 import { supportedFields } from "../constants"
 
 // import types
-import type { Form, ValidationRule, NameInput } from "../interfaces"
+import type {
+  Form,
+  ValidationRule,
+  NameInput,
+  EmailField,
+  CaptchaSize,
+} from "../interfaces"
 
 interface GravityFormData {
   form: Form
   onSubmit: Function
   buttonClass?: string
+  indicatorClass?: string
+  disabledButtonClass?: string
   validation?: ValidationRule[]
   captcha?: {
     captchaSiteKey: string
     captchaSecretKey: string
-    type: string
+    type: CaptchaSize
   }
   parser?: Function
-  debug?: boolean
+  debug?: {
+    ui?: boolean
+    console?: boolean
+  }
 }
 
 const FormComponent: React.FC<GravityFormData> = props => {
-  const { form, buttonClass, onSubmit, validation, captcha, parser, debug } =
-    props
+  const {
+    form,
+    buttonClass,
+    indicatorClass,
+    disabledButtonClass,
+    onSubmit,
+    validation,
+    captcha,
+    parser,
+    debug,
+  } = props
   const fields = form.formFields.nodes
   const button = form.submitButton
+  const { requiredIndicator, customRequiredIndicator } = form
   const formClasses =
     form.cssClass === undefined || form.cssClass === null
       ? ""
       : `${form.cssClass}`
   const { state, dispatch } = useFormContext()
   const disabled = state.errors.length > 0 || state.requiredFields.length > 0
+  const allSupportedFields = fields.filter(field =>
+    supportedFields.includes(field.type)
+  )
 
   const handleSubmit = (e: React.SyntheticEvent): Function => {
     e.preventDefault()
@@ -42,18 +66,15 @@ const FormComponent: React.FC<GravityFormData> = props => {
   }
 
   useEffect(() => {
-    const allSupportedFields = fields.filter(field =>
-      supportedFields.includes(field.type)
-    )
     const requiredFields = allSupportedFields
       .map(field => {
         if (field.type === "CAPTCHA") {
           if (captcha?.type.toLowerCase() === "invisible") return null
-          return `${field.type}${field.id}Value`
+          return `${field.type}${field.databaseId}Value`
         }
         if (!(field.isRequired ?? false)) return null
         if (field.type === "NAME") {
-          const value = `${field.type}${field.id}`
+          const value = `${field.type}${field.databaseId}`
           const prefixInput: NameInput | undefined = field?.inputs?.find(
             (input: NameInput) => input.key === "prefix"
           )
@@ -93,13 +114,13 @@ const FormComponent: React.FC<GravityFormData> = props => {
           return filterNameFields
         }
         if (field.type === "ADDRESS") {
-          const { type, id } = field
-          const streetId = `${type}${id}StreetValue`
+          const { type, databaseId } = field
+          const streetId = `${type}${databaseId}StreetValue`
           // lineTwo is not needed for required fields
-          const cityId = `${type}${id}CityValue`
-          const stateId = `${type}${id}StateValue`
-          const zipId = `${type}${id}ZipValue`
-          const countryId = `${type}${id}CountryValue`
+          const cityId = `${type}${databaseId}CityValue`
+          const stateId = `${type}${databaseId}StateValue`
+          const zipId = `${type}${databaseId}ZipValue`
+          const countryId = `${type}${databaseId}CountryValue`
           const requiredAddressFields = [
             streetId,
             cityId,
@@ -111,12 +132,18 @@ const FormComponent: React.FC<GravityFormData> = props => {
           return requiredAddressFields
         }
 
-        const valueId = `${field.type}${field.id}Value`
+        const valueId = `${field.type}${field.databaseId}Value`
         return valueId
       })
       .flat()
       .filter(field => field !== null)
 
+    // alert(`${String(requiredFields[1])}`)
+
+    // set all required fields to state
+    dispatch({ type: ActionTypes.AddRequired, payload: requiredFields })
+
+    // sets total page count in state by finding largest pageNumber value among fields
     allSupportedFields.map(field => {
       if (Number(field?.pageNumber) <= state.totalPageCount) return null
       return dispatch({
@@ -124,7 +151,74 @@ const FormComponent: React.FC<GravityFormData> = props => {
         payload: field.pageNumber,
       })
     })
-    dispatch({ type: ActionTypes.AddRequired, payload: requiredFields })
+
+    const formDataKeys = allSupportedFields
+      .map(field => {
+        // this field has a default value added by the field component
+        if (field.type === "HIDDEN") return null
+        if (field.type === "RADIO") return null
+        // these fields need no value
+        if (field.type === "HTML") return null
+        if (field.type === "SECTION") return null
+        // these fields should receive values from the user
+        if (field.type === "CAPTCHA") return null
+        // returns email value, and if needed the confirmation value
+        if (field.type === "EMAIL") {
+          const emailField = field as EmailField
+          const confirmation = `${field.type}${field.databaseId}ConfirmationValue`
+          const { hasEmailConfirmation } = emailField
+          if (hasEmailConfirmation !== undefined && hasEmailConfirmation)
+            return [confirmation, `${field.type}${field.databaseId}Value`]
+          return `${field.type}${field.databaseId}Value`
+        }
+        // returns all name field values
+        if (field.type === "NAME") {
+          const value = `${field.type}${field.databaseId}`
+          const prefix = `${value}PrefixValue`
+          const first = `${value}FirstValue`
+          const middle = `${value}MiddleValue`
+          const last = `${value}LastValue`
+          const suffix = `${value}SuffixValue`
+          const nameFields = [prefix, first, middle, last, suffix]
+
+          return nameFields
+        }
+        if (field.type === "ADDRESS") {
+          const { type, databaseId } = field
+          const streetId = `${type}${databaseId}StreetValue`
+          // lineTwo is needed here even if not a required field
+          const lineTwoId = `${type}${databaseId}LineTwoValue`
+          const cityId = `${type}${databaseId}CityValue`
+          const stateId = `${type}${databaseId}StateValue`
+          const zipId = `${type}${databaseId}ZipValue`
+          const countryId = `${type}${databaseId}CountryValue`
+          const requiredAddressFields = [
+            streetId,
+            lineTwoId,
+            cityId,
+            stateId,
+            zipId,
+            countryId,
+          ]
+
+          return requiredAddressFields
+        }
+
+        const valueId = `${field.type}${field.databaseId}Value`
+        return valueId
+      })
+      .flat()
+
+    // add all fields to state with empty strings as default
+    formDataKeys.map(key => {
+      if (key === null) return null
+      return dispatch({ type: ActionTypes.Update, payload: { [key]: "" } })
+    })
+
+    dispatch({
+      type: ActionTypes.UpdateRequiredIndicator,
+      payload: { requiredIndicator, customRequiredIndicator, indicatorClass },
+    })
   }, [])
 
   return (
@@ -136,12 +230,12 @@ const FormComponent: React.FC<GravityFormData> = props => {
               if (field.type === "PAGE")
                 return (
                   <React.Fragment
-                    key={`${field.id}-${field.type}`}
+                    key={`${field.databaseId}-${field.type}`}
                   ></React.Fragment>
                 )
               return (
                 <FormsField
-                  key={`${field.id}-${field.type}`}
+                  key={`${field.databaseId}-${field.type}`}
                   field={field}
                   validation={validation}
                   captcha={captcha}
@@ -155,12 +249,12 @@ const FormComponent: React.FC<GravityFormData> = props => {
               if (field.type !== "PAGE")
                 return (
                   <React.Fragment
-                    key={`${field.id}-${field.type}`}
+                    key={`${field.databaseId}-${field.type}`}
                   ></React.Fragment>
                 )
               return (
                 <FormsField
-                  key={`${field.id}-${field.type}`}
+                  key={`${field.databaseId}-${field.type}`}
                   field={field}
                   validation={validation}
                 />
@@ -174,14 +268,15 @@ const FormComponent: React.FC<GravityFormData> = props => {
             type={button.type}
             text={button.text}
             cssClass={buttonClass}
+            disabledClass={disabledButtonClass}
             onClick={handleSubmit}
             disabled={disabled}
           />
         )}
       </form>
 
-      {Boolean(debug) && console.log(state)}
-      <pre>{JSON.stringify(state, null, 2)}</pre>
+      {Boolean(debug?.console) && console.log(state)}
+      {Boolean(debug?.ui) && <pre>{JSON.stringify(state, null, 2)}</pre>}
     </>
   )
 }

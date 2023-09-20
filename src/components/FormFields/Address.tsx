@@ -10,10 +10,18 @@ interface AddressValue {
 
 const AddressField: React.FC<AddressFieldProps> = props => {
   const { field, validationRules } = props
-  const { id, type, label, cssClass, inputs, size, isRequired, pageNumber } =
-    field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const {
+    databaseId,
+    type,
+    label,
+    cssClass,
+    inputs,
+    size,
+    isRequired,
+    pageNumber,
+  } = field
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
@@ -22,17 +30,22 @@ const AddressField: React.FC<AddressFieldProps> = props => {
   const classes = `${sizeClass} ${otherClasses}`
   const [addressValue, setAddressValue] = useState<AddressValue>({})
   const { state, dispatch } = useFormContext()
-  const validationRule = validationRules?.find(rule => rule.id === id)
-  const streetId = `${type}${id}StreetValue`
-  const lineTwoId = `${type}${id}LineTwoValue`
-  const cityId = `${type}${id}CityValue`
-  const stateId = `${type}${id}StateValue`
-  const zipId = `${type}${id}ZipValue`
-  const countryId = `${type}${id}CountryValue`
+  const validationRule = validationRules?.find(rule => rule.id === databaseId)
+  const streetId = `${type}${databaseId}StreetValue`
+  const lineTwoId = `${type}${databaseId}LineTwoValue`
+  const cityId = `${type}${databaseId}CityValue`
+  const stateId = `${type}${databaseId}StateValue`
+  const zipId = `${type}${databaseId}ZipValue`
+  const countryId = `${type}${databaseId}CountryValue`
   const valudIds = [streetId, lineTwoId, cityId, stateId, zipId, countryId]
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const streetErrorMessage = state.errors.find(error => {
     return error.name.toString() === streetId
@@ -181,7 +194,20 @@ const AddressField: React.FC<AddressFieldProps> = props => {
       className={classes}
       style={{ display: activePageStyle }}
     >
-      <legend>{label}</legend>
+      <legend>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </legend>
       {inputs?.map(input => {
         const key = String(input?.key)
         const inputLabel = input?.label
@@ -190,11 +216,11 @@ const AddressField: React.FC<AddressFieldProps> = props => {
 
         if (key.toLowerCase() === "country") {
           return (
-            <>
+            <React.Fragment key={fieldValueId}>
               <select
                 name={String(key)}
-                id={`input_${id}_${key}`}
-                defaultValue={state.formData?.[fieldValueId]}
+                id={`input_${databaseId}_${key}`}
+                defaultValue={String(state.formData?.[fieldValueId])}
                 onChange={handleChange}
               >
                 <option value=""></option>
@@ -204,28 +230,31 @@ const AddressField: React.FC<AddressFieldProps> = props => {
                   </option>
                 ))}
               </select>
-              <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>
-            </>
+              <label htmlFor={`input_${databaseId}_${key}`}>{inputLabel}</label>
+            </React.Fragment>
           )
         }
         return (
           <>
-            <div key={key}>
+            <div key={fieldValueId}>
               <input
                 type="text"
                 name={String(key)}
-                id={`input_${id}_${key}`}
+                id={`input_${databaseId}_${key}`}
                 placeholder={placeholder}
-                defaultValue={state.formData?.[fieldValueId]}
                 onChange={handleChange}
               />
-              <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>
+              <label htmlFor={`input_${databaseId}_${key}`}>{inputLabel}</label>
             </div>
 
             {errorMessages.map(err => {
               if (err?.name?.toLowerCase().includes(key.toLowerCase()) ?? false)
-                return <p className="error-message">{err?.message}</p>
-              return null
+                return (
+                  <p className="error-message" key={err?.name}>
+                    {err?.message}
+                  </p>
+                )
+              return <React.Fragment key={key}></React.Fragment>
             })}
           </>
         )

@@ -6,7 +6,7 @@ import { FileUploadFieldProps } from "../../interfaces"
 const FileUploadField: React.FC<FileUploadFieldProps> = props => {
   const { field } = props
   const {
-    id,
+    databaseId,
     type,
     label,
     cssClass,
@@ -17,8 +17,8 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
     allowedExtensions,
     canAcceptMultipleFiles,
   } = field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const otherClasses =
     cssClass === undefined || cssClass === null ? "" : `${cssClass}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
@@ -32,10 +32,18 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
   })
+
+  const allFiles = state?.formData?.[valueId] as File[]
+  const oneFile = state?.formData?.[valueId] as File
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     event.preventDefault()
@@ -43,10 +51,10 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
     if (multipleFiles) {
       let currentUploads: File[] = []
       if (state.formData?.[valueId]?.length > 0) {
-        if (state.formData?.[valueId]?.length === maxFiles) {
+        if (state.formData?.[valueId]?.length === Number(maxFiles)) {
           return setMaxFilesError("File Limit Reached")
         }
-        currentUploads = [...state.formData?.[valueId]]
+        currentUploads = [...(state.formData?.[valueId] as File[])]
       }
       const uploadedFiles = Array.prototype.slice.call(
         event.currentTarget.files
@@ -80,14 +88,26 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
 
   return (
     <div className={classes} style={{ display: activePageStyle }}>
-      <label htmlFor={htmlId}>{label}</label>
+      <label htmlFor={htmlId}>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </label>
       <input
         type="file"
         name={htmlId}
         id={htmlId}
         required={isRequired}
         multiple={multipleFiles}
-        defaultValue={state.formData?.[valueId]}
         onChange={handleChange}
       />
       {Boolean(maxFileSize) && <p>Max File Size{maxFileSize}</p>}
@@ -98,19 +118,24 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
 
       {multipleFiles ? (
         <>
-          {state.formData?.[valueId]?.map((file: File) => {
-            return (
-              <>
-                <p>{file.name}</p>
-                <p>{file.type}</p>
-              </>
-            )
-          })}
+          {Boolean(allFiles) &&
+            allFiles.map((file: File) => {
+              return (
+                <>
+                  <p>{file?.name}</p>
+                  <p>{file?.type}</p>
+                </>
+              )
+            })}
         </>
       ) : (
         <>
-          <p>{JSON.stringify(state.formData?.[valueId]?.name, null, 2)}</p>
-          <p>{JSON.stringify(state.formData?.[valueId]?.type, null, 2)}</p>
+          {Boolean(oneFile) && (
+            <>
+              <p>{JSON.stringify(oneFile?.name, null, 2)}</p>
+              <p>{JSON.stringify(oneFile?.type, null, 2)}</p>
+            </>
+          )}
         </>
       )}
       <p>{maxFilesError}</p>

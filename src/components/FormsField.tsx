@@ -22,6 +22,7 @@ import {
   TextAreaField,
   WebsiteField,
   ValidationRule,
+  CaptchaSize,
 } from "../interfaces"
 
 // import components
@@ -50,23 +51,18 @@ const FormsField: React.FC<{
   captcha?: {
     captchaSiteKey: string
     captchaSecretKey: string
-    type: string
+    type: CaptchaSize
   }
   parser?: Function
 }> = props => {
   const { field, validation, captcha, parser } = props
-  const definedCaptcha = {
-    captchaSiteKey: String(captcha?.captchaSiteKey),
-    captchaSecretKey: String(captcha?.captchaSecretKey),
-    type: String(captcha?.type),
-  }
   const definedParser = parser != null ? parser : () => {}
 
   switch (field.type) {
     case "ADDRESS":
       return <Address field={field as AddressField} />
     case "CAPTCHA":
-      return <Captcha field={field as CaptchaField} captcha={definedCaptcha} />
+      return <Captcha field={field as CaptchaField} captcha={captcha} />
     case "CONSENT":
       return <Consent field={field as ConsentField} />
     case "DATE":

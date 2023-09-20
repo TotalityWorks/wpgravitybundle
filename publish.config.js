@@ -1,4 +1,5 @@
 const path = require("path")
+const DeclarationBundlerPlugin = require("types-webpack-bundler")
 
 module.exports = {
   entry: path.join(__dirname, "./src/index.ts"),
@@ -16,6 +17,12 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new DeclarationBundlerPlugin({
+      moduleName: `"wpgravitybundle"`,
+      out: "index.d.ts",
+    }),
+  ],
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".jsx"],
   },

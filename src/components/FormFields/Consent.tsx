@@ -5,10 +5,17 @@ import { ConsentFieldProps } from "../../interfaces"
 
 const ConsentField: React.FC<ConsentFieldProps> = props => {
   const { field } = props
-  const { id, type, label, cssClass, isRequired, checkboxLabel, pageNumber } =
-    field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const {
+    databaseId,
+    type,
+    label,
+    cssClass,
+    isRequired,
+    checkboxLabel,
+    pageNumber,
+  } = field
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const [isChecked, setIsChecked] = useState(false)
@@ -16,11 +23,16 @@ const ConsentField: React.FC<ConsentFieldProps> = props => {
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget
     setIsChecked(!isChecked)
-    const newCheckedValue = isChecked ? null : value
+    const newCheckedValue = isChecked ? "" : value
     return dispatch({
       type: ActionTypes.Update,
       payload: { [valueId]: newCheckedValue },
@@ -29,7 +41,10 @@ const ConsentField: React.FC<ConsentFieldProps> = props => {
 
   useEffect(() => {
     if (!(isRequired ?? false)) return undefined
-    if (state.formData?.[valueId] === null) {
+    if (
+      state.formData?.[valueId] === null ||
+      state.formData?.[valueId] === ""
+    ) {
       return dispatch({ type: ActionTypes.AddRequiredField, payload: valueId })
     }
     dispatch({ type: ActionTypes.RemoveRequiredField, payload: valueId })
@@ -40,10 +55,23 @@ const ConsentField: React.FC<ConsentFieldProps> = props => {
       className={`${otherClasses}`.trim()}
       style={{ display: activePageStyle }}
     >
-      <label htmlFor={htmlId}>{label}</label>
+      <label htmlFor={htmlId}>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </label>
       <input
         type="checkbox"
-        name={String(id)}
+        name={String(databaseId)}
         id={htmlId}
         onChange={handleChange}
         checked={isChecked}

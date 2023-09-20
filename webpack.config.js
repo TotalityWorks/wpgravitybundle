@@ -1,3 +1,4 @@
+const Dotenv = require("dotenv-webpack")
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
@@ -20,7 +21,7 @@ module.exports = {
       },
     ],
   },
-  plugins: [htmlWebpackPlugin],
+  plugins: [new Dotenv(), htmlWebpackPlugin],
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".jsx"],
   },
