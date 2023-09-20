@@ -1,7 +1,13 @@
+export enum RequiredIndicator {
+  TEXT = "TEXT",
+  ASTERISK = "ASTERISK",
+  CUSTOM = "CUSTOM",
+}
+
 export interface Form {
   databaseId: number
   cssClass?: string | null
-  customRequiredIndicator?: null
+  customRequiredIndicator?: string | null
   dateCreated?: string
   dateCreatedGmt?: string
   description?: string
@@ -16,7 +22,7 @@ export interface Form {
   markupVersion?: number
   nextFieldId?: number
   nodeType?: string
-  requiredIndicator?: null
+  requiredIndicator?: RequiredIndicator | null
   subLabelPlacement?: null
   title?: string
   version?: string
@@ -102,6 +108,12 @@ export interface AddressField extends Field {
   inputs?: AddressInput[]
 }
 
+export enum CaptchaSize {
+  COMPACT = "compact",
+  NORMAL = "normal",
+  INVISIBLE = "invisible",
+}
+
 export interface CaptchaField extends Field {
   label?: string
   cssClass?: string
@@ -111,7 +123,7 @@ export interface CaptchaField extends Field {
   captchaType?: "image" | "audio"
   simpleCaptchaBackgroundColor?: string
   simpleCaptchaFontColor?: string
-  simpleCaptchaSize?: "compact" | "normal" | "invisible"
+  simpleCaptchaSize?: CaptchaSize
 }
 
 export interface ConsentField extends Field {
@@ -283,7 +295,7 @@ export interface CaptchaFieldProps {
   captcha?: {
     captchaSiteKey: string
     captchaSecretKey: string
-    type: "COMPACT" | "NORMAL" | "INVISIBLE"
+    type: CaptchaSize
   }
 }
 

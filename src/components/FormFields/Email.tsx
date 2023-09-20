@@ -40,6 +40,11 @@ const EmailField: React.FC<EmailFieldProps> = props => {
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -132,7 +137,20 @@ const EmailField: React.FC<EmailFieldProps> = props => {
   return (
     <>
       <div style={{ display: activePageStyle }}>
-        <label htmlFor={htmlId}>{label}</label>
+        <label htmlFor={htmlId}>
+          {label}
+          {Boolean(isRequired) && (
+            <span className={nonNullIndicatorClass}>
+              {requiredIndicator === "TEXT"
+                ? " Required"
+                : requiredIndicator === "ASTERISK"
+                ? "*"
+                : customRequiredIndicator === null
+                ? " Required"
+                : ` ${customRequiredIndicator}`}
+            </span>
+          )}
+        </label>
         <input
           type="text"
           name={htmlId}
@@ -148,7 +166,20 @@ const EmailField: React.FC<EmailFieldProps> = props => {
       {emailConfirmed && (
         <div style={{ display: activePageStyle }}>
           {/* Investigate using sub-labels for email/confirm email */}
-          <label htmlFor={`${htmlId}_confirm`}>{`Confirm Email`}</label>
+          <label htmlFor={`${htmlId}_confirm`}>
+            {`Confirm Email`}
+            {Boolean(isRequired) && (
+              <span className={nonNullIndicatorClass}>
+                {requiredIndicator === "TEXT"
+                  ? " Required"
+                  : requiredIndicator === "ASTERISK"
+                  ? "*"
+                  : customRequiredIndicator === null
+                  ? " Required"
+                  : ` ${customRequiredIndicator}`}
+              </span>
+            )}
+          </label>
           <input
             type="text"
             name={`${htmlId}_confirm`}

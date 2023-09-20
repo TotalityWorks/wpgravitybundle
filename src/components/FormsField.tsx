@@ -22,6 +22,7 @@ import {
   TextAreaField,
   WebsiteField,
   ValidationRule,
+  CaptchaSize,
 } from "../interfaces"
 
 // import components
@@ -50,7 +51,7 @@ const FormsField: React.FC<{
   captcha?: {
     captchaSiteKey: string
     captchaSecretKey: string
-    type: "COMPACT" | "NORMAL" | "INVISIBLE"
+    type: CaptchaSize
   }
   parser?: Function
 }> = props => {

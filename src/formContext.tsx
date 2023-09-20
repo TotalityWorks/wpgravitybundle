@@ -20,6 +20,9 @@ interface State {
   requiredFields: string[]
   currentPage: number
   totalPageCount: number
+  requiredIndicator: "TEXT" | "ASTERISK" | "CUSTOM" | null
+  customRequiredIndicator: string | null
+  indicatorClass: string | null
 }
 
 export enum ActionTypes {
@@ -31,6 +34,7 @@ export enum ActionTypes {
   RemoveError = "REMOVE_ERROR_MESSAGE",
   ChangePageNumber = "CHANGE_PAGE_NUMBER",
   UpdateTotalPageCount = "UPDATE_TOTAL_PAGE_COUNT",
+  UpdateRequiredIndicator = "UPDATE_REQUIRED_INDICATOR",
 }
 
 interface Action {
@@ -53,6 +57,9 @@ const initialState: State = {
   requiredFields: [],
   currentPage: 1,
   totalPageCount: 1,
+  requiredIndicator: null,
+  customRequiredIndicator: null,
+  indicatorClass: null,
 }
 
 function formReducer(state: State, action: Action): State {
@@ -133,6 +140,17 @@ function formReducer(state: State, action: Action): State {
         totalPageCount: action.payload,
       }
     }
+    case ActionTypes.UpdateRequiredIndicator: {
+      const { requiredIndicator, customRequiredIndicator, indicatorClass } =
+        action.payload
+      return {
+        ...state,
+        requiredIndicator,
+        customRequiredIndicator,
+        indicatorClass,
+      }
+    }
+
     default: {
       throw new Error(`Unhandled action type.`)
     }

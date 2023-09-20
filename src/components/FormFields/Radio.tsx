@@ -26,6 +26,11 @@ const RadioField: React.FC<RadioFieldProps> = props => {
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -68,7 +73,20 @@ const RadioField: React.FC<RadioFieldProps> = props => {
       className={classes}
       style={{ display: activePageStyle }}
     >
-      <legend>{label}</legend>
+      <legend>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </legend>
       {choices?.map(input => {
         const text = input?.text
         const inputValue = input?.value

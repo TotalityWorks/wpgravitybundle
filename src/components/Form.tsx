@@ -7,18 +7,25 @@ import Button from "./Button"
 import { supportedFields } from "../constants"
 
 // import types
-import type { Form, ValidationRule, NameInput, EmailField } from "../interfaces"
+import type {
+  Form,
+  ValidationRule,
+  NameInput,
+  EmailField,
+  CaptchaSize,
+} from "../interfaces"
 
 interface GravityFormData {
   form: Form
   onSubmit: Function
   buttonClass?: string
+  indicatorClass?: string
   disabledButtonClass?: string
   validation?: ValidationRule[]
   captcha?: {
     captchaSiteKey: string
     captchaSecretKey: string
-    type: "COMPACT" | "NORMAL" | "INVISIBLE"
+    type: CaptchaSize
   }
   parser?: Function
   debug?: {
@@ -31,6 +38,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
   const {
     form,
     buttonClass,
+    indicatorClass,
     disabledButtonClass,
     onSubmit,
     validation,
@@ -40,6 +48,7 @@ const FormComponent: React.FC<GravityFormData> = props => {
   } = props
   const fields = form.formFields.nodes
   const button = form.submitButton
+  const { requiredIndicator, customRequiredIndicator } = form
   const formClasses =
     form.cssClass === undefined || form.cssClass === null
       ? ""
@@ -129,6 +138,8 @@ const FormComponent: React.FC<GravityFormData> = props => {
       .flat()
       .filter(field => field !== null)
 
+    // alert(`${String(requiredFields[1])}`)
+
     // set all required fields to state
     dispatch({ type: ActionTypes.AddRequired, payload: requiredFields })
 
@@ -202,6 +213,11 @@ const FormComponent: React.FC<GravityFormData> = props => {
     formDataKeys.map(key => {
       if (key === null) return null
       return dispatch({ type: ActionTypes.Update, payload: { [key]: "" } })
+    })
+
+    dispatch({
+      type: ActionTypes.UpdateRequiredIndicator,
+      payload: { requiredIndicator, customRequiredIndicator, indicatorClass },
     })
   }, [])
 

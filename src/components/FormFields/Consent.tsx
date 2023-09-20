@@ -23,6 +23,11 @@ const ConsentField: React.FC<ConsentFieldProps> = props => {
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const { value } = event.currentTarget
@@ -36,7 +41,10 @@ const ConsentField: React.FC<ConsentFieldProps> = props => {
 
   useEffect(() => {
     if (!(isRequired ?? false)) return undefined
-    if (state.formData?.[valueId] === null) {
+    if (
+      state.formData?.[valueId] === null ||
+      state.formData?.[valueId] === ""
+    ) {
       return dispatch({ type: ActionTypes.AddRequiredField, payload: valueId })
     }
     dispatch({ type: ActionTypes.RemoveRequiredField, payload: valueId })
@@ -47,7 +55,20 @@ const ConsentField: React.FC<ConsentFieldProps> = props => {
       className={`${otherClasses}`.trim()}
       style={{ display: activePageStyle }}
     >
-      <label htmlFor={htmlId}>{label}</label>
+      <label htmlFor={htmlId}>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </label>
       <input
         type="checkbox"
         name={String(databaseId)}

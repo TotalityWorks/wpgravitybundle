@@ -1,6 +1,6 @@
 # WPGravityBundle
 
-Headless WordPress is the future of WordPress, and WPGraphQL is at it's helm. With `WPGraphQL for Gravity Forms`, you can harness the power of Gravity Forms for your headless website. This package is built to complement the work done by Harness Software by giving you a React Component and a hook that will handle your form data and assemble your submission mutation for you.
+Headless WordPress is the future of WordPress, and WPGraphQL is at it's helm. With `WPGraphQL for Gravity Forms`, you can harness the power of Gravity Forms for your headless website. This package is built to complement the work done by AxePress Development by giving you a React Component and a hook that will handle your form data and assemble your submission mutation for you.
 
 ## Installation
 
@@ -9,11 +9,11 @@ To install this package simply run
 `npm install wpgravitybundle`
 
 The following system is recommended:
-- PHP 7.4+ || 8.0
+- PHP 7.4-8.1+
 - WordPress 5.4.1+
 - WPGraphQL 1.9.0+
 - Gravity Forms 2.5+ (Recommend: v2.6+)
-- WPGraphQL for Gravity Forms 0.12.2
+- WPGraphQL for Gravity Forms 0.12.3
 - WPGraphQL Upload - used for File Upload
 
 Technically, this package simply needs data in JSON format so the above is not necessary. However, the shape of this data is dependant upon the shape that `WPGraphQL for Gravity Forms` gives you for your data and expects upon form submission.
@@ -22,7 +22,7 @@ Technically, this package simply needs data in JSON format so the above is not n
 
 To use this package, import the form component and the hook.
 The GravityForm component needs two props: form and onSubmit.
-Since this package is built to use with `WPGraphQL for Gravity Forms` WordPress plugin by Harness Software, it expects a specific json object for each field.
+Since this package is built to use with `WPGraphQL for Gravity Forms` WordPress plugin by AxePress Development, it expects a specific json object for each field.
 `form` should be the data.wpGfForm object you receive from your query.
 The `onSubmit` prop is expecting a function.
 
@@ -34,7 +34,7 @@ The `useGravityFormMutation` hook needs your form data as well. It will use the 
 
 Example Use:
 
-``` js
+``` ts
 import React from 'react'
 import { graphql } from 'gatsby'
 import { useMutation } from "urql"

@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "date-fns": "^2.29.3",
+    "dotenv-webpack": "^8.0.1",
     "react-google-recaptcha": "^2.1.0"
   },
   "devDependencies": {

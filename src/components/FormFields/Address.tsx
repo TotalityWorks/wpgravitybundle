@@ -41,6 +41,11 @@ const AddressField: React.FC<AddressFieldProps> = props => {
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const streetErrorMessage = state.errors.find(error => {
     return error.name.toString() === streetId
@@ -189,7 +194,20 @@ const AddressField: React.FC<AddressFieldProps> = props => {
       className={classes}
       style={{ display: activePageStyle }}
     >
-      <legend>{label}</legend>
+      <legend>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </legend>
       {inputs?.map(input => {
         const key = String(input?.key)
         const inputLabel = input?.label

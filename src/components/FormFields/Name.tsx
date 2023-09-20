@@ -37,6 +37,11 @@ const NameField: React.FC<NameFieldProps> = props => {
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -178,7 +183,20 @@ const NameField: React.FC<NameFieldProps> = props => {
       className={classes}
       style={{ display: activePageStyle }}
     >
-      <legend>{label}</legend>
+      <legend>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </legend>
       {Boolean(prefixInput) && !hiddenPrefix ? (
         <>
           <label htmlFor={`input_${databaseId}_${String(prefixInput?.key)}`}>
@@ -199,7 +217,6 @@ const NameField: React.FC<NameFieldProps> = props => {
           </select>
         </>
       ) : null}
-
       {otherInputs?.map(input => {
         const key = String(input.key)
         const inputLabel = input?.label
