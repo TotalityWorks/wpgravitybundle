@@ -2,25 +2,39 @@ import React from "react"
 import FormComponent from "./Form"
 
 import { FormProvider } from "../formContext"
-import type { Form, ValidationRule } from "../interfaces"
+import type { Form, ValidationRule, CaptchaSize } from "../interfaces"
 
 interface GravityFormData {
   form: Form
   onSubmit: Function
   buttonClass?: string
+  indicatorClass?: string
+  disabledButtonClass?: string
   validation?: ValidationRule[]
   captcha?: {
     captchaSiteKey: string
     captchaSecretKey: string
-    type: string
+    type: CaptchaSize
   }
   parser?: Function
-  debug?: boolean
+  debug?: {
+    ui?: boolean
+    console?: boolean
+  }
 }
 
 const GravityForm: React.FC<GravityFormData> = props => {
-  const { form, buttonClass, onSubmit, validation, captcha, parser, debug } =
-    props
+  const {
+    form,
+    buttonClass,
+    indicatorClass,
+    disabledButtonClass,
+    onSubmit,
+    validation,
+    captcha,
+    parser,
+    debug,
+  } = props
 
   return (
     <FormProvider>
@@ -28,6 +42,8 @@ const GravityForm: React.FC<GravityFormData> = props => {
         form={form}
         onSubmit={onSubmit}
         buttonClass={buttonClass}
+        indicatorClass={indicatorClass}
+        disabledButtonClass={disabledButtonClass}
         validation={validation}
         captcha={captcha}
         parser={parser}

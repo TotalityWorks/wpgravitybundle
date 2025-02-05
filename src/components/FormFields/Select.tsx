@@ -6,7 +6,7 @@ import { SelectFieldProps } from "../../interfaces"
 const SelectField: React.FC<SelectFieldProps> = props => {
   const { field } = props
   const {
-    id,
+    databaseId,
     type,
     label,
     cssClass,
@@ -16,8 +16,8 @@ const SelectField: React.FC<SelectFieldProps> = props => {
     size,
     pageNumber,
   } = field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass = size === undefined ? "" : `${size.toLowerCase()}`
   const otherClasses = cssClass === undefined ? "" : `${cssClass}`
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber

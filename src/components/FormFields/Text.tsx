@@ -6,7 +6,7 @@ import { TextFieldProps } from "../../interfaces"
 const TextField: React.FC<TextFieldProps> = props => {
   const { field, validationRules } = props
   const {
-    id,
+    databaseId,
     type,
     label,
     cssClass,
@@ -15,8 +15,8 @@ const TextField: React.FC<TextFieldProps> = props => {
     size,
     pageNumber,
   } = field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const otherClasses =
@@ -26,10 +26,15 @@ const TextField: React.FC<TextFieldProps> = props => {
   const page = pageNumber === undefined || pageNumber === null ? 1 : pageNumber
   const classes = `${sizeClass} ${otherClasses}`
   const { state, dispatch } = useFormContext()
-  const validationRule = validationRules?.find(rule => rule.id === id)
+  const validationRule = validationRules?.find(rule => rule.id === databaseId)
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
@@ -37,10 +42,12 @@ const TextField: React.FC<TextFieldProps> = props => {
 
   function validateField(value: string): void {
     const validationRegex =
-      validationRule?.regex != null ? validationRule.regex : /[a-z]+/g
+      validationRule?.regex != null ? validationRule.regex : /[a-zA-Z0-9]+/g
     const validationMessage =
       validationRule?.message != null
         ? validationRule.message
+        : value === ""
+        ? ""
         : "Please enter valid characters."
 
     if ((isRequired ?? false) && value.length === 0) {
@@ -50,6 +57,7 @@ const TextField: React.FC<TextFieldProps> = props => {
       })
     }
     if (!validationRegex.test(value)) {
+      if (value === "") return
       return dispatch({
         type: ActionTypes.AddError,
         payload: { name: valueId, message: validationMessage },
@@ -77,16 +85,29 @@ const TextField: React.FC<TextFieldProps> = props => {
   }, [state.formData?.[valueId]])
 
   return (
-    <div className={classes} style={{ display: activePageStyle }}>
-      <label htmlFor={htmlId}>{label}</label>
+    <div style={{ display: activePageStyle }}>
+      <label htmlFor={htmlId}>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </label>
       <input
         type="text"
         name={htmlId}
         id={htmlId}
         required={isRequired}
         placeholder={placeholderValue}
-        defaultValue={state.formData?.[valueId]}
         onChange={handleChange}
+        className={classes}
       />
       <p className="error-message">{errorMessage?.message}</p>
     </div>

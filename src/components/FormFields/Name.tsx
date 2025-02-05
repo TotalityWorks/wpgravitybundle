@@ -9,10 +9,18 @@ interface NameValue {
 
 const NameField: React.FC<NameFieldProps> = props => {
   const { field, validationRules } = props
-  const { id, type, label, cssClass, isRequired, size, inputs, pageNumber } =
-    field
-  const valueId = `${type}${id}Value`
-  const htmlId = `field_${id}`
+  const {
+    databaseId,
+    type,
+    label,
+    cssClass,
+    isRequired,
+    size,
+    inputs,
+    pageNumber,
+  } = field
+  const valueId = `${type}${databaseId}Value`
+  const htmlId = `field_${databaseId}`
   const sizeClass =
     size === undefined || size === null ? "" : `${size.toLowerCase()}`
   const otherClasses =
@@ -25,30 +33,35 @@ const NameField: React.FC<NameFieldProps> = props => {
     prefixInput?.isHidden === undefined ? false : prefixInput?.isHidden
   const [nameValue, setNameValue] = useState<NameValue>({})
   const { state, dispatch } = useFormContext()
-  const validationRule = validationRules?.find(rule => rule.id === id)
+  const validationRule = validationRules?.find(rule => rule.id === databaseId)
 
   const isCurrentPage = state.currentPage === page
   const activePageStyle = isCurrentPage ? "block" : "none"
+  const { requiredIndicator, customRequiredIndicator, indicatorClass } = state
+  const nonNullIndicatorClass =
+    indicatorClass === undefined || indicatorClass === null
+      ? ""
+      : `${indicatorClass}`
 
   const errorMessage = state.errors.find(error => {
     return error.name.toString() === valueId
   })
 
   function inputValueKeys(): string[] {
-    const value = `${field.type}${field.id}`
-    const prefixInput: NameInput | undefined = field?.inputs?.find(
+    const value = `${type}${databaseId}`
+    const prefixInput: NameInput | undefined = inputs?.find(
       (input: NameInput) => input.key === "prefix"
     )
-    const firstInput: NameInput | undefined = field?.inputs?.find(
+    const firstInput: NameInput | undefined = inputs?.find(
       (input: NameInput) => input.key === "first"
     )
-    const middleInput: NameInput | undefined = field?.inputs?.find(
+    const middleInput: NameInput | undefined = inputs?.find(
       (input: NameInput) => input.key === "middle"
     )
-    const lastInput: NameInput | undefined = field?.inputs?.find(
+    const lastInput: NameInput | undefined = inputs?.find(
       (input: NameInput) => input.key === "last"
     )
-    const suffixInput: NameInput | undefined = field?.inputs?.find(
+    const suffixInput: NameInput | undefined = inputs?.find(
       (input: NameInput) => input.key === "suffix"
     )
 
@@ -101,15 +114,15 @@ const NameField: React.FC<NameFieldProps> = props => {
   function formatValuesForState(value: { [key: string]: string }): {} {
     const { prefix, first, middle, last, suffix } = value
     const prefixValueId =
-      (Boolean(prefix) || prefix === "") && `${type}${id}PrefixValue`
+      (Boolean(prefix) || prefix === "") && `${type}${databaseId}PrefixValue`
     const firstValueId =
-      (Boolean(first) || first === "") && `${type}${id}FirstValue`
+      (Boolean(first) || first === "") && `${type}${databaseId}FirstValue`
     const middleValueId =
-      (Boolean(middle) || middle === "") && `${type}${id}MiddleValue`
+      (Boolean(middle) || middle === "") && `${type}${databaseId}MiddleValue`
     const lastValueId =
-      (Boolean(last) || last === "") && `${type}${id}LastValue`
+      (Boolean(last) || last === "") && `${type}${databaseId}LastValue`
     const suffixValueId =
-      (Boolean(suffix) || suffix === "") && `${type}${id}SuffixValue`
+      (Boolean(suffix) || suffix === "") && `${type}${databaseId}SuffixValue`
 
     let values = {}
 
@@ -170,15 +183,28 @@ const NameField: React.FC<NameFieldProps> = props => {
       className={classes}
       style={{ display: activePageStyle }}
     >
-      <legend>{label}</legend>
+      <legend>
+        {label}
+        {Boolean(isRequired) && (
+          <span className={nonNullIndicatorClass}>
+            {requiredIndicator === "TEXT"
+              ? " Required"
+              : requiredIndicator === "ASTERISK"
+              ? "*"
+              : customRequiredIndicator === null
+              ? " Required"
+              : ` ${customRequiredIndicator}`}
+          </span>
+        )}
+      </legend>
       {Boolean(prefixInput) && !hiddenPrefix ? (
         <>
-          <label htmlFor={`input_${id}_${String(prefixInput?.key)}`}>
+          <label htmlFor={`input_${databaseId}_${String(prefixInput?.key)}`}>
             {prefixInput?.label}
           </label>
           <select
             name={String(prefixInput?.key)}
-            id={`input_${id}_${String(prefixInput?.key)}`}
+            id={`input_${databaseId}_${String(prefixInput?.key)}`}
             value={nameValue?.prefix}
             onChange={handleChange}
           >
@@ -191,10 +217,8 @@ const NameField: React.FC<NameFieldProps> = props => {
           </select>
         </>
       ) : null}
-
       {otherInputs?.map(input => {
         const key = String(input.key)
-        const fieldValueId = `${key}Id`
         const inputLabel = input?.label
         const placeholderValue =
           input?.placeholder === undefined || input?.placeholder === null
@@ -205,14 +229,13 @@ const NameField: React.FC<NameFieldProps> = props => {
         }
         return (
           <div key={key}>
-            <label htmlFor={`input_${id}_${key}`}>{inputLabel}</label>
+            <label htmlFor={`input_${databaseId}_${key}`}>{inputLabel}</label>
             <input
               name={String(key)}
               type="text"
-              id={`input_${id}_${key}`}
+              id={`input_${databaseId}_${key}`}
               placeholder={placeholderValue}
               required={isRequired}
-              defaultValue={state.formData?.[fieldValueId]}
               onChange={handleChange}
             />
           </div>

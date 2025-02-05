@@ -6,11 +6,12 @@
     "target": "es5",
     "baseUrl": "src",
     "jsx": "react-jsx",
-    "allowJs": true,
+    "allowJs": false,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node",
     "downlevelIteration": true,
-    "strict": true
+    "strict": true,
+    "declaration": true,
   }
 }

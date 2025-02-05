@@ -40,7 +40,7 @@ If there is a field that they do not support, then we cannot add support for it 
 
 Second, testing your field support is as easy as adding field data to `example/data/query.json` and running `npm run start`.
 
-NOTE: `id` should be a unique number among fields in a form.
+NOTE: `databaseId` should be a unique number among fields in a form.
 
 Your field data should come from querying a WordPress instance that has the plugins `WPGraphQL` and `WPGraphQL for Gravity Forms` installed. In your WordPress instance, navigate to your GraphiQL IDE and add a query like this:
 
@@ -51,7 +51,7 @@ Your field data should come from querying a WordPress instance that has the plug
         formFields {
           nodes {
             ... on PasswordField {
-              id
+              databaseId
             }
           }
         }
@@ -61,7 +61,7 @@ Your field data should come from querying a WordPress instance that has the plug
 }
 ```
 
-Replace `PasswordField` with the field you would like to add support for. Make sure that your field has at least it's `id`, `type`, `label`, `cssClass`, `size`, `isRequired`, `pageNumber`, and any other items unique to that field that are needed in the JSX.
+Replace `PasswordField` with the field you would like to add support for. Make sure that your field has at least it's `databaseId`, `type`, `label`, `cssClass`, `size`, `isRequired`, `pageNumber`, and any other items unique to that field that are needed in the JSX.
 
 Before beginning your work, I would recommend looking at the fields currently supported and attempt, as much as makes sense, to match their implementation.
 
