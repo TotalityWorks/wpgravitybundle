@@ -1,4 +1,4 @@
-# WPGravityBundle
+# WPGravityBundle (No Longer Maintained)
 
 Headless WordPress is the future of WordPress, and WPGraphQL is at it's helm. With `WPGraphQL for Gravity Forms`, you can harness the power of Gravity Forms for your headless website. This package is built to complement the work done by AxePress Development by giving you a React Component and a hook that will handle your form data and assemble your submission mutation for you.
 
